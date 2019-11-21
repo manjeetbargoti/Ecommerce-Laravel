@@ -1,0 +1,1 @@
+<?php /**PATH D:\GITHUB\Ecommerce-Laravel\resources\views/layouts/panel/panel_footer.blade.php ENDPATH**/ ?>
