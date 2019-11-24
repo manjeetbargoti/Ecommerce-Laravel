@@ -5,7 +5,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Users
+                    Products
                 </h4>
             </div>
         </div>
@@ -14,7 +14,7 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12 m-auto">
                 <div class="card">
                     <div class="card-header">Products</div>
                     <div class="card-body">
@@ -44,7 +44,13 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Product Name</th>
-                                        <th>Product Category</th>
+                                        <th>Category</th>
+                                        <th>Quantity</th>
+                                        <th>Initial Stock</th>
+                                        <th>Current Stock</th>
+                                        <th>Buying Price</th>
+                                        <th>Selling Price</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -54,14 +60,20 @@
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td><?php echo e($item->product_name); ?></td>
                                         <td><?php echo e($item->product_category); ?></td>
+                                        <td><?php echo e($item->quantity); ?></td>
+                                        <td><?php echo e($item->initial_stock); ?></td>
+                                        <td><?php echo e($item->current_stock); ?></td>
+                                        <td><?php echo e($item->buying_price); ?></td>
+                                        <td><?php echo e($item->selling_price); ?></td>
+                                        <td><?php echo e($item->status); ?></td>
                                         <td>
                                             <a href="<?php echo e(url('/admin/product/' . $item->id)); ?>"
                                                 title="View Product"><button class="btn btn-info btn-sm"><i
-                                                        class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                        class="fa fa-eye" aria-hidden="true"></i> </button></a>
                                             <a href="<?php echo e(url('/admin/product/' . $item->id . '/edit')); ?>"
                                                 title="Edit Product"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    Edit</button></a>
+                                                    </button></a>
 
                                             <form method="POST" action="<?php echo e(url('/admin/product' . '/' . $item->id)); ?>"
                                                 accept-charset="UTF-8" style="display:inline">
@@ -72,7 +84,7 @@
                                                 <button type="submit" class="btn btn-danger btn-sm"
                                                     title="Delete Product"
                                                     onclick="return confirm(&quot;Confirm delete?&quot;)"><i
-                                                        class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </form>
                                         </td>
                                     </tr>

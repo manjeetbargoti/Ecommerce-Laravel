@@ -259,15 +259,15 @@
 
     <script>
     // Creating Property URL
-    $('#product_name').change(function(e) {
-        $.get('<?php echo e(url("/admin/product/create")); ?>', {
-                'product_name': $(this).val()
-            },
-            function(data) {
-                $('#slug').val(data.slug);
-            }
-        );
-    });
+    // $('#product_name').change(function(e) {
+    //     $.get('<?php echo e(url("/admin/product/create")); ?>', {
+    //             'product_name': $(this).val()
+    //         },
+    //         function(data) {
+    //             $('#slug').val(data.slug);
+    //         }
+    //     );
+    // });
     </script>
 
 </body>

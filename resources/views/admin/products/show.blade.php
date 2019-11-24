@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Users
+                    Products
                 </h4>
             </div>
         </div>
@@ -16,18 +16,18 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 m-auto">
                 <div class="card">
                     <div class="card-header">Product {{ $product->id }}</div>
                     <div class="card-body">
 
-                        <a href="{{ url('/admin/products') }}" title="Back"><button class="btn btn-warning btn-sm"><i
+                        <a href="{{ url('/admin/product') }}" title="Back"><button class="btn btn-warning btn-sm"><i
                                     class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/products/' . $product->id . '/edit') }}" title="Edit Product"><button
+                        <a href="{{ url('/admin/product/' . $product->id . '/edit') }}" title="Edit Product"><button
                                 class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Edit</button></a>
 
-                        <form method="POST" action="{{ url('admin/products' . '/' . $product->id) }}"
+                        <form method="POST" action="{{ url('admin/product' . '/' . $product->id) }}"
                             accept-charset="UTF-8" style="display:inline">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
@@ -39,7 +39,7 @@
                         <br />
 
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-hover">
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
@@ -53,10 +53,41 @@
                                         <th> Product Category </th>
                                         <td> {{ $product->product_category }} </td>
                                     </tr>
+                                    <tr>
+                                        <th> Vendor </th>
+                                        <td> {{ $product->vendor }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Initial Stock </th>
+                                        <td> {{ $product->initial_stock }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Current Stock </th>
+                                        <td> {{ $product->current_stock }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Buying Price </th>
+                                        <td> {{ $product->buying_price }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Selling Price </th>
+                                        <td> {{ $product->selling_price }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Add By </th>
+                                        <td> {{ $product->user_id }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Status </th>
+                                        <td> {{ $product->status }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Product Description </th>
+                                        <td> {{ $product->product_description }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

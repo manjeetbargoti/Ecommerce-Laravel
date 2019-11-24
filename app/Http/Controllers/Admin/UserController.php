@@ -60,7 +60,12 @@ class UserController extends Controller
         $user = User::create($requestData);
         $user->assignRole($roles);
 
-        return redirect('admin/user')->with('flash_message', 'User added!');
+        $notification = array(
+            'message' => 'User Added successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user')->with($notification);
     }
 
     /**
@@ -111,7 +116,12 @@ class UserController extends Controller
         $user->update($requestData);
         $user->syncRoles($roles);
 
-        return redirect('admin/user')->with('flash_message', 'User updated!');
+        $notification = array(
+            'message' => 'User Updated successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user')->with($notification);
     }
 
     /**
@@ -125,7 +135,12 @@ class UserController extends Controller
     {
         User::destroy($id);
 
-        return redirect('admin/user')->with('flash_message', 'User deleted!');
+        $notification = array(
+            'message' => 'User Deleted successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user')->with($notification);
     }
 
 
@@ -142,7 +157,12 @@ class UserController extends Controller
             $user = User::create($requestData);
             $user->assignRole($roles);
 
-            return redirect('/register')->with('flash_message', 'User added!');
+            $notification = array(
+                'message' => 'User Added successfully!',
+                'alert-type' => 'success'
+            );
+
+            return redirect('/register')->with($notification);
         }
 
     }

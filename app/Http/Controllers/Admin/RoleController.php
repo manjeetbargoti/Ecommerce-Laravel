@@ -59,7 +59,12 @@ class RoleController extends Controller
         $role = Role::create($requestData);
         $role->givePermissionTo($permissions);
 
-        return redirect('admin/user/role')->with('flash_message', 'Role added!');
+        $notification = array(
+            'message' => 'Role Added successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user/role')->with($notification);
     }
 
     /**
@@ -110,7 +115,12 @@ class RoleController extends Controller
 
         $role->syncPermissions($permissions);
 
-        return redirect('admin/user/role')->with('flash_message', 'Role updated!');
+        $notification = array(
+            'message' => 'Role Updated successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user/role')->with($notification);
     }
 
     /**
@@ -124,6 +134,11 @@ class RoleController extends Controller
     {
         Role::destroy($id);
 
-        return redirect('admin/user/role')->with('flash_message', 'Role deleted!');
+        $notification = array(
+            'message' => 'Role Deleted successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('admin/user/role')->with($notification);
     }
 }

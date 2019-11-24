@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('product_code')->nullable();
             $table->string('product_category')->nullable();
             $table->string('vendor')->nullable();
+            $table->string('quantity')->nullable();
             $table->string('initial_stock')->nullable();
             $table->string('current_stock')->nullable();
             $table->string('buying_price')->nullable();

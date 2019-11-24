@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Permission;
+
+use App\ProductCategory;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +21,16 @@ class PermissionController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $permission = Permission::where('name', 'LIKE', "%$keyword%")
+            $productcategory = ProductCategory::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhere('status', 'LIKE', "%$keyword%")
+                ->orWhere('image', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $permission = Permission::latest()->paginate($perPage);
+            $productcategory = ProductCategory::latest()->paginate($perPage);
         }
 
-        return view('admin.permission.index', compact('permission'));
+        return view('admin.product-category.index', compact('productcategory'));
     }
 
     /**
@@ -36,7 +40,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permission.create');
+        return view('admin.product-category.create');
     }
 
     /**
@@ -50,15 +54,21 @@ class PermissionController extends Controller
     {
         
         $requestData = $request->all();
-        
-        Permission::create($requestData);
+                if ($request->hasFile('image')) {
+            $requestData['image'] = $request->file('image')
+                ->store('uploads', 'public');
+        }
+
+        // dd($requestData);
+
+        ProductCategory::create($requestData);
 
         $notification = array(
-            'message' => 'Permission added successfully!',
+            'message' => 'Category Added successfully!',
             'alert-type' => 'success'
         );
 
-        return redirect('admin/user/permission')->with($notification);
+        return redirect('admin/product-category')->with($notification);
     }
 
     /**
@@ -70,9 +80,9 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        $permission = Permission::findOrFail($id);
+        $productcategory = ProductCategory::findOrFail($id);
 
-        return view('admin.permission.show', compact('permission'));
+        return view('admin.product-category.show', compact('productcategory'));
     }
 
     /**
@@ -84,9 +94,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $permission = Permission::findOrFail($id);
+        $productcategory = ProductCategory::findOrFail($id);
 
-        return view('admin.permission.edit', compact('permission'));
+        return view('admin.product-category.edit', compact('productcategory'));
     }
 
     /**
@@ -101,16 +111,20 @@ class PermissionController extends Controller
     {
         
         $requestData = $request->all();
-        
-        $permission = Permission::findOrFail($id);
-        $permission->update($requestData);
+                if ($request->hasFile('image')) {
+            $requestData['image'] = $request->file('image')
+                ->store('uploads', 'public');
+        }
+
+        $productcategory = ProductCategory::findOrFail($id);
+        $productcategory->update($requestData);
 
         $notification = array(
-            'message' => 'Permission Updated successfully!',
+            'message' => 'Category Updated successfully!',
             'alert-type' => 'success'
         );
 
-        return redirect('admin/user/permission')->with($notification);
+        return redirect('admin/product-category')->with($notification);
     }
 
     /**
@@ -122,13 +136,13 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        Permission::destroy($id);
+        ProductCategory::destroy($id);
 
         $notification = array(
-            'message' => 'Permission Deleted successfully!',
+            'message' => 'Category Deleted successfully!',
             'alert-type' => 'success'
         );
 
-        return redirect('admin/user/permission')->with($notification);
+        return redirect('admin/product-category')->with($notification);
     }
 }

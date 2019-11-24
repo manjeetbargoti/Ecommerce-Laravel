@@ -2,9 +2,9 @@
 
 @section('content')
 <style>
-    .product_image_upload .fileinput-upload-button {
-        display: none;
-    }
+.product_image_upload .fileinput-upload-button {
+    display: none;
+}
 </style>
 <header class="head">
     <div class="main-bar">
@@ -12,7 +12,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Users
+                    Products
                 </h4>
             </div>
         </div>
@@ -46,11 +46,9 @@
                                 <div class="col-sm-6">
                                     <label for="product_category" class="control-label">{{ 'Product Category' }}</label>
                                     <select name="product_category" class="form-control" id="product_category">
-                                        @foreach (json_decode('{"":" -- Select Category -- ","test1":"test1"}', true) as
-                                        $optionKey => $optionValue)
-                                        <option value="{{ $optionKey }}"
-                                            {{ (isset($product->product_category) && $product->product_category == $optionKey) ? 'selected' : ''}}>
-                                            {{ $optionValue }}</option>
+                                        <option value=""> -- Select Category -- </option>
+                                        @foreach($productCategory as $pcat)
+                                        <option value="{{ $pcat->name }}">{{ $pcat->name }}</option>
                                         @endforeach
                                     </select>
                                     {!! $errors->first('product_category', '<p class="help-block">:message</p>') !!}
@@ -67,34 +65,38 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 col-12">
                                     <label for="product_slug" class="control-label">{{ 'Product Url' }}</label>
-                                    <input class="form-control" name="slug" type="text" id="slug"
-                                        value="{{ old('slug') }}">
-                                    {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
+                                    <input class="form-control" name="product_slug" type="text" id="slug"
+                                        value="{{ old('product_slug') }}">
+                                    {!! $errors->first('product_slug', '<p class="help-block">:message</p>') !!}
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="product_category" class="control-label">{{ 'Vendor' }}</label>
-                                    <select name="product_category" class="form-control" id="product_category">
-                                        @foreach (json_decode('{"":" -- Select Vendor -- ","test1":"test1"}', true) as
-                                        $optionKey => $optionValue)
-                                        <option value="{{ $optionKey }}"
-                                            {{ (isset($product->product_category) && $product->product_category == $optionKey) ? 'selected' : ''}}>
-                                            {{ $optionValue }}</option>
-                                        @endforeach
+                                    <select name="vendor" class="form-control" id="vendor">
+                                        <option value=""> -- Select Vendor -- </option>
+                                        <option value="Vendor 1">Vendor 1</option>
+                                        <option value="Vendor 2">Vendor 2</option>
                                     </select>
                                     {!! $errors->first('product_category', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
+                                    <label for="Quantity" class="control-label">{{ 'Quantity' }}</label>
+                                    <input class="form-control" name="quantity" type="text" id="quantity"
+                                        value="{{ isset($product->quantity) ? $product->quantity : ''}}">
+                                    {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
+                                </div>
+
+                                <div class="col-sm-4 col-12">
                                     <label for="Initial Stock" class="control-label">{{ 'Initial Stock' }}</label>
                                     <input class="form-control" name="initial_stock" type="text" id="initial_stock"
                                         value="{{ isset($product->initial_stock) ? $product->initial_stock : ''}}">
                                     {!! $errors->first('initial_stock', '<p class="help-block">:message</p>') !!}
                                 </div>
 
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
                                     <label for="Current Stock" class="control-label">{{ 'Current Stock' }}</label>
                                     <input class="form-control" name="current_stock" type="text" id="current_stock"
                                         value="{{ isset($product->current_stock) ? $product->current_stock : ''}}">
@@ -103,18 +105,33 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
                                     <label for="Buying Price" class="control-label">{{ 'Buying Price' }}</label>
-                                    <input class="form-control" name="buying_price" type="text" id="buying_price"
-                                        value="{{ isset($product->buying_price) ? $product->buying_price : ''}}">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> $ </span>
+                                        <input class="form-control" name="buying_price" type="text" id="buying_price"
+                                            value="{{ isset($product->buying_price) ? $product->buying_price : ''}}">
+                                    </div>
                                     {!! $errors->first('buying_price', '<p class="help-block">:message</p>') !!}
                                 </div>
 
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
                                     <label for="Selling Price" class="control-label">{{ 'Selling Price' }}</label>
-                                    <input class="form-control" name="selling_price" type="text" id="selling_price"
-                                        value="{{ isset($product->selling_price) ? $product->selling_price : ''}}">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> $ </span>
+                                        <input class="form-control" name="selling_price" type="text" id="selling_price"
+                                            value="{{ isset($product->selling_price) ? $product->selling_price : ''}}">
+                                    </div>
                                     {!! $errors->first('selling_price', '<p class="help-block">:message</p>') !!}
+                                </div>
+
+                                <div class="col-sm-4 col-12">
+                                    <label for="Product Status" class="control-label">{{ 'Product Status' }}</label>
+                                    <select name="status" class="form-control" id="ProductStatus">
+                                        <option value="1">Enable</option>
+                                        <option value="0">Disable</option>
+                                    </select>
+                                    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 
@@ -131,7 +148,8 @@
                             <div class="form-group row">
                                 <div class="col-sm-12 col-12 product_image_upload">
                                     <label for="Product Description" class="control-label">{{ 'File Upload' }}</label>
-                                    <input id="input-fa" name="product_image[]" accept="image/*" type="file" class="file-loading" accept="image/*" multiple>
+                                    <input id="input-fa" name="product_image[]" accept="image/*" type="file"
+                                        class="file-loading" accept="image/*" multiple>
                                 </div>
                             </div>
 

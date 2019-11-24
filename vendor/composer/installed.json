@@ -735,6 +735,51 @@
         ]
     },
     {
+        "name": "haruncpi/laravel-id-generator",
+        "version": "v1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/haruncpi/laravel-id-generator.git",
+            "reference": "cd016d001233abad309bd716ce40e51fd7b18f80"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/haruncpi/laravel-id-generator/zipball/cd016d001233abad309bd716ce40e51fd7b18f80",
+            "reference": "cd016d001233abad309bd716ce40e51fd7b18f80",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0"
+        },
+        "time": "2019-10-28T08:55:12+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Haruncpi\\LaravelIdGenerator\\IdGeneratorServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Haruncpi\\LaravelIdGenerator\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "cc-by-4.0"
+        ],
+        "authors": [
+            {
+                "name": "Md.Harun-Ur-Rashid",
+                "email": "harun.cox@gmail.com"
+            }
+        ],
+        "description": "Easy way to generate custom ID in laravel framework"
+    },
+    {
         "name": "jakub-onderka/php-console-color",
         "version": "v0.2",
         "version_normalized": "0.2.0.0",

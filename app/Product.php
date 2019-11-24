@@ -12,14 +12,14 @@ class Product extends Model
      *
      * @return array
      */
-    public function sluggable()
-    {
-        return [
-            'product_slug' => [
-                'source' => 'product_name'
-            ]
-        ];
-    }
+    // public function sluggable()
+    // {
+    //     return [
+    //         'product_slug' => [
+    //             'source' => 'product_name'
+    //         ]
+    //     ];
+    // }
 
     /**
      * The database table used by the model.
@@ -41,7 +41,8 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'product_name','product_slug','product_category'
+        'product_name','product_slug','product_code','product_category','quantity','vendor','initial_stock','current_stock',
+        'buying_price','selling_price','user_id','status','product_description'
     ];
 
     public function user()

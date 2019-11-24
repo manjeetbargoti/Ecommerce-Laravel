@@ -141,8 +141,8 @@
                                 <i class="fa fa-angle-right"></i> &nbsp; Add New Product
                             </a>
                         </li>
-                        <li class="<?php echo e((request()->is('admin/product/category')) ? 'active':''); ?>">
-                            <a href="<?php echo e(url('admin/product/category')); ?>">
+                        <li class="<?php echo e((request()->is('admin/product-category')) ? 'active':''); ?>">
+                            <a href="<?php echo e(url('admin/product-category')); ?>">
                                 <i class="fa fa-angle-right"></i>
                                 <span class="link-title"> &nbsp; Product Category</span>
                             </a>

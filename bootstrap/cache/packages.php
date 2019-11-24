@@ -20,6 +20,13 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
+  'haruncpi/laravel-id-generator' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Haruncpi\\LaravelIdGenerator\\IdGeneratorServiceProvider',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
