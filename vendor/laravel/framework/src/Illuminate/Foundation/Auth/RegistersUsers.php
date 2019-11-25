@@ -2,9 +2,11 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\SupplierData;
+use DB;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
 
 trait RegistersUsers
 {
@@ -30,12 +32,56 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        // event(new Registered($user = $this->create($request->all())));
+
+        $requestData = $request->except('roles');
+        $roles = $request->roles;
+
+        DB::beginTransaction();
+
+        try {
+
+            event(new Registered($user = $this->create($requestData)));
+            event(new Registered($user->assignRole($roles)));
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
+
+            if ($roles == 'Supplier') {
+                SupplierData::create([
+                    'business_name' => $requestData['business_name'],
+                    'category' => $requestData['supplier_category'],
+                    'user_id' => $user->id,
+                ]);
+                // echo "Test"; die;
+            }
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        DB::commit();
 
         $this->guard()->login($user);
 
+        $notification = array(
+            'message' => 'Registered successfully!',
+            'alert-type' => 'success',
+        );
+
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        ?: redirect($this->redirectPath())->with($notification);
     }
 
     /**

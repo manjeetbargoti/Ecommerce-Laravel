@@ -175,8 +175,8 @@
                                 <i class="fa fa-angle-right"></i> &nbsp; Add New Supplier
                             </a>
                         </li>
-                        <li class="{{ (request()->is('admin/suppliers/category')) ? 'active':'' }}">
-                            <a href="{{ url('admin/suppliers/category') }}">
+                        <li class="{{ (request()->is('admin/supplier-category*')) ? 'active':'' }}">
+                            <a href="{{ url('admin/supplier-category') }}">
                                 <i class="fa fa-angle-right"></i>
                                 <span class="link-title"> &nbsp; Supplier Category</span>
                             </a>

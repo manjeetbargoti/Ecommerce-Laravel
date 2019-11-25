@@ -110,12 +110,17 @@ z-index: 999999">
         });
     });
     </script>
+
     <script>
-    function userTypeCheck() {
-        if (document.getElementById('IfLawyer').checked) {
-            document.getElementById('IfLawyerCheck').style.display = 'none';
-        } else document.getElementById('IfLawyerCheck').style.display = 'block';
-    }
+    // function supplierCheck() {
+        $('input:radio').click(function() {
+            if ($(this).val() == 'Supplier') {
+                $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
+            } else {
+                $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
+            }
+        });
+    // }
     </script>
 </body>
 

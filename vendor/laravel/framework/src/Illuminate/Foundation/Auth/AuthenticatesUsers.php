@@ -106,8 +106,18 @@ trait AuthenticatesUsers
 
         $this->clearLoginAttempts($request);
 
+        $notification = array(
+            'message' => 'Login successfully!',
+            'alert-type' => 'success',
+        );
+
+        $notification_err = array(
+            'message' => 'Login Failed!',
+            'alert-type' => 'danger',
+        );
+
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+                ?: redirect()->intended($this->redirectPath())->with($notification);
     }
 
     /**

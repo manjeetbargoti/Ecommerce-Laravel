@@ -23,21 +23,23 @@ body {
                     </div>
                     <div class="bg-white login_content login_border_radius">
                         <!-- Register Form Start here -->
-                        <form class="form-horizontal login_validator m-b-20" id="register_valid"
-                            action="{{ route('register') }}" method="post">
+                        <form class="form-horizontal register_valid m-b-20" id="register_valid"
+                            action="{{ route('register') }}" method="POST">
                             @csrf
                             <div class="common" id="Common">
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <label class="col-form-label">{{ __('You are?') }}</label>
                                     </div>
-                                    @foreach(Spatie\Permission\Models\Role::get() as $roles)
-                                    <div class="col-sm-3 col-12">
+                                    @foreach(Spatie\Permission\Models\Role::whereIn('name',
+                                    array('user','supplier'))->get() as $roles)
+                                    <div class="col-sm-3 col-12" id="UserOption">
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" id="If{{ $roles->name }}" name="roles"
-                                                onclick="javascript:userTypeCheck();" value="{{ $roles->name }}"
-                                                class="custom-control-input form-control @error('roles') is-invalid @enderror"
-                                                >
+                                            <input type="radio" id="If{{ $roles->name }}" @if($roles->name == 'User')
+                                            checked @endif name="roles"
+                                            value="{{ $roles->name }}"
+                                            class="custom-control-input form-control @error('roles') is-invalid
+                                            @enderror">
                                             <span class="custom-control-indicator"></span>
                                             <a class="custom-control-description">{{ $roles->name }}</a>
                                         </label>
@@ -51,193 +53,230 @@ body {
                                 </div>
                             </div>
 
-                            <div class="client_form agentForm" id="ifLawyerCheck" style="display:block;">
-                                <div class="form-group row">
-                                    <!-- Title field -->
-                                    <div class="col-sm-6">
-                                        <label for="title" class="col-form-label">{{ __('Title *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"> <i
-                                                    class="fa fa-get-pocket text-primary"></i>
-                                            </span>
-                                            <select type="text"
-                                                class="form-control @error('title') is-invalid @enderror" name="title"
-                                                value="{{ old('title') }}" required id="title">
-                                                <option value="Mr.">Mr.</option>
-                                                <option value="Ms.">Ms.</option>
-                                                <option value="Mrs.">Mrs.</option>
-                                            </select>
+                            <div class="form-group row d-none" id="IfSupplierCheck">
+                                <!-- Business name field -->
+                                <div class="col-sm-12">
+                                    <label for="Business Name"
+                                        class="col-form-label">{{ __('Business Name *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-pencil text-primary"></i>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control @error('business_name') is-invalid @enderror"
+                                            name="business_name" value="{{ old('business_name') }}" required
+                                            id="business_name" placeholder="Business Name">
 
-                                            @error('title')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Title field -->
-                                    <!-- Username field -->
-                                    <div class="col-sm-6">
-                                        <label for="username" class="col-form-label">{{ __('Username *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"> <i
-                                                    class="fa fa-user-circle-o text-primary"></i>
-                                            </span>
-                                            <input type="text"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                name="username" value="{{ old('username') }}" required id="username"
-                                                placeholder="Username">
-
-                                            @error('username')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Username field -->
-                                </div>
-                                <div class="form-group row">
-                                    <!-- First Name field -->
-                                    <div class="col-sm-6">
-                                        <label for="first name" class="col-form-label">{{ __('First Name *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"> <i class="fa fa-user text-primary"></i>
-                                            </span>
-                                            <input type="text"
-                                                class="form-control @error('first_name') is-invalid @enderror"
-                                                name="first_name" value="{{ old('first_name') }}" required
-                                                autocomplete="first_name" id="first_name" placeholder="First Name">
-
-                                            @error('first_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.First Name field -->
-                                    <!-- Last Name field -->
-                                    <div class="col-sm-6">
-                                        <label for="last name" class="col-form-label">{{ __('Last Name *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"> <i
-                                                    class="fa fa-user-plus text-primary"></i>
-                                            </span>
-                                            <input type="text"
-                                                class="form-control @error('last_name') is-invalid @enderror"
-                                                name="last_name" value="{{ old('last_name') }}" required
-                                                autocomplete="last_name" id="last_name" placeholder="Last Name">
-
-                                            @error('last_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Last Name field -->
-                                </div>
-                                <div class="form-group row">
-                                    <!-- Email Address field -->
-                                    <div class="col-sm-6">
-                                        <label for="email" class="col-form-label">{{ __('Email Address *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-envelope text-primary"></i>
-                                            </span>
-                                            <input type="email" placeholder="Email Address" name="email" id="email"
-                                                class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ old('email') }}" required autocomplete="email" />
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Email Address field -->
-                                    <!-- Phone number field -->
-                                    <div class="col-sm-6">
-                                        <label for="phone" class="col-form-label">{{ __('Phone *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-phone text-primary"></i>
-                                            </span>
-                                            <input type="tel" id="phone" placeholder="Phone Number" name="phone"
-                                                class="form-control @error('phone') is-invalid @enderror"
-                                                value="{{ old('phone') }}" required autocomplete="phone" />
-
-                                            @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Phone number field -->
-                                </div>
-                                <div class="form-group row">
-                                    <!-- Password field -->
-                                    <div class="col-sm-6">
-                                        <label for="password"
-                                            class="col-form-label text-sm-right">{{ __('Password *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-key text-primary"></i>
-                                            </span>
-                                            <input type="password" placeholder="Password" id="password" name="password"
-                                                class="form-control @error('password') is-invalid @enderror" required />
-
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Password Field -->
-                                    <!-- Confirm Password field -->
-                                    <div class="col-sm-6">
-                                        <label for="confirmpassword"
-                                            class="col-form-label">{{ __('Confirm Password *') }}</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-key text-primary"></i>
-                                            </span>
-                                            <input type="password" placeholder="Confirm Password" name="confirm"
-                                                id="confirmpassword"
-                                                class="form-control @error('password') is-invalid @enderror" required />
-
-                                            @error('confirmpassword')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- /.Confirm Password field -->
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-sm-9">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input form-control"
-                                                name="terms" id="Terms">
-                                            <span class="custom-control-indicator"></span>
-                                            <span href="#" class="custom-control-description">I agree with the <a
-                                                    href="#" style="text-decoration:underline;">Terms and
-                                                    Conditions</a>.</span>
-                                        </label>
+                                        @error('business_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        <button type="reset" class="btn btn-danger btn-lg pull-left">Reset</button>
-                                        <input type="submit" value="Submit" class="btn btn-primary btn-lg pull-right" />
+                                <!-- /.Business name field -->
 
+                                <!-- Business Category field -->
+                                <div class="col-sm-12">
+                                    <label for="Category" class="col-form-label">{{ __('Category *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-get-pocket text-primary"></i>
+                                        </span>
+                                        <select name="supplier_category" id="supplier_category" class="form-control">
+                                            <option value=""> -- Select Category -- </option>
+                                            @foreach(\App\SupplierCategory::where('status','1')->get() as $suppCat)
+                                                <option value="{{ $suppCat->name }}">{{ $suppCat->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('supplier_category')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
+                                </div>
+                                <!-- /.Business Category field -->
+                            </div>
+                            <div class="form-group row">
+                                <!-- Title field -->
+                                <div class="col-sm-6">
+                                    <label for="title" class="col-form-label">{{ __('Title *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-get-pocket text-primary"></i>
+                                        </span>
+                                        <select type="text" class="form-control @error('title') is-invalid @enderror"
+                                            name="title" value="{{ old('title') }}" required id="title">
+                                            <option value="Mr.">Mr.</option>
+                                            <option value="Ms.">Ms.</option>
+                                            <option value="Mrs.">Mrs.</option>
+                                        </select>
+
+                                        @error('title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Title field -->
+                                <!-- Username field -->
+                                <div class="col-sm-6">
+                                    <label for="username" class="col-form-label">{{ __('Username *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i
+                                                class="fa fa-user-circle-o text-primary"></i>
+                                        </span>
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                            name="username" value="{{ old('username') }}" required id="username"
+                                            placeholder="Username">
+
+                                        @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Username field -->
+                            </div>
+                            <div class="form-group row">
+                                <!-- First Name field -->
+                                <div class="col-sm-6">
+                                    <label for="first name" class="col-form-label">{{ __('First Name *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-user text-primary"></i>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control @error('first_name') is-invalid @enderror"
+                                            name="first_name" value="{{ old('first_name') }}" required
+                                            autocomplete="first_name" id="first_name" placeholder="First Name">
+
+                                        @error('first_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.First Name field -->
+                                <!-- Last Name field -->
+                                <div class="col-sm-6">
+                                    <label for="last name" class="col-form-label">{{ __('Last Name *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-user-plus text-primary"></i>
+                                        </span>
+                                        <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                                            name="last_name" value="{{ old('last_name') }}" required
+                                            autocomplete="last_name" id="last_name" placeholder="Last Name">
+
+                                        @error('last_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Last Name field -->
+                            </div>
+                            <div class="form-group row">
+                                <!-- Email Address field -->
+                                <div class="col-sm-6">
+                                    <label for="email" class="col-form-label">{{ __('Email Address *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope text-primary"></i>
+                                        </span>
+                                        <input type="email" placeholder="Email Address" name="email" id="email"
+                                            class="form-control @error('email') is-invalid @enderror"
+                                            value="{{ old('email') }}" required autocomplete="email" />
+
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Email Address field -->
+                                <!-- Phone number field -->
+                                <div class="col-sm-6">
+                                    <label for="phone" class="col-form-label">{{ __('Phone *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-phone text-primary"></i>
+                                        </span>
+                                        <input type="tel" id="phone" placeholder="Phone Number" name="phone"
+                                            class="form-control @error('phone') is-invalid @enderror"
+                                            value="{{ old('phone') }}" required autocomplete="phone" />
+
+                                        @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Phone number field -->
+                            </div>
+                            <div class="form-group row">
+                                <!-- Password field -->
+                                <div class="col-sm-6">
+                                    <label for="password"
+                                        class="col-form-label text-sm-right">{{ __('Password *') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key text-primary"></i>
+                                        </span>
+                                        <input type="password" placeholder="Password" id="password" name="password"
+                                            class="form-control @error('password') is-invalid @enderror" required
+                                            autocomplete="new-password" />
+
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Password Field -->
+                                <!-- Confirm Password field -->
+                                <div class="col-sm-6">
+                                    <label for="password-confirm"
+                                        class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key text-primary"></i>
+                                        </span>
+                                        <input id="password-confirm" type="password" class="form-control"
+                                            name="password_confirmation" required autocomplete="new-password">
+
+                                        @error('confirmpassword')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- /.Confirm Password field -->
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-9">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input form-control" name="terms"
+                                            id="Terms">
+                                        <span class="custom-control-indicator"></span>
+                                        <span href="#" class="custom-control-description">I agree with the <a href="#"
+                                                style="text-decoration:underline;">Terms and
+                                                Conditions</a>.</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button type="reset" class="btn btn-danger btn-lg pull-left">Reset</button>
+                                    <input type="submit" value="Submit" class="btn btn-primary btn-lg pull-right" />
+
                                 </div>
                             </div>
                             <div class="row">
@@ -256,6 +295,20 @@ body {
     </div>
 </div>
 
+<script>
+// function supplierCheck() {
+//     if (document.getElementById('IfSupplier').checked) {
+//         document.getElementById('IfSupplierCheck').style.display = 'block';
+//     } else document.getElementById('IfSupplierCheck').style.display = 'none';
+// };
 
+// $("#UserOption").change(function() {
+//     if ($(this).val() == 'Supplier') {
+//         $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
+//     } else {
+//         $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
+//     }
+// });
+</script>
 
 @endsection

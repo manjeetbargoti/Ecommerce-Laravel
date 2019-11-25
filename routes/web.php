@@ -18,6 +18,9 @@ Route::group(['middleware'=>'role:Super Admin','auth'],function(){
     Route::resource('admin/product-vendor', 'Admin\\ProductVendorController');
     // Route::match(['get', 'post'], 'admin/product/create', 'Admin\\ProductsController@checkSlug');
 
+    // Supplier Management
+    Route::resource('admin/supplier-category', 'Admin\\SupplierCategoryController');
+
     // Website System Setting Options Route
     Route::get('admin/system/options', 'SystemController@getOptions');
     Route::post('admin/system/options','SystemController@postOption');
