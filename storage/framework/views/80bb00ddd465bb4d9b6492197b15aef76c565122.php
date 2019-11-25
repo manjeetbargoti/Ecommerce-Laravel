@@ -65,7 +65,7 @@
                                         <td><?php echo e($item->current_stock); ?></td>
                                         <td><?php echo e($item->buying_price); ?></td>
                                         <td><?php echo e($item->selling_price); ?></td>
-                                        <td><?php echo e($item->status); ?></td>
+                                        <td><?php if($item->status == 1): ?><i class="fa text-success fa-check-square-o"></i><?php elseif($item->status == 0): ?> <i class="fa fa-window-close text-danger"></i> <?php endif; ?></td>
                                         <td>
                                             <a href="<?php echo e(url('/admin/product/' . $item->id)); ?>"
                                                 title="View Product"><button class="btn btn-info btn-sm"><i

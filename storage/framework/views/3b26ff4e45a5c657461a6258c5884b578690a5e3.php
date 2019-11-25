@@ -15,23 +15,23 @@
             <div class="navbar-toggleable-sm m-lg-auto d-none d-lg-flex top_menu" id="nav-content">
                 <ul class="nav navbar-nav flex-row top_menubar">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
+                        <a class="nav-link text-white" href="<?php echo e(url('/admin/dashboard')); ?>">
                             <i class="fa fa-inbox"></i> <span class="quick_text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
+                        <a class="nav-link text-white" href="<?php echo e(url('/admin/user')); ?>">
                             <i class="fa fa fa-edit"></i> <span class="quick_text">Users</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fa fa-map-marker"></i> <span class="quick_text">Roles</span>
+                        <a class="nav-link text-white" href="<?php echo e(url('/admin/product')); ?>">
+                            <i class="fa fa-map-marker"></i> <span class="quick_text">Products</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fa fa-picture-o"></i> <span class="quick_text">Permissions</span>
+                        <a class="nav-link text-white" href="<?php echo e(url('/admin/dashboard')); ?>">
+                            <i class="fa fa-picture-o"></i> <span class="quick_text">Suppliers</span>
                         </a>
                     </li>
                 </ul>

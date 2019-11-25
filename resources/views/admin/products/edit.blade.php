@@ -44,7 +44,8 @@
                                     <select name="product_category" class="form-control" id="product_category">
                                         <option value=""> -- Select Category -- </option>
                                         @foreach($productCategory as $pcat)
-                                        <option value="{{ $pcat->name }}" @if($product->product_category == $pcat->name) selected @endif>{{ $pcat->name }}</option>
+                                        <option value="{{ $pcat->name }}" @if($product->product_category == $pcat->name)
+                                            selected @endif>{{ $pcat->name }}</option>
                                         @endforeach
                                     </select>
                                     {!! $errors->first('product_category', '<p class="help-block">:message</p>') !!}
@@ -70,22 +71,31 @@
                                     <label for="Vendor" class="control-label">{{ 'Vendor' }}</label>
                                     <select name="vendor" class="form-control" id="vendor">
                                         <option value=""> -- Select Vendor -- </option>
-                                        <option value="Vendor 1" @if($product->vendor == 'Vendor 1') selected @endif>Vendor 1</option>
-                                        <option value="Vendor 2" @if($product->vendor == 'Vendor 2') selected @endif>Vendor 2</option>
+                                        @foreach($productVendor as $pvend)
+                                        <option value="{{ $pvend->name }}" @if($product->vendor == $pvend->name) selected
+                                            @endif>{{ $pvend->name }}</option>
+                                        @endforeach
                                     </select>
                                     {!! $errors->first('vendor', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
+                                    <label for="Quantity" class="control-label">{{ 'Quantity' }}</label>
+                                    <input class="form-control" name="quantity" type="text" id="quantity"
+                                        value="{{ isset($product->quantity) ? $product->quantity : ''}}">
+                                    {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
+                                </div>
+
+                                <div class="col-sm-4 col-12">
                                     <label for="Initial Stock" class="control-label">{{ 'Initial Stock' }}</label>
                                     <input class="form-control" name="initial_stock" type="text" id="initial_stock"
                                         value="{{ isset($product->initial_stock) ? $product->initial_stock : ''}}">
                                     {!! $errors->first('initial_stock', '<p class="help-block">:message</p>') !!}
                                 </div>
 
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-4 col-12">
                                     <label for="Current Stock" class="control-label">{{ 'Current Stock' }}</label>
                                     <input class="form-control" name="current_stock" type="text" id="current_stock"
                                         value="{{ isset($product->current_stock) ? $product->current_stock : ''}}">
@@ -140,7 +150,7 @@
 
                             <div class="form-group">
                                 <input class="btn btn-warning pull-left" type="reset" value="Reset">
-                                <input class="btn btn-primary pull-right" type="submit" value="Add Product">
+                                <input class="btn btn-primary pull-right" type="submit" value="Update Product">
                             </div>
 
                         </form>

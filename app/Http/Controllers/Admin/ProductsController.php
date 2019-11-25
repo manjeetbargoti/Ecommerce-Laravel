@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Product;
-use App\ProductCategory;
 use DB;
+use App\User;
+use App\Product;
+use App\ProductVendor;
+use App\ProductCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {
@@ -39,8 +41,9 @@ class ProductsController extends Controller
     public function create()
     {
         $productCategory = ProductCategory::where('status', 1)->orderBy('name', 'desc')->get();
+        $productVendor = ProductVendor::where('status', 1)->orderBy('created_at', 'desc')->get();
 
-        return view('admin.products.create', compact('productCategory'));
+        return view('admin.products.create', compact('productCategory','productVendor'));
     }
 
     /**
@@ -97,7 +100,7 @@ class ProductsController extends Controller
             $productInCategory = ProductCategory::where('name', $data['product_category'])->count();
             $catProduct_count = $productInCategory + 1;
 
-            ProductCategory::where('name', $data['product_category'])->update([
+            ProductCategory::where(['name' => $data['product_category']])->update([
                 'products' => $catProduct_count,
             ]);
         } catch (ValidationException $e) {
@@ -129,7 +132,11 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view('admin.products.show', compact('product'));
+        $user = User::select('first_name','last_name')->where('id',$product['user_id'])->first();
+
+        // dd($user);
+
+        return view('admin.products.show', compact('product','user'));
     }
 
     /**
@@ -145,7 +152,9 @@ class ProductsController extends Controller
 
         $productCategory = ProductCategory::where('status', 1)->orderBy('name', 'desc')->get();
 
-        return view('admin.products.edit', compact('product', 'productCategory'));
+        $productVendor = ProductVendor::where('status', 1)->orderBy('created_at', 'desc')->get();
+
+        return view('admin.products.edit', compact('product','productCategory','productVendor'));
     }
 
     /**

@@ -141,10 +141,16 @@
                                 <i class="fa fa-angle-right"></i> &nbsp; Add New Product
                             </a>
                         </li>
-                        <li class="{{ (request()->is('admin/product-category')) ? 'active':'' }}">
+                        <li class="{{ (request()->is('admin/product-category*')) ? 'active':'' }}">
                             <a href="{{ url('admin/product-category') }}">
                                 <i class="fa fa-angle-right"></i>
                                 <span class="link-title"> &nbsp; Product Category</span>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('admin/product-vendor*')) ? 'active':'' }}">
+                            <a href="{{ url('admin/product-vendor') }}">
+                                <i class="fa fa-angle-right"></i>
+                                <span class="link-title"> &nbsp; Product Vendor</span>
                             </a>
                         </li>
                     </ul>

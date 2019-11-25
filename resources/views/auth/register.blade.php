@@ -24,7 +24,7 @@ body {
                     <div class="bg-white login_content login_border_radius">
                         <!-- Register Form Start here -->
                         <form class="form-horizontal login_validator m-b-20" id="register_valid"
-                            action="{{ url('/user/register') }}" method="post">
+                            action="{{ route('register') }}" method="post">
                             @csrf
                             <div class="common" id="Common">
                                 <div class="form-group row">
@@ -206,7 +206,7 @@ body {
                                             <span class="input-group-addon">
                                                 <i class="fa fa-key text-primary"></i>
                                             </span>
-                                            <input type="password" placeholder="Confirm Password" name="confirmpassword"
+                                            <input type="password" placeholder="Confirm Password" name="confirm"
                                                 id="confirmpassword"
                                                 class="form-control @error('password') is-invalid @enderror" required />
 

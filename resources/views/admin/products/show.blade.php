@@ -58,6 +58,10 @@
                                         <td> {{ $product->vendor }} </td>
                                     </tr>
                                     <tr>
+                                        <th> Quantity </th>
+                                        <td> {{ $product->quantity }} </td>
+                                    </tr>
+                                    <tr>
                                         <th> Initial Stock </th>
                                         <td> {{ $product->initial_stock }} </td>
                                     </tr>
@@ -75,15 +79,22 @@
                                     </tr>
                                     <tr>
                                         <th> Add By </th>
-                                        <td> {{ $product->user_id }} </td>
+                                        <td> {{ $user->first_name }} {{ $user->last_name }} </td>
                                     </tr>
                                     <tr>
                                         <th> Status </th>
-                                        <td> {{ $product->status }} </td>
+                                        <td> @if($product->status == 1) <label
+                                                class="badge badge-success badge-lg badge-pill">Enable</label>
+                                            @elseif($product->status == 0) <label
+                                                class="badge badge-danger badge-lg badge-pill">Disable</label> @endif </td>
                                     </tr>
                                     <tr>
                                         <th> Product Description </th>
                                         <td> {{ $product->product_description }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Created on </th>
+                                        <td> {{ date('d M, Y (h:i:s A)', strtotime($product->created_at)) }} </td>
                                     </tr>
                                 </tbody>
                             </table>

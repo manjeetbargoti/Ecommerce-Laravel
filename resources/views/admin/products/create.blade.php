@@ -74,8 +74,9 @@
                                     <label for="product_category" class="control-label">{{ 'Vendor' }}</label>
                                     <select name="vendor" class="form-control" id="vendor">
                                         <option value=""> -- Select Vendor -- </option>
-                                        <option value="Vendor 1">Vendor 1</option>
-                                        <option value="Vendor 2">Vendor 2</option>
+                                        @foreach($productVendor as $pvend)
+                                        <option value="{{ $pvend->name }}">{{ $pvend->name }}</option>
+                                        @endforeach
                                     </select>
                                     {!! $errors->first('product_category', '<p class="help-block">:message</p>') !!}
                                 </div>
