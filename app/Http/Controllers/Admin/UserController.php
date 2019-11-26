@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use App\User;
-use App\Http\Requests;
+use App\SupplierData;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -36,7 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get()->pluck('name','name');
+        $roles = Role::get()->pluck('name', 'name');
 
         return view('admin.user.create', compact('roles'));
     }
@@ -50,19 +51,50 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         // $requestData = $request->all();
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        // dd($requestData);
-        
-        $user = User::create($requestData);
-        $user->assignRole($roles);
+        // dd($roles[0]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $user = User::create($requestData);
+            $user->assignRole($roles);
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
+            if ($roles[0] == 'Supplier') {
+                SupplierData::create([
+                    'business_name'     => $requestData['business_name'],
+                    'category'          => $requestData['category'],
+                    'user_id'           => $user->id,
+                ]);
+            }
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        DB::commit();
 
         $notification = array(
             'message' => 'User Added successfully!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         );
 
         return redirect('admin/user')->with($notification);
@@ -79,7 +111,13 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('admin.user.show', compact('user'));
+        $roleName = implode(', ', $user->getRoleNames()->toArray());
+
+        $supplierData = SupplierData::where('user_id', $id)->first();
+
+        // dd($roleName);
+
+        return view('admin.user.show', compact('user', 'supplierData', 'roleName'));
     }
 
     /**
@@ -93,9 +131,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $roles = Role::get()->pluck('name','name');
+        $roles = Role::get()->pluck('name', 'name');
 
-        return view('admin.user.edit', compact('user','roles'));
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -111,14 +149,14 @@ class UserController extends Controller
 
         $requestData = $request->except('roles');
         $roles = $request->roles;
-        
+
         $user = User::findOrFail($id);
         $user->update($requestData);
         $user->syncRoles($roles);
 
         $notification = array(
             'message' => 'User Updated successfully!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         );
 
         return redirect('admin/user')->with($notification);
@@ -137,29 +175,28 @@ class UserController extends Controller
 
         $notification = array(
             'message' => 'User Deleted successfully!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         );
 
         return redirect('admin/user')->with($notification);
     }
 
-
     public function registerUser(Request $request)
     {
-        
-        if($request->isMethod('post')){
+
+        if ($request->isMethod('post')) {
 
             $requestData = $request->except('roles');
             $roles = $request->roles;
 
             // dd($requestData);
-            
+
             $user = User::create($requestData);
             $user->assignRole($roles);
 
             $notification = array(
                 'message' => 'User Added successfully!',
-                'alert-type' => 'success'
+                'alert-type' => 'success',
             );
 
             return redirect('/register')->with($notification);

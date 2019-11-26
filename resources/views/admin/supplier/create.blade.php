@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Users
+                    Suppliers
                 </h4>
             </div>
         </div>
@@ -18,10 +18,11 @@
         <div class="row">
             <div class="col-xl-12 m-auto">
                 <div class="card">
-                    <div class="card-header">Create New user</div>
+                    <div class="card-header">Add New Supplier</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/user') }}" title="Back"><button class="btn btn-warning btn-sm"><i
-                                    class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/supplier') }}" title="Back"><button
+                                class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                Back</button></a>
                         <br />
                         <br />
 
@@ -33,29 +34,24 @@
                         </ul>
                         @endif
 
-                        <form action="{{ url('admin/user') }}" method="post" class="form-horizontal login_validator"
+                        <form action="{{ url('admin/supplier/create') }}" method="post" class="form-horizontal login_validator"
                             enctype="multipart/form-data" id="form_inline_validator">
                             @csrf
                             <!-- User Role Select Field -->
-                            <div class="form-group row">
+                            <div class="form-group row d-none">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="User Role" class="col-form-label">{{ __('User Role *') }}</label>
                                 </div>
-                                <div class="col-xl-4">
-                                    <select name="roles[]" id="UserRoleType"
-                                        class="validate[required] form-control select2 @error('roles') is-invalid @enderror"
-                                        required value="{{ old('roles') }}">
-                                        <option value="">Select a Role</option>
-                                        @foreach(Spatie\Permission\Models\Role::get() as $roles)
-                                        <option value="{{ $roles->name }}">{{ $roles->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-sm-4">
+                                    <input type="text" name="roles" id="roles"
+                                        class="form-control @error('roles') is-invalid @enderror" required
+                                        value="Supplier">
                                 </div>
                             </div>
                             <!-- /.User Role Select Field -->
 
                             <!-- Business name Field -->
-                            <div class="form-group row d-none" id="BusinessName">
+                            <div class="form-group row" id="BusinessName">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Business Name"
                                         class="col-form-label">{{ __('Business Name *') }}</label>
@@ -69,7 +65,7 @@
                             <!-- /.Business name Field -->
 
                             <!-- Supplier Category Select Field -->
-                            <div class="form-group row d-none" id="SupplierCategory">
+                            <div class="form-group row" id="SupplierCategory">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Supplier Category"
                                         class="col-form-label">{{ __('Supplier Category *') }}</label>

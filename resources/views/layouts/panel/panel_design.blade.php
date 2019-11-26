@@ -270,6 +270,18 @@
     // });
     </script>
 
+    <script>
+    $('#UserRoleType').change(function() {
+        if ($(this).val() == 'Supplier') {
+            $('#BusinessName').removeClass('d-none').addClass('d-block-new');
+            $('#SupplierCategory').removeClass('d-none').addClass('d-block-new');
+        } else {
+            $('#BusinessName').removeClass('d-block-new').addClass('d-none');
+            $('#SupplierCategory').removeClass('d-block-new').addClass('d-none');
+        }
+    });
+    </script>
+
 </body>
 
 </html>

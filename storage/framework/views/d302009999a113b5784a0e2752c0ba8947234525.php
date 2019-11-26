@@ -158,22 +158,18 @@
                 <!-- /.Product Management -->
 
                 <!-- Suppliers Management -->
-                <li class="dropdown_menu <?php echo e((request()->is('admin/suppliers*')) ? 'active':''); ?>">
-                    <a href="<?php echo e(url('/admin/suppliers')); ?>">
+                <li class="dropdown_menu <?php echo e((request()->is('admin/supplier*')) ? 'active':''); ?>">
+                    <a href="<?php echo e(url('/admin/supplier')); ?>">
                         <i class="fa fa-file-text-o"></i>
                         <span class="link-title menu_hide">&nbsp; Supplier Management</span>
                         <span class="fa arrow menu_hide"></span>
                     </a>
                     <ul>
-                        <li class="<?php echo e((request()->is('admin/suppliers')) ? 'active':''); ?>">
-                            <a href="<?php echo e(url('admin/suppliers')); ?>">
+                        <li class="<?php echo e((request()->is('admin/supplier*')) ? 'active':''); ?>">
+                            <a href="<?php echo e(url('admin/supplier')); ?>">
                                 <i class="fa fa-angle-right"></i> &nbsp; Suppliers
                             </a>
                         </li>
-                        <li class="<?php echo e((request()->is('admin/suppliers/create')) ? 'active':''); ?>">
-                            <a href="<?php echo e(url('admin/suppliers/create')); ?>">
-                                <i class="fa fa-angle-right"></i> &nbsp; Add New Supplier
-                            </a>
                         </li>
                         <li class="<?php echo e((request()->is('admin/supplier-category*')) ? 'active':''); ?>">
                             <a href="<?php echo e(url('admin/supplier-category')); ?>">

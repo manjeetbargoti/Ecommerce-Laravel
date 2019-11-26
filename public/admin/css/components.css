@@ -4626,6 +4626,9 @@ a.bg-gray:focus, a.bg-gray:hover {
 .d-block {
   display: block !important; }
 
+.d-block-new {
+    display: -webkit-box !important; }
+
 .d-table {
   display: table !important; }
 

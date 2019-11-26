@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Users
+                    Suppliers
                 </h4>
             </div>
         </div>
@@ -18,23 +18,23 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">User ({{ $user->first_name }} {{ $user->last_name }})</div>
+                    <div class="card-header">Supplier ({{ $user->first_name }} {{ $user->last_name }})</div>
                     <div class="card-body">
 
-                        <a href="{{ url('/admin/user') }}" title="Back"><button class="btn btn-warning btn-sm"><i
+                        <a href="{{ url('/admin/supplier') }}" title="Back"><button class="btn btn-warning btn-sm"><i
                                     class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/user/' . $user->id . '/edit') }}" title="Edit user"><button
+                        <a href="{{ url('/admin/supplier/' . $user->id . '/edit') }}" title="Edit Supplier"><button
                                 class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Edit</button></a>
                         {!! Form::open([
                         'method'=>'DELETE',
-                        'url' => ['admin/user', $user->id],
+                        'url' => ['admin/supplier', $user->id],
                         'style' => 'display:inline'
                         ]) !!}
                         {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
                         'type' => 'submit',
                         'class' => 'btn btn-danger btn-sm',
-                        'title' => 'Delete user',
+                        'title' => 'Delete Supplier',
                         'onclick'=>'return confirm("Confirm delete?")'
                         ))!!}
                         {!! Form::close() !!}
