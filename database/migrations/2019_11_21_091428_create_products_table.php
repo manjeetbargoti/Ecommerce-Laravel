@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('selling_price')->nullable();
             $table->integer('add_by')->nullable();
             $table->boolean('status')->nullable();
+            $table->boolean('is_premium')->nullable();
             $table->string('product_description')->nullable();
             $table->timestamps();
         });

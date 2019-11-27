@@ -67,7 +67,7 @@
 
 </head>
 
-<body>
+<body class="fixed_header">
 
     <!-- Pre-Loader Starts here -->
     <div class="preloader" style=" position: fixed;

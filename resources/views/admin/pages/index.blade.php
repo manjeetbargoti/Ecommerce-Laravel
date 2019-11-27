@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Products
+                    Pages
                 </h4>
             </div>
         </div>
@@ -18,14 +18,13 @@
         <div class="row">
             <div class="col-md-12 m-auto">
                 <div class="card">
-                    <div class="card-header">Products</div>
+                    <div class="card-header">Pages</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/product/create') }}" class="btn btn-success btn-sm"
-                            title="Add New Product">
+                        <a href="{{ url('/admin/pages/create') }}" class="btn btn-success btn-sm" title="Add New Page">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        <form method="GET" action="{{ url('/admin/product') }}" accept-charset="UTF-8"
+                        <form method="GET" action="{{ url('/admin/pages') }}" accept-charset="UTF-8"
                             class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Search..."
@@ -45,46 +44,35 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th>Quantity</th>
-                                        <!-- <th>Initial Stock</th> -->
-                                        <th>Current Stock</th>
-                                        <!-- <th>Buying Price</th> -->
-                                        <th>Selling Price</th>
-                                        <th>Status</th>
-                                        <th>Premium</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Page Type</th>
+                                        <th>Content</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($products as $item)
+                                    @foreach($pages as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->product_name }}</td>
-                                        <td>{{ $item->product_category }}</td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <!-- <td>{{ $item->initial_stock }}</td> -->
-                                        <td>{{ $item->current_stock }}</td>
-                                        <!-- <td>{{ $item->buying_price }}</td> -->
-                                        <td>{{ $item->selling_price }}</td>
-                                        <td>@if($item->status == 1)<i class="fa text-success fa-check-square-o"></i>@elseif($item->status == 0) <i class="fa fa-window-close text-danger"></i> @endif</td>
-                                        <td>@if($item->is_premium == 1)<i class="fa text-success fa-check-square-o"></i>@elseif($item->is_premium == 0) <i class="fa fa-window-close text-danger"></i> @endif</td>
+                                        <td>{{ $item->featured_image }}</td>
+                                        <td><a href="{{ url('/'.$item->slug) }}">{{ $item->name }}</a></td>
+                                        <td>@if($item->page_type == 1) <label class="badge badge-success badge-lg">Standard</label> @endif</td>
+                                        <td>{{ str_limit($item->content, $limit=150) }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/product/' . $item->id) }}"
-                                                title="View Product"><button class="btn btn-info btn-sm"><i
-                                                        class="fa fa-eye" aria-hidden="true"></i> </button></a>
-                                            <a href="{{ url('/admin/product/' . $item->id . '/edit') }}"
-                                                title="Edit Product"><button class="btn btn-primary btn-sm"><i
+                                            <a href="{{ url('/admin/pages/' . $item->id) }}" title="View Page"><button
+                                                    class="btn btn-info btn-sm"><i class="fa fa-eye"
+                                                        aria-hidden="true"></i> </button></a>
+                                            <a href="{{ url('/admin/pages/' . $item->id . '/edit') }}"
+                                                title="Edit Page"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </button></a>
 
-                                            <form method="POST" action="{{ url('/admin/product' . '/' . $item->id) }}"
+                                            <form method="POST" action="{{ url('/admin/pages' . '/' . $item->id) }}"
                                                 accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    title="Delete Product"
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Page"
                                                     onclick="return confirm(&quot;Confirm delete?&quot;)"><i
                                                         class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </form>
@@ -93,7 +81,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $products->appends(['search' =>
+                            <div class="pagination-wrapper"> {!! $pages->appends(['search' =>
                                 Request::get('search')])->render() !!} </div>
                         </div>
 

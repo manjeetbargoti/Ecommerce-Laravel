@@ -137,6 +137,17 @@
                             </div>
 
                             <div class="form-group row">
+                                <div class="col-sm-4 col-12">
+                                    <label for="is Premium" class="control-label">{{ 'is Premium' }}</label>
+                                    <select name="is_premium" class="form-control" id="IsPremium">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    {!! $errors->first('is_premium', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <div class="col-sm-12 col-12">
                                     <label for="Product Description"
                                         class="control-label">{{ 'Product Description' }}</label>

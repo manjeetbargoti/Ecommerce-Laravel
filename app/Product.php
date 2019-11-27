@@ -42,7 +42,7 @@ class Product extends Model
      */
     protected $fillable = [
         'product_name','product_slug','product_code','product_category','quantity','vendor','initial_stock','current_stock',
-        'buying_price','selling_price','user_id','status','product_description'
+        'buying_price','selling_price','user_id','status','is_premium','product_description'
     ];
 
     public function user()

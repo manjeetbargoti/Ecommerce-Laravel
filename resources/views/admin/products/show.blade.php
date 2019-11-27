@@ -89,6 +89,13 @@
                                                 class="badge badge-danger badge-lg badge-pill">Disable</label> @endif </td>
                                     </tr>
                                     <tr>
+                                        <th> Premium </th>
+                                        <td> @if($product->is_premium == 1) <label
+                                                class="badge badge-success badge-lg badge-pill">Yes</label>
+                                            @elseif($product->is_premium == 0) <label
+                                                class="badge badge-danger badge-lg badge-pill">No</label> @endif </td>
+                                    </tr>
+                                    <tr>
                                         <th> Product Description </th>
                                         <td> {{ $product->product_description }} </td>
                                     </tr>

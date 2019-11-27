@@ -46,11 +46,12 @@
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th>Quantity</th>
-                                        <th>Initial Stock</th>
+                                        <!-- <th>Initial Stock</th> -->
                                         <th>Current Stock</th>
-                                        <th>Buying Price</th>
+                                        <!-- <th>Buying Price</th> -->
                                         <th>Selling Price</th>
                                         <th>Status</th>
+                                        <th>Premium</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -61,11 +62,12 @@
                                         <td><?php echo e($item->product_name); ?></td>
                                         <td><?php echo e($item->product_category); ?></td>
                                         <td><?php echo e($item->quantity); ?></td>
-                                        <td><?php echo e($item->initial_stock); ?></td>
+                                        <!-- <td><?php echo e($item->initial_stock); ?></td> -->
                                         <td><?php echo e($item->current_stock); ?></td>
-                                        <td><?php echo e($item->buying_price); ?></td>
+                                        <!-- <td><?php echo e($item->buying_price); ?></td> -->
                                         <td><?php echo e($item->selling_price); ?></td>
                                         <td><?php if($item->status == 1): ?><i class="fa text-success fa-check-square-o"></i><?php elseif($item->status == 0): ?> <i class="fa fa-window-close text-danger"></i> <?php endif; ?></td>
+                                        <td><?php if($item->is_premium == 1): ?><i class="fa text-success fa-check-square-o"></i><?php elseif($item->is_premium == 0): ?> <i class="fa fa-window-close text-danger"></i> <?php endif; ?></td>
                                         <td>
                                             <a href="<?php echo e(url('/admin/product/' . $item->id)); ?>"
                                                 title="View Product"><button class="btn btn-info btn-sm"><i

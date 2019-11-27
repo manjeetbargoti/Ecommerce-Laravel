@@ -22,6 +22,9 @@ Route::group(['middleware'=>'role:Super Admin','auth'],function(){
     Route::resource('admin/supplier', 'SupplierController');
     Route::resource('admin/supplier-category', 'Admin\\SupplierCategoryController');
 
+    // Page Management
+    Route::resource('admin/pages', 'Admin\\PagesController');
+
     // Website System Setting Options Route
     Route::get('admin/system/options', 'SystemController@getOptions');
     Route::post('admin/system/options','SystemController@postOption');
@@ -49,3 +52,4 @@ Route::group(['middleware'=>'auth'],function(){
 
 Route::match(['get','post'], '/', 'HomeController@index')->name('homepage');
 Route::match(['get','post'], '/user/register', 'Admin\UserController@registerUser');
+

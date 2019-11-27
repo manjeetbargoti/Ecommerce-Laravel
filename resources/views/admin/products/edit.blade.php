@@ -72,7 +72,8 @@
                                     <select name="vendor" class="form-control" id="vendor">
                                         <option value=""> -- Select Vendor -- </option>
                                         @foreach($productVendor as $pvend)
-                                        <option value="{{ $pvend->name }}" @if($product->vendor == $pvend->name) selected
+                                        <option value="{{ $pvend->name }}" @if($product->vendor == $pvend->name)
+                                            selected
                                             @endif>{{ $pvend->name }}</option>
                                         @endforeach
                                     </select>
@@ -125,6 +126,17 @@
                                         <option value="0" @if($product->status == '0') selected @endif>Disable</option>
                                     </select>
                                     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4 col-12">
+                                    <label for="is Premium" class="control-label">{{ 'is Premium' }}</label>
+                                    <select name="is_premium" class="form-control" id="IsPremium">
+                                        <option value="1" @if($product->is_premium == '1') selected @endif>Yes</option>
+                                        <option value="0" @if($product->is_premium == '0') selected @endif>No</option>
+                                    </select>
+                                    {!! $errors->first('is_premium', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 
