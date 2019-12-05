@@ -7,6 +7,7 @@ use App\SupplierData;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -153,7 +154,7 @@ class UserController extends Controller
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        // dd($requestData);    
+        // dd($requestData);
 
         DB::beginTransaction();
         try {
@@ -229,6 +230,56 @@ class UserController extends Controller
 
             return redirect('/register')->with($notification);
         }
+    }
 
+    // Profile Access
+    public function profile()
+    {
+        $auth_user = Auth::user();
+        $user = User::findOrFail($auth_user['id']);
+
+        $roleName = implode(', ', $user->getRoleNames()->toArray());
+
+        $supplierData = SupplierData::where('user_id', $auth_user['id'])->first();
+
+        return view('admin.profile.view', compact('user', 'roleName', 'supplierData'));
+    }
+
+    // Edit Profile Information
+    public function profileEdit(Request $request, $id)
+    {
+
+        if ($request->isMethod('post')) {
+
+            $requestData = $request->all();
+            // dd($requestData);
+
+            DB::beginTransaction();
+            try {
+                $user = User::findOrFail($id);
+                $user->update($requestData);
+            } catch (ValidationException $e) {
+                DB::rollback();
+                return Redirect()->back()->withErrors($e->getErrors())->withInput();
+            } catch (\Exception $e) {
+                DB::rollback();
+            }
+
+            DB::commit();
+
+            $notification = array(
+                'message' => 'Profile Updated!',
+                'alert-type' => 'success',
+            );
+
+            return redirect('/admin/profile')->with($notification);
+        }
+
+        $auth_user = Auth::user();
+        $user = User::findOrFail($auth_user['id']);
+
+        $roleName = implode(', ', $user->getRoleNames()->toArray());
+
+        return view('admin.profile.edit', compact('user', 'roleName'));
     }
 }

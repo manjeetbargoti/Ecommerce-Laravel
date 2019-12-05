@@ -302,15 +302,11 @@
                         </button>
                         <div class="dropdown-menu admire_admin">
                             <div class="popover-header"><?php echo e(config('app.name')); ?></div>
-                            <a class="dropdown-item" href="#"><i class="fa fa-cogs"></i>
-                                Account Settings</a>
+                            <a class="dropdown-item" href="<?php echo e(url('/admin/profile')); ?>"><i class="fa fa-cogs"></i> 
+                                Profile Settings</a>
                             <a class="dropdown-item" href="#">
                                 <i class="fa fa-user"></i> User Status
                             </a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-envelope"></i>
-                                Inbox</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-lock"></i>
-                                Lock Screen</a>
                             <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>
                                 <?php echo e(__('Logout')); ?></a>

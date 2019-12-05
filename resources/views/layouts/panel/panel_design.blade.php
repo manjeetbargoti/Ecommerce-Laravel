@@ -61,6 +61,9 @@
     <link rel="stylesheet" href="{{ asset('admin/vendors/blueimp_file_upload/css/jquery.fileupload.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/vendors/blueimp_file_upload/css/jquery.fileupload-ui.css') }}" />
 
+    
+    <link rel="stylesheet" href="{{ asset('admin/css/pages/profile.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('admin/css/pages/gallery.css') }}"/>
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 
@@ -149,6 +152,10 @@
     <script src="{{ asset('admin/vendors/multiselect/js/jquery.multi-select.js') }}"></script>
     <script src="{{ asset('admin/js/pages/radio_checkbox.js') }}"></script>
     <!--End of plugin scripts-->
+
+    <script src="{{ asset('admin/vendors/fullcalendar/js/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('admin/js/pages/mini_calendar.js') }}"></script>
+
     <!--Page level scripts-->
     <script src="{{ asset('admin/js/form.js') }}"></script>
     <script src="{{ asset('admin/js/pages/form_validation.js') }}"></script>

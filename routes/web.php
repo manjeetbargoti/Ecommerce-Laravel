@@ -45,6 +45,10 @@ Route::group(['middleware' => 'role:Super Admin', 'auth'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('dashboard');
 
+    // Profile Access
+    Route::match(['get','post'], '/admin/profile', 'Admin\\UserController@profile');
+    Route::match(['get','post'], '/admin/profile/{id}/edit', 'Admin\\UserController@profileEdit');
+
     // Email and Username velidation
     Route::match(['get', 'post'], '/checkemail', 'AdminController@checkEmail');
     Route::match(['get', 'post'], '/checkusername', 'AdminController@checkUsername');
