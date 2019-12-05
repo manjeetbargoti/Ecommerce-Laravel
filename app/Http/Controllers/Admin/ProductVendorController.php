@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
+use DB;
+use App\User;
+use App\SupplierData;
 use App\ProductVendor;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 
 class ProductVendorController extends Controller
 {
@@ -15,19 +17,16 @@ class ProductVendorController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    // Show all Suppliers
     public function index(Request $request)
     {
         $keyword = $request->get('search');
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $productvendor = ProductVendor::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('business_name', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Vendor");})->where('first_name', 'LIKE', "%$keyword%")->orWhere('last_name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")->orWhere('phone', 'LIKE', "%$keyword%")->orWhere('username', 'LIKE', "%$keyword%")->latest()->paginate($perPage);
         } else {
-            $productvendor = ProductVendor::latest()->paginate($perPage);
+            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Vendor");})->latest()->paginate($perPage);
         }
 
         return view('admin.product-vendor.index', compact('productvendor'));
@@ -40,7 +39,9 @@ class ProductVendorController extends Controller
      */
     public function create()
     {
-        return view('admin.product-vendor.create');
+        $roles = Role::get()->pluck('name', 'name');
+
+        return view('admin.product-vendor.create', compact('roles'));
     }
 
     /**
@@ -52,12 +53,53 @@ class ProductVendorController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        ProductVendor::create($requestData);
+        if ($request->isMethod('POST')) {
+            $requestData = $request->except('roles');
+            $roles = $request->roles;
 
-        return redirect('admin/product-vendor')->with('flash_message', 'ProductVendor added!');
+            // dd($roles);
+
+            DB::beginTransaction();
+
+            try {
+
+                $user = User::create($requestData);
+                $user->assignRole($roles);
+
+            } catch (ValidationException $e) {
+                DB::rollback();
+                return Redirect()->back()->withErrors($e->getErrors())->withInput();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw $e;
+            }
+
+            try {
+                if ($roles == 'Vendor') {
+                    SupplierData::create([
+                        'business_name' => $requestData['business_name'],
+                        'category' => $requestData['category'],
+                        'user_id' => $user->id,
+                    ]);
+                }
+
+            } catch (ValidationException $e) {
+                DB::rollback();
+                return Redirect()->back()->withErrors($e->getErrors())->withInput();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw $e;
+            }
+
+            DB::commit();
+
+            $notification = array(
+                'message' => 'Vendor Added successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect('admin/product-vendor')->with($notification);
+        }
     }
 
     /**
@@ -69,9 +111,11 @@ class ProductVendorController extends Controller
      */
     public function show($id)
     {
-        $productvendor = ProductVendor::findOrFail($id);
+        $productvendor = User::findOrFail($id);
 
-        return view('admin.product-vendor.show', compact('productvendor'));
+        $supplierData = SupplierData::where('user_id',$id)->first();
+
+        return view('admin.product-vendor.show', compact('productvendor','supplierData'));
     }
 
     /**
@@ -83,9 +127,11 @@ class ProductVendorController extends Controller
      */
     public function edit($id)
     {
-        $productvendor = ProductVendor::findOrFail($id);
+        $productvendor = User::findOrFail($id);
 
-        return view('admin.product-vendor.edit', compact('productvendor'));
+        $supplierData = SupplierData::where('user_id',$id)->first();
+
+        return view('admin.product-vendor.edit', compact('productvendor','supplierData'));
     }
 
     /**
@@ -98,13 +144,47 @@ class ProductVendorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();
-        
-        $productvendor = ProductVendor::findOrFail($id);
-        $productvendor->update($requestData);
 
-        return redirect('admin/product-vendor')->with('flash_message', 'ProductVendor updated!');
+        $requestData = $request->except('roles');
+        $roles = $request->roles;
+
+        // dd($requestData);
+
+        DB::beginTransaction();
+
+        try {
+            $user = User::findOrFail($id);
+            $user->update($requestData);
+            $user->syncRoles($roles);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
+            SupplierData::where('user_id', $id)->update([
+                'business_name' => $requestData['business_name'],
+                'category' => $requestData['category'],
+            ]);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        DB::commit();
+
+        $notification = array(
+            'message' => 'Supplier Updated successfully!',
+            'alert-type' => 'success',
+        );
+
+        return redirect('admin/product-vendor')->with($notification);
     }
 
     /**
@@ -116,8 +196,13 @@ class ProductVendorController extends Controller
      */
     public function destroy($id)
     {
-        ProductVendor::destroy($id);
+        User::destroy($id);
 
-        return redirect('admin/product-vendor')->with('flash_message', 'ProductVendor deleted!');
+        $notification = array(
+            'message' => 'Vendor Deleted successfully!',
+            'alert-type' => 'success',
+        );
+
+        return redirect('admin/product-vendor')->with($notification);
     }
 }

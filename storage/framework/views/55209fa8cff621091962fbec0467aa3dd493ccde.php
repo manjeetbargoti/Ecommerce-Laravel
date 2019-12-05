@@ -1,1 +1,0 @@
-<?php /**PATH D:\GITHUB\New-Ecom\resources\views/layouts/front/front_footer.blade.php ENDPATH**/ ?>

@@ -1,1 +1,0 @@
-<?php /**PATH D:\GITHUB\USER-MANAGEMENT\resources\views/layouts/front/front_footer.blade.php ENDPATH**/ ?>

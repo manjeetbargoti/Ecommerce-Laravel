@@ -20,7 +20,8 @@
                 <div class="card">
                     <div class="card-header">Roles</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/user/role/create') }}" class="btn btn-success btn-sm" title="Add New Role">
+                        <a href="{{ url('/admin/user/role/create') }}" class="btn btn-success btn-sm"
+                            title="Add New Role">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -54,20 +55,20 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/user/role/' . $item->id) }}" title="View Role"><button
-                                                    class="btn btn-info btn-sm"><i class="fa fa-eye"
-                                                        aria-hidden="true"></i>
-                                                    View</button></a>
+                                            <a href="{{ url('/admin/user/role/' . $item->id) }}"
+                                                title="View Role"><button class="btn btn-info btn-sm"><i
+                                                        class="fa fa-eye" aria-hidden="true"></i>
+                                                </button></a>
                                             <a href="{{ url('/admin/user/role/' . $item->id . '/edit') }}"
                                                 title="Edit Role"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    Edit</button></a>
+                                                </button></a>
                                             {!! Form::open([
                                             'method'=>'DELETE',
                                             'url' => ['/admin/user/role', $item->id],
                                             'style' => 'display:inline'
                                             ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete',
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ',
                                             array(
                                             'type' => 'submit',
                                             'class' => 'btn btn-danger btn-sm',

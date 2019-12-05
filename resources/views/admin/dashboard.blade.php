@@ -48,13 +48,15 @@
                                     <div class="float-left">
                                         <span class="fa-stack fa-sm">
                                             <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-product-hunt fa-stack-1x fa-inverse text-success visit_icon"></i>
+                                            <i
+                                                class="fa fa-product-hunt fa-stack-1x fa-inverse text-success visit_icon"></i>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-7 col-7 icon_padd_right">
                                     <div class="float-right cards_content">
-                                        <span class="number_val" id="visitors_count">{{ \App\Product::count() }}</span><i
+                                        <span class="number_val"
+                                            id="visitors_count">{{ \App\Product::count() }}</span><i
                                             class="fa fa-long-arrow-up fa-2x"></i>
                                         <br />
                                         <span class="card_description">Products</span>
@@ -76,7 +78,8 @@
                                 </div>
                                 <div class="col-lg-7 col-7 icon_padd_right">
                                     <div class="float-right cards_content">
-                                        <span class="number_val" id="revenue_count">15</span>
+                                        <span class="number_val"
+                                            id="revenue_count">{{ \App\User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->count() }}</span>
                                         <i class="fa fa-long-arrow-up fa-2x"></i>
                                         <br />
                                         <span class="card_description">Suppliers</span>
@@ -98,7 +101,8 @@
                                 </div>
                                 <div class="col-lg-7 col-7 icon_padd_right">
                                     <div class="float-right cards_content">
-                                        <span class="number_val" id="subscribers_count">{{ $usercount }}</span><i
+                                        <span class="number_val"
+                                            id="subscribers_count">{{ \App\User::count() }}</span><i
                                             class="fa fa-long-arrow-up fa-2x"></i>
                                         <br />
                                         <span class="card_description">Users</span>

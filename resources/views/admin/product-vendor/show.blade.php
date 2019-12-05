@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Product
+                    Vendors
                 </h4>
             </div>
         </div>
@@ -16,9 +16,9 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="col-md-9 m-auto">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Product Vendor #{{ $productvendor->id }} ({{ $productvendor->name }})</div>
+                    <div class="card-header">Product Vendor #{{ $productvendor->id }} ({{ $productvendor->first_name }} {{ $productvendor->last_name }})</div>
                     <div class="card-body">
 
                         <a href="{{ url('/admin/product-vendor') }}" title="Back"><button
@@ -48,11 +48,27 @@
                                     </tr>
                                     <tr>
                                         <th> Name </th>
-                                        <td> {{ $productvendor->name }} </td>
+                                        <td> {{ $productvendor->title }} {{ $productvendor->first_name }} {{ $productvendor->last_name }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Phone </th>
+                                        <td> {{ $productvendor->phone }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Email </th>
+                                        <td> {{ $productvendor->email }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Role </th>
+                                        <td> {{ implode(', ', $productvendor->getRoleNames()->toArray()) }} </td>
                                     </tr>
                                     <tr>
                                         <th> Business Name </th>
-                                        <td> {{ $productvendor->business_name }} </td>
+                                        <td> {{ $supplierData->business_name }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Category </th>
+                                        <td> <label class="badge badge-info badge-lg badge-pill text-20"> {{ $supplierData->category }} </label></td>
                                     </tr>
                                     <tr>
                                         <th> Status </th>

@@ -57,7 +57,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->featured_image }}</td>
                                         <td><a href="{{ url('/'.$item->slug) }}">{{ $item->name }}</a></td>
-                                        <td>@if($item->page_type == 1) <label class="badge badge-success badge-lg">Standard</label> @endif</td>
+                                        <td>@if($item->page_type == 1) <label
+                                                class="badge badge-success badge-lg">Standard</label> @endif</td>
                                         <td>{{ str_limit($item->content, $limit=150) }}</td>
                                         <td>
                                             <a href="{{ url('/admin/pages/' . $item->id) }}" title="View Page"><button
@@ -66,7 +67,7 @@
                                             <a href="{{ url('/admin/pages/' . $item->id . '/edit') }}"
                                                 title="Edit Page"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    </button></a>
+                                                </button></a>
 
                                             <form method="POST" action="{{ url('/admin/pages' . '/' . $item->id) }}"
                                                 accept-charset="UTF-8" style="display:inline">

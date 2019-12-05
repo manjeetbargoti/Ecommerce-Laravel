@@ -48,6 +48,7 @@
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Status</th>
                                         <th>Role</th>
                                         <th>Actions</th>
                                     </tr>
@@ -60,6 +61,7 @@
                                         <td>{{ $item->username }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone }}</td>
+                                        <td>@if($item->status == 1)<i class="fa text-success fa-check-square-o"></i>@elseif($item->status == 0) <i class="fa fa-window-close text-danger"></i> @endif</td>
                                         <td>{{ implode(', ', $item->getRoleNames()->toArray()) }}</td>
                                         <td>
                                             <a href="{{ url('/admin/user/' . $item->id) }}" title="View user"><button

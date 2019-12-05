@@ -49,6 +49,7 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Role</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -61,6 +62,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ implode(', ', $item->getRoleNames()->toArray()) }}</td>
+                                        <td>@if($item->status == 1) <i class="fa fa-check-square-o text-success"></i> @else <i class="fa fa-window-close text-danger"></i> @endif</td>
                                         <td>
                                             <a href="{{ url('/admin/supplier/' . $item->id) }}" title="View Supplier"><button
                                                     class="btn btn-info btn-sm"><i class="fa fa-eye"

@@ -111,9 +111,10 @@
                                     <label for="Username" class="col-form-label">{{ __('Username *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="text" id="Username" name="username"
+                                    <input type="text" id="UserName" name="username"
                                         class="form-control @error('username') is-invalid @enderror" required
                                         value="{{ old('username') }}">
+                                    <span class="pull-left" id="error_username"></span>
                                 </div>
                             </div>
                             <!-- /.Username Input Field -->
@@ -150,9 +151,10 @@
                                     <label for="email" class="col-form-label">{{ __('E-mail *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="email" id="EmailAddress" name="email"
+                                    <input type="email" id="email" name="email"
                                         class="form-control @error('email') is-invalid @enderror" required
                                         value="{{ old('email') }}">
+                                    <span class="pull-left" id="error_email"></span>
                                 </div>
                             </div>
                             <!-- Email Address Input Field -->

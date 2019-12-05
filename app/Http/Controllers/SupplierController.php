@@ -131,7 +131,9 @@ class SupplierController extends Controller
 
         $roles = Role::get()->pluck('name', 'name');
 
-        return view('admin.supplier.edit', compact('user', 'roles'));
+        $supplierData = SupplierData::where('user_id', $id)->first();
+
+        return view('admin.supplier.edit', compact('user', 'roles', 'supplierData'));
     }
 
     /**
@@ -148,9 +150,36 @@ class SupplierController extends Controller
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        $user = User::findOrFail($id);
-        $user->update($requestData);
-        $user->syncRoles($roles);
+        // dd($requestData);
+
+        DB::beginTransaction();
+
+        try {
+            $user = User::findOrFail($id);
+            $user->update($requestData);
+            $user->syncRoles($roles);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
+            SupplierData::where('user_id', $id)->update([
+                'business_name' => $requestData['business_name'],
+                'category' => $requestData['category'],
+            ]);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        DB::commit();
 
         $notification = array(
             'message' => 'Supplier Updated successfully!',

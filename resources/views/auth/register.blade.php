@@ -32,7 +32,7 @@ body {
                                         <label class="col-form-label">{{ __('You are?') }}</label>
                                     </div>
                                     @foreach(Spatie\Permission\Models\Role::whereIn('name',
-                                    array('user','supplier'))->get() as $roles)
+                                    array('user','supplier','vendor'))->get() as $roles)
                                     <div class="col-sm-3 col-12" id="UserOption">
                                         <label class="custom-control custom-radio">
                                             <input type="radio" id="If{{ $roles->name }}" @if($roles->name == 'User')
@@ -296,19 +296,7 @@ body {
 </div>
 
 <script>
-// function supplierCheck() {
-//     if (document.getElementById('IfSupplier').checked) {
-//         document.getElementById('IfSupplierCheck').style.display = 'block';
-//     } else document.getElementById('IfSupplierCheck').style.display = 'none';
-// };
 
-// $("#UserOption").change(function() {
-//     if ($(this).val() == 'Supplier') {
-//         $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
-//     } else {
-//         $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
-//     }
-// });
 </script>
 
 @endsection

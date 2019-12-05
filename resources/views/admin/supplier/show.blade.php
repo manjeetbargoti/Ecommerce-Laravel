@@ -16,7 +16,7 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Supplier ({{ $user->first_name }} {{ $user->last_name }})</div>
                     <div class="card-body">
@@ -71,9 +71,17 @@
                                     </tr>
                                     <tr>
                                         <th> Category </th>
-                                        <td> <label class="badge badge-success badge-lg">{{ $supplierData->category }}</label> </td>
+                                        <td> <label class="badge badge-info badge-lg badge-pill">{{ $supplierData->category }}</label> </td>
                                     </tr>
                                     @endif
+                                    <tr>
+                                        <th> Status </th>
+                                        <td> @if($user->status == 1)<label class="badge badge-success badge-lg badge-pill">Enable</label>@elseif($user->status == 0) <label class="badge badge-danger badge-lg">Disable</label> @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Created on </th>
+                                        <td> {{ date('d M, Y (h:i:s A)', strtotime($user->created_at)) }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

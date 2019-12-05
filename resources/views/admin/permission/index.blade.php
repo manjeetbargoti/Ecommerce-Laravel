@@ -57,17 +57,17 @@
                                         <td>
                                             <a href="{{ url('/admin/user/permission/' . $item->id) }}"
                                                 title="View Permission"><button class="btn btn-info btn-sm"><i
-                                                        class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                        class="fa fa-eye" aria-hidden="true"></i> </button></a>
                                             <a href="{{ url('/admin/user/permission/' . $item->id . '/edit') }}"
                                                 title="Edit Permission"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    Edit</button></a>
+                                                    </button></a>
                                             {!! Form::open([
                                             'method'=>'DELETE',
                                             'url' => ['/admin/user/permission', $item->id],
                                             'style' => 'display:inline'
                                             ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete',
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ',
                                             array(
                                             'type' => 'submit',
                                             'class' => 'btn btn-danger btn-sm',

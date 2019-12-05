@@ -37,18 +37,51 @@
                         <form action="{{ url('admin/supplier/create') }}" method="post" class="form-horizontal login_validator"
                             enctype="multipart/form-data" id="form_inline_validator">
                             @csrf
-                            <!-- User Role Select Field -->
+                            <!-- User Role input Field -->
                             <div class="form-group row d-none">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="User Role" class="col-form-label">{{ __('User Role *') }}</label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xl-4">
                                     <input type="text" name="roles" id="roles"
                                         class="form-control @error('roles') is-invalid @enderror" required
                                         value="Supplier">
                                 </div>
                             </div>
-                            <!-- /.User Role Select Field -->
+                            <!-- /.User Role input Field -->
+
+                            <!-- Business name Field -->
+                            <div class="form-group row" id="BusinessEName">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Business Name"
+                                        class="col-form-label">{{ __('Business Name *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" name="business_name" id="business_name"
+                                        class="form-control @error(' business_name') is-invalid @enderror" required
+                                        value="{{ old('business_name') }}">
+                                </div>
+                            </div>
+                            <!-- /.Business name Field -->
+
+                            <!-- Supplier Category Select Field -->
+                            <div class="form-group row" id="SupplierECategory">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Supplier Category"
+                                        class="col-form-label">{{ __('Supplier Category *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <select name="category" id="SuppCategory"
+                                        class="validate[required] form-control select2 @error('category') is-invalid @enderror"
+                                        required value="{{ old('category') }}">
+                                        <option value=""> -- Supplier Category -- </option>
+                                        @foreach(\App\SupplierCategory::where('status',1)->get() as $suppCat)
+                                        <option value="{{ $suppCat->name }}">{{ $suppCat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.Supplier Category Select Field -->
 
                             <!-- Business name Field -->
                             <div class="form-group row" id="BusinessName">
@@ -107,9 +140,10 @@
                                     <label for="Username" class="col-form-label">{{ __('Username *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="text" id="Username" name="username"
+                                    <input type="text" id="UserName" name="username"
                                         class="form-control @error('username') is-invalid @enderror" required
                                         value="{{ old('username') }}">
+                                        <span class="pull-left" id="error_username"></span>
                                 </div>
                             </div>
                             <!-- /.Username Input Field -->
@@ -146,9 +180,10 @@
                                     <label for="email" class="col-form-label">{{ __('E-mail *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="email" id="EmailAddress" name="email"
+                                    <input type="email" id="email" name="email"
                                         class="form-control @error('email') is-invalid @enderror" required
                                         value="{{ old('email') }}">
+                                        <span class="pull-left" id="error_email"></span>
                                 </div>
                             </div>
                             <!-- Email Address Input Field -->

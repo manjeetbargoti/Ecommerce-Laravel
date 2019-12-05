@@ -18,7 +18,8 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Edit user #{{ $user->id }} ({{ $user->first_name }} {{ $user->last_name }})</div>
+                    <div class="card-header">Edit user #{{ $user->id }} ({{ $user->first_name }} {{ $user->last_name }})
+                    </div>
                     <div class="card-body">
                         <a href="{{ url('/admin/user') }}" title="Back"><button class="btn btn-warning btn-sm"><i
                                     class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -33,7 +34,7 @@
                         </ul>
                         @endif
 
-                        <form action="{{ url('admin/user/'.$user->id) }}"  method="POST"
+                        <form action="{{ url('admin/user/'.$user->id) }}" method="POST"
                             class="form-horizontal login_validator" enctype="multipart/form-data"
                             id="form_inline_validator">
                             <input name="_method" type="hidden" value="PATCH">
@@ -44,7 +45,7 @@
                                     <label for="User Role" class="col-form-label">{{ __('User Role *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <select name="roles[]" id="roles"
+                                    <select name="roles[]" id="UserRoleType"
                                         class="validate[required] form-control select2 @error('roles') is-invalid @enderror"
                                         required value="{{ old('roles') }}">
                                         <option value="">Select a Role</option>
@@ -56,14 +57,51 @@
                             </div>
                             <!-- /.User Role Select Field -->
 
+                            <!-- Business name Field -->
+                            @if(!empty($supplierData->business_name))
+                            <div class="form-group row d-none" id="BusinessName">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Business Name"
+                                        class="col-form-label">{{ __('Business Name *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" name="business_name" id="business_name"
+                                        class="form-control @error(' business_name') is-invalid @enderror" required
+                                            value="{{ $supplierData->business_name }}">
+                                </div>
+                            </div>
+                            @endif
+                            <!-- /.Business name Field -->
+
+                            <!-- Supplier Category Select Field -->
+                            @if(!empty($supplierData->business_name))
+                            <div class="form-group row d-none" id="SupplierCategory">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Supplier Category"
+                                        class="col-form-label">{{ __('Supplier Category *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <select name="category" id="SuppCategory"
+                                        class="validate[required] form-control select2 @error('category') is-invalid @enderror"
+                                        required value="{{ old('category') }}">
+                                        <option value=""> -- Supplier Category -- </option>
+                                        @foreach(\App\SupplierCategory::where('status',1)->get() as $suppCat)
+                                        <option value="{{ $suppCat->name }}" @if($supplierData->category ==
+                                            $suppCat->name) selected @endif>{{ $suppCat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @endif
+                            <!-- /.Supplier Category Select Field -->
+
                             <!-- User Title Select Field -->
                             <div class="form-group row">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="User Role" class="col-form-label">{{ __('User Title *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <select name="title" id="UserTitle"
-                                        class="validate[required] form-control select2 @error(' title') is-invalid
+                                    <select name="title" id="UserTitle" class="validate[required] form-control select2 @error(' title') is-invalid
                                             @enderror" required value="{{ old('title') }}">
                                         <option value="">Select a Title</option>
                                         <option value="Mr." @if($user->title == 'Mr.') selected @endif>Mr.</option>
@@ -80,9 +118,10 @@
                                     <label for="Username" class="col-form-label">{{ __('Username *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="text" id="Username" name="username"
+                                    <input type="text" id="UserName" name="username"
                                         class="form-control @error('username') is-invalid @enderror" required
                                         value="{{ $user->username }}">
+                                    <span class="pull-left" id="error_username"></span>
                                 </div>
                             </div>
                             <!-- /.Username Input Field -->
@@ -119,9 +158,10 @@
                                     <label for="email" class="col-form-label">{{ __('E-mail *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <input type="email" id="EmailAddress" name="email"
+                                    <input type="email" id="email" name="email"
                                         class="form-control @error('email') is-invalid @enderror" required
                                         value="{{ $user->email }}">
+                                    <span class="pull-left" id="error_email"></span>
                                 </div>
                             </div>
                             <!-- Email Address Input Field -->
@@ -139,10 +179,26 @@
                             </div>
                             <!-- Phone Number Input Field -->
 
+                            <!-- User Status Select Field -->
+                            <div class="form-group row">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Status" class="col-form-label">{{ __('Status *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <select name="status" id="status" value="{{ $user->status }}"
+                                        class="form-control @error('status') is-invalid @enderror">
+                                        <option value="1" @if($user->status == 1) selected @endif>Enable</option>
+                                        <option value="0" @if($user->status == 0) selected @endif>Disable</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- User Status Field -->
+
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">
                                     <input type="reset" value="Reset" class="btn btn-warning pull-left">
-                                    <input type="submit" value="Update User" class="btn btn-primary pull-right">
+                                    <input type="submit" value="Update {{ $user->first_name }}"
+                                        class="btn btn-primary pull-right">
                                 </div>
                             </div>
                         </form>

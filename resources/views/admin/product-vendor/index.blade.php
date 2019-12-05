@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Product
+                    Vendors
                 </h4>
             </div>
         </div>
@@ -16,12 +16,12 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="col-md-9 m-auto">
+            <div class="col-md-12 m-auto">
                 <div class="card">
                     <div class="card-header">Product Vendor</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/product-vendor/create') }}" class="btn btn-success btn-sm"
-                            title="Add New ProductVendor">
+                            title="Add New Vendor">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -46,7 +46,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Business Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Username</th>
+                                        <th>Role</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -55,8 +58,11 @@
                                     @foreach($productvendor as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->business_name }}</td>
+                                        <td>{{ $item->title }} {{ $item->first_name }} {{ $item->last_name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->phone }}</td>
+                                        <td>{{ $item->username }}</td>
+                                        <td>{{ implode(', ', $item->getRoleNames()->toArray()) }}</td>
                                         <td>@if($item->status == 1)<i class="fa text-success fa-check-square-o"></i>@elseif($item->status == 0) <i class="fa fa-window-close text-danger"></i> @endif</td>
                                         <td>
                                             <a href="{{ url('/admin/product-vendor/' . $item->id) }}"

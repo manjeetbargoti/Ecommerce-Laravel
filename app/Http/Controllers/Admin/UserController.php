@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use App\User;
+use App\Http\Controllers\Controller;
 use App\SupplierData;
+use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -74,11 +74,11 @@ class UserController extends Controller
         }
 
         try {
-            if ($roles[0] == 'Supplier') {
+            if ($roles[0] == 'Supplier' || $roles[0] == 'Vendor') {
                 SupplierData::create([
-                    'business_name'     => $requestData['business_name'],
-                    'category'          => $requestData['category'],
-                    'user_id'           => $user->id,
+                    'business_name' => $requestData['business_name'],
+                    'category' => $requestData['category'],
+                    'user_id' => $user->id,
                 ]);
             }
 
@@ -132,8 +132,11 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $roles = Role::get()->pluck('name', 'name');
+        $supplierData = SupplierData::where('user_id', $id)->first();
 
-        return view('admin.user.edit', compact('user', 'roles'));
+        // dd($supplierData);
+
+        return view('admin.user.edit', compact('user', 'roles', 'supplierData'));
     }
 
     /**
@@ -150,9 +153,34 @@ class UserController extends Controller
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        $user = User::findOrFail($id);
-        $user->update($requestData);
-        $user->syncRoles($roles);
+        // dd($requestData);    
+
+        DB::beginTransaction();
+        try {
+            $user = User::findOrFail($id);
+            $user->update($requestData);
+            $user->syncRoles($roles);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
+        try {
+            SupplierData::where('user_id', $id)->update([
+                'business_name' => $requestData['business_name'],
+                'category' => $requestData['category'],
+            ]);
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        DB::commit();
 
         $notification = array(
             'message' => 'User Updated successfully!',

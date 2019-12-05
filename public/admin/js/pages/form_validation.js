@@ -178,7 +178,7 @@ $(document).ready(function() {
                         message: 'The confirm password is required and can\'t be empty.'
                     },
                     identical: {
-                        field: 'Password3',
+                        field: 'password',
                         message: 'Please enter the same password as above'
                     }
                 }

@@ -172,20 +172,20 @@
         <!-- /.Suppliers Management -->
 
         <!-- Support Center -->
-        <li class="dropdown_menu <?php echo e((request()->is('admin/supports*')) ? 'active':''); ?>">
+        <li class="dropdown_menu <?php echo e((request()->is('admin/support*')) ? 'active':''); ?>">
             <a href="<?php echo e(url('/admin/supports')); ?>">
                 <i class="fa fa-file-text-o"></i>
                 <span class="link-title menu_hide">&nbsp; Support Center</span>
                 <span class="fa arrow menu_hide"></span>
             </a>
             <ul>
-                <li class="<?php echo e((request()->is('admin/supports/product-queries')) ? 'active':''); ?>">
-                    <a href="<?php echo e(url('admin/supports/product-queries')); ?>">
+                <li class="<?php echo e((request()->is('admin/support/product-query*')) ? 'active':''); ?>">
+                    <a href="<?php echo e(url('admin/support/product-query')); ?>">
                         <i class="fa fa-angle-right"></i> &nbsp; Product Queries
                     </a>
                 </li>
-                <li class="<?php echo e((request()->is('admin/supports/supplier-queries')) ? 'active':''); ?>">
-                    <a href="<?php echo e(url('admin/supports/supplier-queries')); ?>">
+                <li class="<?php echo e((request()->is('admin/support/supplier-query')) ? 'active':''); ?>">
+                    <a href="<?php echo e(url('admin/support/supplier-query')); ?>">
                         <i class="fa fa-angle-right"></i> &nbsp; Supplier Queries
                     </a>
                 </li>

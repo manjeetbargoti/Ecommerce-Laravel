@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -28,6 +27,34 @@ class AdminController extends Controller
         $usercount = User::count();
 
         return view('admin.dashboard', compact('usercount'));
+    }
+
+    // Check User Email
+    public function checkEmail(Request $request)
+    {
+        if ($request->get('email')) {
+            $email = $request->get('email');
+            $data = User::where('email', $email)->count();
+            if ($data > 0) {
+                echo 'not_unique';
+            } else {
+                echo 'unique';
+            }
+        }
+    }
+
+    // Check Username
+    public function checkUsername(Request $request)
+    {
+        if ($request->get('username')) {
+            $username = $request->get('username');
+            $data = User::where('username', $username)->count();
+            if ($data > 0) {
+                echo 'not_unique';
+            } else {
+                echo 'unique';
+            }
+        }
     }
 
 }

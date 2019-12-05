@@ -1,1 +1,0 @@
-<?php /**PATH D:\GITHUB\New-Ecom\resources\views/layouts/panel/panel_footer.blade.php ENDPATH**/ ?>
