@@ -61,3 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::match(['get', 'post'], '/', 'HomeController@index')->name('homepage');
 Route::match(['get', 'post'], '/user/register', 'Admin\UserController@registerUser');
 
+// Product Category Page
+Route::match(['get', 'post'], '/product/categories', 'Admin\ProductCategoryController@productCategory');
+

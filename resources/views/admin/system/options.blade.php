@@ -68,7 +68,7 @@
                                         class="form-control" placeholder="Site Logo">
                                     <div class="help-block">
                                         <span><a href="{{ asset(config('app.logo')) }}" target="_blank"><img
-                                                    src="{{ asset(config('app.logo')) }}"></a></span>
+                                                    src="{{ asset(config('app.logo')) }}" width="60"></a></span>
                                     </div>
                                 </div>
                             </div>

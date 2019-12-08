@@ -1,39 +1,31 @@
-<!-- Top Navbar -->
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container-fluid">
-
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-            <i class="fa fa-align-justify"></i>
-            <span></span>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top menubar-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset(config('app.logo')) }}" width="60px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-        </button>
-        <span style="font-size:2em;font-weight:400;"> &nbsp;{{ config('app.name') }}</span>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            @if (Route::has('login'))
-            <ul class="nav navbar-nav ml-auto">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">How it works</a>
+                    <a class="nav-link" href="{{ url('/contact') }}">CONTACT</a>
                 </li>
+                @if (Route::has('login'))
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                    <a class="nav-link" href="{{ url('/admin/profile') }}">ACCOUNT</a>
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <!-- <a class="nav-link" href="{{ route('register') }}">Register</a> -->
+                    <a class="nav-link" href="{{ route('login') }}">SIGN IN</a>
                 </li>
                 @endauth
+                @endif
+                <li class="nav-item">
+                    <a class="nav-link d-lg-none d-md-none d-sm-block d-xs-block" href="#">ABOUT</a>
+                </li>
             </ul>
-            @endif
         </div>
     </div>
 </nav>
-<!-- /.Top Navbar -->

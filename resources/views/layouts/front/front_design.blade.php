@@ -2,41 +2,33 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <title>{{ config('app.name') }}</title>
 
-    <link rel="shortcut icon" href="favicon.png" />
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('front/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('admin/css/components.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}" />
-    <!--End of Global styles -->
 
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('front/css/sidebarmenu.css') }}">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    <!-- Font Awesome JS -->
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"></script> -->
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"></script> -->
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('front/css/heroic-features.css') }}" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="fonts/Cinzel/Cinzel-Regular.otf">
 
-    <!--Plugin styles-->
-    <link rel="stylesheet" href="{{ asset('admin/vendors/bootstrapvalidator/css/bootstrapValidator.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/vendors/wow/css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/css/pages/login1.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 </head>
 
-<body>
+<body class="d-flex flex-column">
     <div class="preloader" style=" position: fixed;
   width: 100%;
   height: 100%;
@@ -56,21 +48,18 @@ z-index: 999999">
         </div>
     </div>
 
-    <div class="wrapper">
-
-        @include('layouts.front.front_sidebar')
 
         <!-- Page Content start -->
-        <div id="content">
+        <!-- <div id="content"> -->
             @include('layouts.front.header.front_header')
 
             @yield('content')
-        </div>
+        <!-- </div> -->
         <!-- /.Page Content end -->
 
         @include('layouts.front.front_footer')
 
-    </div>
+
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
@@ -113,13 +102,13 @@ z-index: 999999">
 
     <script>
     // function supplierCheck() {
-        $('input:radio').click(function() {
-            if ($(this).val() == 'Supplier') {
-                $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
-            } else {
-                $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
-            }
-        });
+    $('input:radio').click(function() {
+        if ($(this).val() == 'Supplier') {
+            $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
+        } else {
+            $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
+        }
+    });
     // }
     </script>
 </body>

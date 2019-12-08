@@ -145,4 +145,16 @@ class ProductCategoryController extends Controller
 
         return redirect('admin/product-category')->with($notification);
     }
+
+    //#################################################################################//
+    //           ###########          Frontend Functions          ##########           //
+    //#################################################################################//
+
+    // Product Category Route
+    public function productCategory()
+    {
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        return view('front.product.category', compact('productcategory'));
+    }
 }
