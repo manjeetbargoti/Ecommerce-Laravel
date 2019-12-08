@@ -458,3 +458,21 @@ a:active {
   box-shadow: none;
   display: table-cell;
 }
+
+.all-products .card{
+	border-radius:0;
+}
+
+.all-products .card-body{
+	background-color:#000 !important;
+}
+
+.green-txt{
+	color:#67d5ae !important;
+}
+
+.gry-bg{
+	background-color:#222 !important;
+}
+
+

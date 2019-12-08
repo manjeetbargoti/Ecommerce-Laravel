@@ -17,8 +17,14 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{{ asset('front/plugins/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/plugins/owl-carousel/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/plugins/magnific-popup/magnific-popup.css') }}">
+
     <!-- Custom styles for this template -->
     <link href="{{ asset('front/css/heroic-features.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('front/css/product-style.css') }}">
 
     <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
     <link href="fonts/Cinzel/Cinzel-Regular.otf">
@@ -61,9 +67,13 @@ z-index: 999999">
 
 
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <!-- jQuery -->
     <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
+    <script src="{{ asset('front/plugins/jquery-2.1.1.min.js') }}"></script>
+    <script src="{{ asset('front/plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('front/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('front/plugins/magnific-popup/jquery.magnific.popup.min.js') }}"></script>
+    <script src="(( asset('front/js/main.js') }}"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->

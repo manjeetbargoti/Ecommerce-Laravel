@@ -63,4 +63,5 @@ Route::match(['get', 'post'], '/user/register', 'Admin\UserController@registerUs
 
 // Product Category Page
 Route::match(['get', 'post'], '/product/categories', 'Admin\ProductCategoryController@productCategory');
+Route::match(['get', 'post'], '/category/{category}/products', 'Admin\ProductCategoryController@categoryProduct');
 

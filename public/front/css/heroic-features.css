@@ -21,11 +21,12 @@ height:400px;
 .menubar-top{
 	height: 100px;
     padding: 0 30px;
-	background:transparent !important;
+	background: rgba(0,0,0,0.8) !important;
 }
 
 .menubar-bottom{
 	margin-bottom:50px !important;
+	background: rgba(0,0,0,0.8);
 	}
 	
 .menubar-bottom a{
@@ -133,7 +134,7 @@ text-align: right;
   z-index: 9;
   bottom: 0;
   width: 100%;
-	padding: 10px 0 !important;
+	padding: 12px 0 !important;
 }
 
 /* Other Classes for Page Styling */
@@ -311,7 +312,7 @@ body {
   }
   
   .menubar-top img{
-  	margin-top:60px;  
+  	margin-top:1px;  
 	width:90px;
   }
   .page-content{

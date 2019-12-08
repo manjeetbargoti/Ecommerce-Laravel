@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Product;
 use App\ProductCategory;
 use Illuminate\Http\Request;
 
@@ -156,5 +156,18 @@ class ProductCategoryController extends Controller
         $productcategory = ProductCategory::where('status', 1)->get();
 
         return view('front.product.category', compact('productcategory'));
+    }
+
+    // Category Products
+    public function categoryProduct($category=null)
+    {
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        $products = Product::where('product_category', $category)->where('status', 1)->get();
+
+        $product_qty = $products->count();
+        // dd($product_qty);
+
+        return view('front.product.category_product', compact('productcategory','products'));
     }
 }
