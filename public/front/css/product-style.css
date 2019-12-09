@@ -475,4 +475,21 @@ a:active {
 	background-color:#222 !important;
 }
 
+.product-supplier li {
+  padding: 1em 2em;
+}
+
+.product-supplier li.active a{
+  color: #fff !important;
+}
+
+.product-page-content li.active a{
+  color: #67d5ae;
+}
+
+.blur-img {
+  -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
+  filter: blur(7px);
+}
+
 

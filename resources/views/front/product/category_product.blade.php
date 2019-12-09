@@ -20,26 +20,30 @@
             <!-- /.col-lg-3 -->
             <div class="col-lg-9 all-products">
                 <div class="row">
-                    @if($products->count() == 0)
-                        <p style="margin: auto;padding-top: 6rem;">Sorry! We have no product in this category.</p>
-                    @else
-                    @foreach($products as $prod)
-                    <div class="col-lg-4 col-md-6 mb-4" id="watch1">
-                        <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="{{ asset('images/watch1.png') }}" alt=""></a>
-                            <div class="card-body">
-                                <h5 class="text-white">{{ $prod->product_name }}</h5>
-                                <p class="card-text mt-2">{{ str_limit($prod->product_description, $limit=100) }}</p>
-                                <h4 class="card-title">
-                                    <a href="#" class="green-txt">Get Inquired</a>
-                                </h4>
+                    @if(Auth::check())
+                        @if($products->count() == 0)
+                            <p style="margin: auto;padding-top: 6rem;">Sorry! We have no product in this category.</p>
+                        @else
+                        @foreach($products as $prod)
+                        <div class="col-lg-4 col-md-6 mb-4" id="watch1">
+                            <div class="card h-100">
+                                <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"><img class="card-img-top @if($prod->is_premium == 1) blur-img @endif" src="{{ asset('images/watch1.png') }}" alt=""></a>
+                                <div class="card-body">
+                                    <h5><a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}" class="text-white">{{ $prod->product_name }}</a></h5>
+                                    <p class="card-text mt-2">{{ str_limit($prod->product_description, $limit=100) }}</p>
+                                    <h4 class="card-title">
+                                        <a href="#" class="green-txt">Get Inquired</a>
+                                    </h4>
+                                </div>
+                                <!-- <div class="card-footer gry-bg">
+                                    <small class="text-muted green-txt">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                </div> -->
                             </div>
-                            <!-- <div class="card-footer gry-bg">
-                                <small class="text-muted green-txt">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                            </div> -->
                         </div>
-                    </div>
-                    @endforeach
+                        @endforeach
+                        @endif
+                    @else
+                    <h3 class="m-auto">Please <a href="{{ route('login') }}" style="color: #67d5ae;font-size:20px !important;">Login/Register</a> to check our products.</h3>
                     @endif
                 </div>
                 <!-- /.row -->

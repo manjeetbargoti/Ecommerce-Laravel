@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+// use App\Http\Requests;
 use App\Product;
 use App\ProductCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductCategoryController extends Controller
 {
@@ -162,12 +163,26 @@ class ProductCategoryController extends Controller
     public function categoryProduct($category=null)
     {
         $productcategory = ProductCategory::where('status', 1)->get();
-
+        
         $products = Product::where('product_category', $category)->where('status', 1)->get();
 
-        $product_qty = $products->count();
         // dd($product_qty);
 
         return view('front.product.category_product', compact('productcategory','products'));
+    }
+
+    // Single Product Page
+    public function singleProduct($category=null,$id=null)
+    {
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        $productData = Product::where('id',$id)->where('product_category', $category)->where('status', 1)->first();
+
+        if($productData->is_premium == 0 && Auth::User())
+        {
+            return view('front.product.single_product', compact('productcategory', 'productData'));
+        }else {
+            return redirect()->back();
+        }
     }
 }
