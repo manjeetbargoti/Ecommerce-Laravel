@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Product;
 use App\ProductQuery;
-use App\Http\Requests;
+use App\ProductEmailToken;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ProductQueryController extends Controller
 {
@@ -55,11 +57,11 @@ class ProductQueryController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
 
-        dd($requestData);
-        
+        // dd($requestData);
+
         ProductQuery::create($requestData);
 
         return redirect('admin/product-query')->with('flash_message', 'ProductQuery added!');
@@ -103,9 +105,9 @@ class ProductQueryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $productquery = ProductQuery::findOrFail($id);
         $productquery->update($requestData);
 
@@ -124,5 +126,43 @@ class ProductQueryController extends Controller
         ProductQuery::destroy($id);
 
         return redirect('admin/product-query')->with('flash_message', 'ProductQuery deleted!');
+    }
+
+    // Send Email
+    public function sendEmail($id = null)
+    {
+        $queryData = ProductQuery::where('id', $id)->first();
+
+        $email = $queryData['email'];
+
+        $var = str_random($length = 64);
+
+        // $productData = Product::where('id', $queryData->product_id)->first();
+
+        $token = base64_encode($var);
+
+        // dd($queryData);
+
+        $messageData = ['email' => $queryData['email'], 'id' => $queryData['product_id'], 'name' => $queryData['name'], 'token' => $token];
+        Mail::send('emails.product_url', $messageData, function ($message) use ($email) {
+            $message->to($email)->subject('Please check requested Product link | VVV Luxury');
+        });
+
+        ProductEmailToken::create([
+            'product_id'    => $queryData['product_id'],
+            'email'         => $queryData['email'],
+            'token'         => $token,
+        ]);
+
+        ProductQuery::where('id',$id)->update(['status' => 1]);
+
+        // dd($messageData);
+
+        $notification = array(
+            'message' => 'Email Sent Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/support/product-query')->with($notification);
     }
 }

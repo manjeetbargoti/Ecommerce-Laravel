@@ -20,10 +20,10 @@
                 <div class="card">
                     <div class="card-header">Product Query</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/support/product-query/create') }}" class="btn btn-success btn-sm"
+                        <!-- <a href="{{ url('/admin/support/product-query/create') }}" class="btn btn-success btn-sm"
                             title="Add New ProductQuery">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
+                        </a> -->
 
                         <form method="GET" action="{{ url('/admin/support/product-query') }}" accept-charset="UTF-8"
                             class="form-inline my-2 my-lg-0 float-right" role="search">
@@ -48,6 +48,9 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Product</th>
+                                        <th>Product Type</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -58,14 +61,19 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone }}</td>
+                                        @foreach(\App\Product::where('id', $item->product_id)->get() as $prod)
+                                        <td>{{ $prod->product_name }}</td>
+                                        @endforeach
+                                        <td>@if($item->product_type == 1)<label class="badge badge-success">VVIP</label>@elseif($item->product_type == 0) <label class="badge badge-info">Basic</label> @endif</td>
+                                        <td>@if($item->status == 1)<label class="badge badge-success">Done</label>@elseif($item->status == 0) <label class="badge badge-danger">Pending</label> @endif</td>
                                         <td>
                                             <a href="{{ url('/admin/product-query/' . $item->id) }}"
-                                                title="View ProductQuery"><button class="btn btn-info btn-sm"><i
-                                                        class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                title="View Query"><button class="btn btn-info btn-sm"><i
+                                                        class="fa fa-eye" aria-hidden="true"></i> </button></a>
                                             <a href="{{ url('/admin/product-query/' . $item->id . '/edit') }}"
-                                                title="Edit ProductQuery"><button class="btn btn-primary btn-sm"><i
+                                                title="Edit Query"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    Edit</button></a>
+                                                    </button></a>
 
                                             <form method="POST"
                                                 action="{{ url('/admin/product-query' . '/' . $item->id) }}"
@@ -73,10 +81,14 @@
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                    title="Delete ProductQuery"
-                                                    onclick="return confirm(&quot;Confirm delete?&quot;)"><i
-                                                        class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                    title="Delete Query"
+                                                    onclick="return confirm('Confirm delete?')"><i
+                                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </form>
+
+                                            <a href="{{ url('/admin/send-email/' . $item->id) }}"
+                                                title="Send Email"><button class="btn btn-info btn-sm"><i
+                                                        class="fa fa-envelope" aria-hidden="true"></i> </button></a>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -25,6 +25,7 @@
             </li>
             <!-- /.Dashboard -->
 
+            @role('Super Admin')
             <!-- System Settings -->
             <li class="dropdown_menu {{ (request()->is('admin/system*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/system') }}">
@@ -64,9 +65,10 @@
                 </ul>
             </li>
             <!-- /.System Settings -->
+            @endrole
 
             <!-- User Management -->
-            @hasanyrole('Super Admin')
+            @role('Super Admin')
             <li class="dropdown_menu {{ (request()->is('admin/user*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/user') }}">
                     <i class="fa fa-users"></i>
@@ -95,6 +97,7 @@
             @endrole
             <!-- /.User Management -->
 
+            @role('Super Admin')
             <!-- Page Management -->
             <li class="dropdown_menu {{ (request()->is('admin/pages*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/pages') }}">
@@ -117,7 +120,9 @@
                 </ul>
             </li>
             <!-- /.Page Management -->
+            @endrole
 
+            @role('Super Admin')
             <!-- Product Management -->
             <li class="dropdown_menu {{ (request()->is('admin/product*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/product') }}">
@@ -146,7 +151,9 @@
                 </ul>
             </li>
             <!-- /.Product Management -->
+            @endrole
 
+            @role('Super Admin')
             <!-- Suppliers Management -->
             <li class="dropdown_menu {{ (request()->is('admin/supplier*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/supplier') }}">
@@ -170,7 +177,9 @@
         </ul>
         </li>
         <!-- /.Suppliers Management -->
+        @endrole
 
+        @role('Super Admin')
         <!-- Support Center -->
         <li class="dropdown_menu {{ (request()->is('admin/support*')) ? 'active':'' }}">
             <a href="{{ url('/admin/supports') }}">
@@ -192,6 +201,7 @@
             </ul>
         </li>
         <!-- /.Support Center -->
+        @endrole
         </ul>
         <!-- /#menu -->
     </div>

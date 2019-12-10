@@ -28,6 +28,9 @@ Route::group(['middleware' => 'role:Super Admin', 'auth'], function () {
     // Product Query Management
     Route::resource('admin/support/product-query', 'Admin\\ProductQueryController');
 
+    // Send Email for Product Query
+    Route::match(['get','post'], '/admin/send-email/{id}', 'Admin\\ProductQueryController@sendEmail');
+
     // Website System Setting Options Route
     Route::get('admin/system/options', 'SystemController@getOptions');
     Route::post('admin/system/options', 'SystemController@postOption');
@@ -61,8 +64,14 @@ Route::group(['middleware' => 'auth'], function () {
 Route::match(['get', 'post'], '/', 'HomeController@index')->name('homepage');
 Route::match(['get', 'post'], '/user/register', 'Admin\UserController@registerUser');
 
-// Product Category Page
+// Product & Product Category Page
 Route::match(['get', 'post'], '/product/categories', 'Admin\ProductCategoryController@productCategory');
-Route::match(['get', 'post'], '/category/{category}/products', 'Admin\ProductCategoryController@categoryProduct');
-Route::match(['get', 'post'], '/category/{category}/product/{id}', 'Admin\ProductCategoryController@singleProduct');
+Route::match(['get', 'post'], '/category/{category}/products', 'Admin\ProductsController@categoryProduct');
+Route::match(['get', 'post'], '/category/{category}/product/{id}', 'Admin\ProductsController@singleProduct');
 
+// Supllier & Supplier Category Page
+Route::match(['get', 'post'], '/supplier/categories', 'SupplierController@supplierCategory');
+Route::match(['get', 'post'], '/category/{category}/suppliers', 'SupplierController@categorySupplier');
+
+// Email Product url 
+Route::match(['get', 'post'], '/product/{id}/{token}', 'Admin\ProductsController@singleEmailProduct');

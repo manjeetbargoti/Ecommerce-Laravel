@@ -258,7 +258,7 @@
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">
                                     <input type="reset" value="Reset" class="btn btn-warning pull-left">
-                                    <input type="submit" value="Create User" class="btn btn-primary pull-right">
+                                    <input type="submit" value="Create Supplier" class="btn btn-primary pull-right">
                                 </div>
                             </div>
                         </form>

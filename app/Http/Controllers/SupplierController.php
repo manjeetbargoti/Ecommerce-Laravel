@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\SupplierData;
+use App\SupplierCategory;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -51,7 +52,7 @@ class SupplierController extends Controller
             $requestData = $request->except('roles');
             $roles = $request->roles;
 
-            // dd($roles);
+            dd($requestData);
 
             DB::beginTransaction();
 
@@ -206,5 +207,46 @@ class SupplierController extends Controller
         );
 
         return redirect('admin/supplier')->with($notification);
+    }
+
+    //#################################################################################//
+    //           ###########          Frontend Functions          ##########           //
+    //#################################################################################//
+
+    // Product Category Route
+    public function supplierCategory()
+    {
+        $suppliercategory = SupplierCategory::where('status', 1)->get();
+
+        return view('front.supplier.category', compact('suppliercategory'));
+    }
+
+    // Category Suppliers
+    public function categorySupplier($category=null)
+    {
+        $suppliercategory = SupplierCategory::where('status', 1)->get();
+        
+        $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('status', 1)->get();
+
+        $supplierData = SupplierData::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('category',$category)->get();
+        $supplierData = json_decode(json_encode($supplierData));
+
+        foreach($supplierData as $key => $val){
+            $supplier_count = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('id', $val->user_id)->where('status', 1)->count();
+            if($supplier_count > 0) {
+                $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('id', $val->user_id)->where('status', 1)->get();
+                // $supplierData[$key]->first_name = $supplier->username;
+                // $supplierData[$key]->role = $supplier->roles;
+                $supplier = json_decode(json_encode($supplier));
+
+                // foreach($supplier as $key => $val)
+            }
+            
+            // dd($supplier);
+        }
+
+        dd($supplierData);
+
+        return view('front.product.category_product', compact('suppliercategory','supplierData'));
     }
 }

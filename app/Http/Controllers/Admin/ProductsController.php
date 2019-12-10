@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use App\User;
-use App\Product;
-use App\ProductVendor;
-use App\ProductCategory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Product;
+use App\ProductCategory;
+use App\ProductEmailToken;
+use App\ProductQuery;
+use App\ProductVendor;
+use App\User;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -43,7 +46,7 @@ class ProductsController extends Controller
         $productCategory = ProductCategory::where('status', 1)->orderBy('name', 'desc')->get();
         $productVendor = ProductVendor::where('status', 1)->orderBy('created_at', 'desc')->get();
 
-        return view('admin.products.create', compact('productCategory','productVendor'));
+        return view('admin.products.create', compact('productCategory', 'productVendor'));
     }
 
     /**
@@ -74,17 +77,17 @@ class ProductsController extends Controller
         try {
 
             auth()->user()->products()->create([
-                'product_name'      => $data['product_name'],
-                'product_slug'      => $data['product_slug'],
-                'product_code'      => $product_code,
-                'product_category'  => $data['product_category'],
-                'vendor'            => $data['vendor'],
-                'quantity'          => $data['quantity'],
-                'initial_stock'     => $data['initial_stock'],
-                'current_stock'     => $data['current_stock'],
-                'buying_price'      => $data['buying_price'],
-                'selling_price'     => $data['selling_price'],
-                'status'            => $data['status'],
+                'product_name' => $data['product_name'],
+                'product_slug' => $data['product_slug'],
+                'product_code' => $product_code,
+                'product_category' => $data['product_category'],
+                'vendor' => $data['vendor'],
+                'quantity' => $data['quantity'],
+                'initial_stock' => $data['initial_stock'],
+                'current_stock' => $data['current_stock'],
+                'buying_price' => $data['buying_price'],
+                'selling_price' => $data['selling_price'],
+                'status' => $data['status'],
                 'product_description' => $data['product_description'],
             ]);
 
@@ -132,11 +135,11 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $user = User::select('first_name','last_name')->where('id',$product['user_id'])->first();
+        $user = User::select('first_name', 'last_name')->where('id', $product['user_id'])->first();
 
         // dd($user);
 
-        return view('admin.products.show', compact('product','user'));
+        return view('admin.products.show', compact('product', 'user'));
     }
 
     /**
@@ -154,7 +157,7 @@ class ProductsController extends Controller
 
         $productVendor = ProductVendor::where('status', 1)->orderBy('created_at', 'desc')->get();
 
-        return view('admin.products.edit', compact('product','productCategory','productVendor'));
+        return view('admin.products.edit', compact('product', 'productCategory', 'productVendor'));
     }
 
     /**
@@ -228,11 +231,118 @@ class ProductsController extends Controller
         return redirect('admin/product')->with($notification);
     }
 
-    // Creating unique Slug
-    // public function checkSlug(Request $request)
-    // {
-    //     $slug = SlugService::createSlug(Product::class, 'product_slug', $request->product_name, ['unique' => true]);
-    //     // echo "<pre>"; print_r($slug); die;
-    //     return response()->json(['slug' => $slug]);
-    // }
+    //#################################################################################//
+    //           ###########          Frontend Functions          ##########           //
+    //#################################################################################//
+
+    // Category Products
+    public function categoryProduct(Request $request, $category = null)
+    {
+        if ($request->isMethod('POST')) {
+            $requestData = $request->all();
+
+            // dd($requestData);
+
+            ProductQuery::create($requestData);
+
+            $notification = array(
+                'message' => 'Query Submited successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        $products = Product::where('product_category', $category)->where('status', 1)->get();
+
+        // dd($product_qty);
+
+        return view('front.product.category_product', compact('productcategory', 'products'));
+    }
+
+    // Single Product Page
+    public function singleProduct(Request $request, $category = null, $id = null)
+    {
+        if ($request->isMethod('POST')) {
+            $requestData = $request->all();
+
+            // dd($requestData);
+
+            ProductQuery::create($requestData);
+
+            $notification = array(
+                'message' => 'Query Submited successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        $productData = Product::where('id', $id)->where('product_category', $category)->where('status', 1)->first();
+
+        if (Auth::check()) {
+            if ($productData->is_premium == 0) {
+                return view('front.product.single_product', compact('productcategory', 'productData'));
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    // Single Email Product Page
+    public function singleEmailProduct(Request $request, $id = null, $token = null)
+    {
+        if ($request->isMethod('POST')) {
+            $requestData = $request->all();
+
+            // dd($requestData);
+
+            ProductQuery::create($requestData);
+
+            $notification = array(
+                'message' => 'Query Submited successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $tokenCount = ProductEmailToken::where('product_id', $id)->where('token', $token)->count();
+
+        if($tokenCount > 0){
+            $tokenEmailData = ProductEmailToken::where('product_id', $id)->where('token', $token)->first();
+        }
+
+        // dd($tokenCount);
+
+        if ($tokenCount > 0) {
+            $productcategory = ProductCategory::where('status', 1)->get();
+
+            $productData = Product::where('id', $id)->first();
+
+            // dd($productData);
+
+            ProductEmailToken::where('id',$tokenEmailData->id)->delete();
+
+            return view('front.product.single_product', compact('productcategory', 'productData'));
+        } else {
+
+            $productcategory = ProductCategory::where('status', 1)->get();
+            
+            $notification = array(
+                'message' => 'URL has been expired!',
+                'alert-type' => 'success',
+            );
+
+            return view('front.product.partials.expire_email', compact('productcategory'))->with($notification);
+        }
+
+        return view('front.product.single_product', compact('productcategory', 'productData'));
+    }
 }

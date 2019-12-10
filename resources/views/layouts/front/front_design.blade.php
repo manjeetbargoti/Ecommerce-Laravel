@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
 
 </head>
 
@@ -55,15 +57,16 @@ z-index: 999999">
     </div>
 
 
-        <!-- Page Content start -->
-        <!-- <div id="content"> -->
-            @include('layouts.front.header.front_header')
 
-            @yield('content')
-        <!-- </div> -->
-        <!-- /.Page Content end -->
+    <!-- Page Content start -->
+    <!-- <div id="content"> -->
+    @include('layouts.front.header.front_header')
 
-        @include('layouts.front.front_footer')
+    @yield('content')
+    <!-- </div> -->
+    <!-- /.Page Content end -->
+
+    @include('layouts.front.front_footer')
 
 
 
@@ -73,7 +76,8 @@ z-index: 999999">
     <script src="{{ asset('front/plugins/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/plugins/magnific-popup/jquery.magnific.popup.min.js') }}"></script>
-    <script src="(( asset('front/js/main.js') }}"></script>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
+    <script src="{{ asset('front/js/main.js') }}"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
@@ -89,6 +93,8 @@ z-index: 999999">
     <script src="{{ asset('admin/vendors/wow/js/wow.min.js') }}"></script>
     <script src="{{ asset('admin/js/pages/login1.js') }}"></script>
     <script src="{{ asset('admin/js/pages/register.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -113,13 +119,37 @@ z-index: 999999">
     <script>
     // function supplierCheck() {
     $('input:radio').click(function() {
-        if ($(this).val() == 'Supplier') {
+        if ($(this).val() == 'Supplier' || $(this).val() == 'Vendor') {
             $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
         } else {
             $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');
         }
     });
     // }
+    </script>
+
+    <!-- Notification -->
+    <script>
+    @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type', 'info') }}";
+    switch (type) {
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+    @endif
     </script>
 </body>
 

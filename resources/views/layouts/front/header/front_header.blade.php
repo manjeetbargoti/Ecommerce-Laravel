@@ -13,8 +13,21 @@
                 </li>
                 @if (Route::has('login'))
                 @auth
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/admin/profile') }}">ACCOUNT</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="top: 0em;left: 2em;background: rgba(255,255,255,0.05);">
+                        <a class="dropdown-item" href="{{ url('/admin/profile') }}"><i class="fa fa-user"></i>
+                            Profile</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i
+                                class="fa fa-sign-out"></i>
+                            {{ __('Logout') }}</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </li>
                 @else
                 <li class="nav-item">

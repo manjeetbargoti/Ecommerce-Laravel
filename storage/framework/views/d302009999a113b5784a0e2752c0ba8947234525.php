@@ -25,6 +25,7 @@
             </li>
             <!-- /.Dashboard -->
 
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- System Settings -->
             <li class="dropdown_menu <?php echo e((request()->is('admin/system*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/system')); ?>">
@@ -64,9 +65,10 @@
                 </ul>
             </li>
             <!-- /.System Settings -->
+            <?php endif; ?>
 
             <!-- User Management -->
-            <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin')): ?>
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <li class="dropdown_menu <?php echo e((request()->is('admin/user*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/user')); ?>">
                     <i class="fa fa-users"></i>
@@ -95,6 +97,7 @@
             <?php endif; ?>
             <!-- /.User Management -->
 
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- Page Management -->
             <li class="dropdown_menu <?php echo e((request()->is('admin/pages*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/pages')); ?>">
@@ -117,7 +120,9 @@
                 </ul>
             </li>
             <!-- /.Page Management -->
+            <?php endif; ?>
 
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- Product Management -->
             <li class="dropdown_menu <?php echo e((request()->is('admin/product*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/product')); ?>">
@@ -146,7 +151,9 @@
                 </ul>
             </li>
             <!-- /.Product Management -->
+            <?php endif; ?>
 
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- Suppliers Management -->
             <li class="dropdown_menu <?php echo e((request()->is('admin/supplier*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/supplier')); ?>">
@@ -170,7 +177,9 @@
         </ul>
         </li>
         <!-- /.Suppliers Management -->
+        <?php endif; ?>
 
+        <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
         <!-- Support Center -->
         <li class="dropdown_menu <?php echo e((request()->is('admin/support*')) ? 'active':''); ?>">
             <a href="<?php echo e(url('/admin/supports')); ?>">
@@ -192,6 +201,7 @@
             </ul>
         </li>
         <!-- /.Support Center -->
+        <?php endif; ?>
         </ul>
         <!-- /#menu -->
     </div>

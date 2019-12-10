@@ -159,30 +159,5 @@ class ProductCategoryController extends Controller
         return view('front.product.category', compact('productcategory'));
     }
 
-    // Category Products
-    public function categoryProduct($category=null)
-    {
-        $productcategory = ProductCategory::where('status', 1)->get();
-        
-        $products = Product::where('product_category', $category)->where('status', 1)->get();
-
-        // dd($product_qty);
-
-        return view('front.product.category_product', compact('productcategory','products'));
-    }
-
-    // Single Product Page
-    public function singleProduct($category=null,$id=null)
-    {
-        $productcategory = ProductCategory::where('status', 1)->get();
-
-        $productData = Product::where('id',$id)->where('product_category', $category)->where('status', 1)->first();
-
-        if($productData->is_premium == 0 && Auth::User())
-        {
-            return view('front.product.single_product', compact('productcategory', 'productData'));
-        }else {
-            return redirect()->back();
-        }
-    }
+    
 }
