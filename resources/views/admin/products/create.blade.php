@@ -107,7 +107,7 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-4 col-12">
-                                    <label for="Buying Price" class="control-label">{{ 'Buying Price' }}</label>
+                                    <label for="Buying Price" class="control-label">{{ 'Original Price' }}</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"> $ </span>
                                         <input class="form-control" name="buying_price" type="text" id="buying_price"
@@ -138,7 +138,7 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-4 col-12">
-                                    <label for="is Premium" class="control-label">{{ 'is Premium' }}</label>
+                                    <label for="is Premium" class="control-label">{{ 'is VVV' }}</label>
                                     <select name="is_premium" class="form-control" id="IsPremium">
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>

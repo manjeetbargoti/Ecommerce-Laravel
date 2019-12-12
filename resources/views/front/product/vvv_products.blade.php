@@ -1,7 +1,45 @@
 @extends('layouts.front.front_design')
 @section('content')
 
-@include('front.supplier.partials.category_list')
+<div id="particles-js"></div>
+<div class="" style="position: relative;">
+    <div class="product-page-heading ">
+        <div class="menu-destination-prehome">
+            <ul class="list-unstyled text-center product-supplier">
+                <li class="active">
+                    <div style="display: block;"><a class="" href="{{ url('/product/categories') }}">PRODUCTS</a></div>
+                </li>
+                <li class="">
+                    <div style="display: block;"><a class="" href="{{ url('/supplier/categories') }}">SUPPLIERS</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="product-page-content">
+        <div class="menu-destination-prehome">
+            <ul class="list-unstyled text-center">
+                @foreach($productcategory as $pcat)
+                <li class="">
+                    <span style="display: block;"><a class=""
+                            href="{{ url('/category/'.$pcat->name.'/products/') }}">{{ $pcat->name }}</a></span>
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="menu-destination-prehome" style="padding-top: 5em;">
+            <ul class="list-unstyled text-center">
+                <li class="">
+                    <span style="display: block;"><a class="" href="{{ url('/vvv-lux/products/') }}"
+                            style="font-size: 2em !important;">VVV LUXURY</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="space"></div>
+    </div>
+</div>
+
 
 <div class="space"></div>
 <!-- hero area -->
@@ -12,9 +50,9 @@
             <div class="col-lg-3 mb-5">
                 <h2 class="my-4">Product Categories</h2>
                 <div class="list-group">
-                    @foreach($suppliercategory as $sc)
-                    <a href="{{ url('/category/'.$sc->name.'/suppliers/') }}"
-                        class="list-group-item green-txt gry-bg">{{ $sc->name }}</a>
+                    @foreach($productcategory as $pcat)
+                    <a href="{{ url('/category/'.$pcat->name.'/products/') }}"
+                        class="list-group-item green-txt gry-bg">{{ $pcat->name }}</a>
                     @endforeach
                 </div>
             </div>
@@ -22,27 +60,29 @@
             <div class="col-lg-9 all-products">
                 <div class="row">
 
-                    @if($supplier_count == 0)
-                    <p style="margin: auto;padding-top: 6rem;">Sorry! We have no Supplier in this category.</p>
+                    @if($products->count() == 0)
+                    <p style="margin: auto;padding-top: 6rem;">Sorry! We have no product in this category.</p>
                     @else
-                    @foreach($supplier as $supp)
+                    @foreach($products as $prod)
                     <div class="col-lg-4 col-md-6 mb-4" id="watch1">
                         <div class="card h-100">
-                            <a href="{{ url('/category/'.$supp->category.'/supplier/'.$supp->id) }}">
-                                @if(!empty($supp->image))
-                                <img class="card-img-top" src="{{ asset('images/watch1.png') }}" alt="">
-                                @else
-                                <img class="card-img-top" src="{{ asset('images/supplier.png') }}" alt="">
-                                @endif
-                            </a>
+                            <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"><img
+                                    class="card-img-top @if($prod->is_premium == 1) blur-img @endif"
+                                    src="{{ asset('images/watch1.png') }}" alt=""></a>
                             <div class="card-body">
-                                <h5><a href="{{ url('/category/'.$supp->category.'/supplier/'.$supp->id) }}"
-                                        class="text-white">{{ $supp->business_name }}</a></h5>
-                                <p class="card-text mt-2">{{ $supp->category }}</p>
+                                <h5><a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"
+                                        class="text-white">{{ $prod->product_name }}</a></h5>
+                                <p class="card-text mt-2">{{ str_limit($prod->product_description, $limit=100) }}</p>
                                 <h4 class="card-title">
+                                    @if($prod->is_premium == 1)
                                     <a href="" class="green-txt" data-toggle="modal"
-                                        data-target="#Supplier{{ $supp->id }}">Get
+                                        data-target="#Product{{ $prod->id }}">Get
                                         Inquired</a>
+                                    @elseif($prod->is_premium == 0)
+                                    <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"
+                                        class="green-txt">More Info</a>
+
+                                    @endif
                                 </h4>
                             </div>
                             <!-- <div class="card-footer gry-bg">
@@ -52,18 +92,18 @@
                     </div>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="Supplier{{ $supp->id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="Product{{ $prod->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ $supp->business_name }}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ $prod->product_name }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url('/category/'.$supp->category.'/suppliers/') }}" method="POST"
+                                    <form action="{{ url('/category/'.$pcat->name.'/products/') }}" method="POST"
                                         class="EnquiryForm">
                                         @csrf
                                         <div class="form-group">
@@ -81,13 +121,13 @@
                                         <div class="form-group d-none">
                                             <input type="text" name="product_id" id="ProductId"
                                                 class="form-control mb-2" placeholder="Product ID"
-                                                value="{{ $supp->id }}">
+                                                value="{{ $prod->id }}">
                                         </div>
-                                        <!-- <div class="form-group d-none">
+                                        <div class="form-group d-none">
                                             <input type="text" name="product_type" id="ProductType"
                                                 class="form-control mb-2" placeholder="Product Type"
-                                                value="">
-                                        </div> -->
+                                                value="{{ $prod->is_premium }}">
+                                        </div>
                                         <div class="form-group">
                                             <textarea name="location" id="Location" cols="30" rows="2"
                                                 class="form-control" placeholder="Location" required></textarea>

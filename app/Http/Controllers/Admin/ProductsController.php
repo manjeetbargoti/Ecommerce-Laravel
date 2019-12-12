@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use DB;
+use App\User;
 use App\Product;
-use App\ProductCategory;
-use App\ProductEmailToken;
 use App\ProductQuery;
 use App\ProductVendor;
-use App\User;
-use DB;
+use App\ProductCategory;
+use App\ProductEmailToken;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
@@ -77,18 +77,19 @@ class ProductsController extends Controller
         try {
 
             auth()->user()->products()->create([
-                'product_name' => $data['product_name'],
-                'product_slug' => $data['product_slug'],
-                'product_code' => $product_code,
-                'product_category' => $data['product_category'],
-                'vendor' => $data['vendor'],
-                'quantity' => $data['quantity'],
-                'initial_stock' => $data['initial_stock'],
-                'current_stock' => $data['current_stock'],
-                'buying_price' => $data['buying_price'],
-                'selling_price' => $data['selling_price'],
-                'status' => $data['status'],
-                'product_description' => $data['product_description'],
+                'product_name'          => $data['product_name'],
+                'product_slug'          => $data['product_slug'],
+                'product_code'          => $product_code,
+                'product_category'      => $data['product_category'],
+                'vendor'                => $data['vendor'],
+                'quantity'              => $data['quantity'],
+                'initial_stock'         => $data['initial_stock'],
+                'current_stock'         => $data['current_stock'],
+                'buying_price'          => $data['buying_price'],
+                'selling_price'         => $data['selling_price'],
+                'is_premium'            => $data['is_premium'],
+                'status'                => $data['status'],
+                'product_description'   => $data['product_description'],
             ]);
 
         } catch (ValidationException $e) {
@@ -255,11 +256,42 @@ class ProductsController extends Controller
 
         $productcategory = ProductCategory::where('status', 1)->get();
 
+        $pcategory = ProductCategory::where('name', $category)->first();
+
         $products = Product::where('product_category', $category)->where('status', 1)->get();
 
-        // dd($product_qty);
+        // dd($pcategory);
 
-        return view('front.product.category_product', compact('productcategory', 'products'));
+        return view('front.product.category_product', compact('productcategory', 'products', 'pcategory'));
+    }
+
+    // VVV Lux Products
+    public function vvvProduct(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $requestData = $request->all();
+
+            // dd($requestData);
+
+            ProductQuery::create($requestData);
+
+            $notification = array(
+                'message' => 'Query Submited successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $productcategory = ProductCategory::where('status', 1)->get();
+
+        // $pcategory = ProductCategory::where('name', $category)->first();
+
+        $products = Product::where('is_premium', '1')->where('status', 1)->get();
+
+        // dd($pcategory);
+
+        return view('front.product.vvv_products', compact('productcategory', 'products'));
     }
 
     // Single Product Page

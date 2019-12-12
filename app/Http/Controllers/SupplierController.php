@@ -226,27 +226,26 @@ class SupplierController extends Controller
     {
         $suppliercategory = SupplierCategory::where('status', 1)->get();
         
-        $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('status', 1)->get();
+        $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('category', $category)->where('status', 1)->get();
 
-        $supplierData = SupplierData::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('category',$category)->get();
-        $supplierData = json_decode(json_encode($supplierData));
+        $supplier_count = $supplier->count();
 
-        foreach($supplierData as $key => $val){
-            $supplier_count = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('id', $val->user_id)->where('status', 1)->count();
+        // $supplierData = SupplierData::where('category',$category)->get();
+        $supplier = json_decode(json_encode($supplier));
+
+        foreach($supplier as $key => $val){
+            $supplier_count = SupplierData::where('user_id', $val->id)->where('category',$category)->count();
             if($supplier_count > 0) {
-                $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('id', $val->user_id)->where('status', 1)->get();
-                // $supplierData[$key]->first_name = $supplier->username;
-                // $supplierData[$key]->role = $supplier->roles;
-                $supplier = json_decode(json_encode($supplier));
-
-                // foreach($supplier as $key => $val)
+                $supplier_data = SupplierData::where('user_id', $val->id)->where('category',$category)->first();
+                $supplier[$key]->business_name = $supplier_data->business_name;
+                $supplier[$key]->image = $supplier_data->image;
             }
             
             // dd($supplier);
         }
 
-        dd($supplierData);
+        // dd($supplier_count);
 
-        return view('front.product.category_product', compact('suppliercategory','supplierData'));
+        return view('front.supplier.category_supplier', compact('suppliercategory','supplier','supplier_count'));
     }
 }

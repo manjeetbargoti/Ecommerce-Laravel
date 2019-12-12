@@ -69,9 +69,12 @@ Route::match(['get', 'post'], '/product/categories', 'Admin\ProductCategoryContr
 Route::match(['get', 'post'], '/category/{category}/products', 'Admin\ProductsController@categoryProduct');
 Route::match(['get', 'post'], '/category/{category}/product/{id}', 'Admin\ProductsController@singleProduct');
 
+// VVV Luxury Product URL's
+Route::match(['get', 'post'], '/vvv-lux/products', 'Admin\ProductsController@vvvProduct');
+
 // Supllier & Supplier Category Page
 Route::match(['get', 'post'], '/supplier/categories', 'SupplierController@supplierCategory');
-Route::match(['get', 'post'], '/category/{category}/suppliers', 'SupplierController@categorySupplier');
+Route::match(['get', 'post'], '/category/{category}/suppliers/', 'SupplierController@categorySupplier');
 
 // Email Product url 
 Route::match(['get', 'post'], '/product/{id}/{token}', 'Admin\ProductsController@singleEmailProduct');

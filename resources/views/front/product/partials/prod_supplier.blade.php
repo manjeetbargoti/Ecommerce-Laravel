@@ -1,6 +1,5 @@
-<!-- <div id="particles-js"></div> -->
-<div class=""
-    style="background-image: url('{{ url('images/product-category/large/'.$pcategory->image) }}');background-size:cover;">
+<div id="particles-js"></div>
+<div class="" style="position:relative;">
     <div class="product-page-heading ">
         <div class="menu-destination-prehome">
             <ul class="list-unstyled text-center product-supplier">
@@ -8,8 +7,7 @@
                     <div style="display: block;"><a class="" href="{{ url('/product/categories') }}">PRODUCTS</a></div>
                 </li>
                 <li class="">
-                    <div style="display: block;"><a class="" href="{{ url('/supplier/categories') }}">SUPPLIERS</a>
-                    </div>
+                    <div style="display: block;"><a class="" href="{{ url('/supplier/categories') }}">SUPPLIERS</a></div>
                 </li>
             </ul>
         </div>
@@ -29,8 +27,8 @@
         <div class="menu-destination-prehome" style="padding-top: 5em;">
             <ul class="list-unstyled text-center">
                 <li class="">
-                    <span style="display: block;"><a class="" href="{{ url('/vvv-lux/products/') }}"
-                            style="font-size: 2em !important;">VVV LUXURY</a></span>
+                    <span style="display: block;"><a class=""
+                            href="{{ url('/vvv-lux/products/') }}" style="font-size: 2em !important;">VVV LUXURY</a></span>
                 </li>
             </ul>
         </div>
