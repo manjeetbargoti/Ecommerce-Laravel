@@ -26,14 +26,14 @@
                 @endforeach
             </ul>
         </div>
-        <div class="menu-destination-prehome" style="padding-top: 5em;">
+        <div class="menu-destination-prehome" style="padding-top: 7em;">
             <ul class="list-unstyled text-center">
                 <li class="">
                     <span style="display: block;"><a class="" href="{{ url('/vvv-lux/products/') }}"
-                            style="font-size: 2em !important;">VVV LUXURY</a></span>
+                            style="font-size: 3em !important;">VVV LUXURY</a></span>
                 </li>
             </ul>
         </div>
-        <div class="space"></div>
+        <div class="space2"></div>
     </div>
 </div>

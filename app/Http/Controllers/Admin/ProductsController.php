@@ -358,6 +358,8 @@ class ProductsController extends Controller
 
             $productData = Product::where('id', $id)->first();
 
+            // $pcategory = ProductCategory::where('name', $category)->first();
+
             // dd($productData);
 
             ProductEmailToken::where('id',$tokenEmailData->id)->delete();

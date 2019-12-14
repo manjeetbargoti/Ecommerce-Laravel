@@ -24,8 +24,8 @@ $(window).load(function() {
 particlesJS("particles-js", {
     "particles": {
         "number": {
-            "value":250, "density": {
-                "enable": true, "value_area":800
+            "value":200, "density": {
+                "enable": true, "value_area":1000
             }
         }
 
@@ -54,7 +54,7 @@ particlesJS("particles-js", {
         }
 
         , "size": {
-            "value":3, "random":true, "anim": {
+            "value":4, "random":true, "anim": {
                 "enable": false, "speed":40, "size_min":0.1, "sync":false
             }
         }
@@ -64,7 +64,7 @@ particlesJS("particles-js", {
         }
 
         , "move": {
-            "enable":true, "speed":6, "direction":"none", "random":false, "straight":false, "out_mode":"out", "bounce":false, "attract": {
+            "enable":true, "speed":3, "direction":"none", "random":false, "straight":false, "out_mode":"out", "bounce":false, "attract": {
                 "enable": false, "rotateX":600, "rotateY":1200
             }
         }

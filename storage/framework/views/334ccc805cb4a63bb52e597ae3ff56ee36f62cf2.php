@@ -279,7 +279,7 @@
 
     <script>
     $('#UserRoleType').change(function() {
-        if ($(this).val() == 'Supplier' || $(this).val() == 'Vendor') {
+        if ($(this).val() == 'Supplier' || $(this).val() == 'Seller') {
             $('#BusinessName').removeClass('d-none').addClass('d-block-new');
             $('#SupplierCategory').removeClass('d-none').addClass('d-block-new');
         } else {
@@ -289,12 +289,12 @@
     });
 
     $(function() {
-        if ($('#UserRoleType').val() == "Supplier" || $('#UserRoleType').val() == "Vendor") {
-            $('#BusinessName').removeClass('d-none').addClass('d-block-new');
-            $('#SupplierCategory').removeClass('d-none').addClass('d-block-new');
+        if ($('#UserRoleType').val() == "Supplier" || $('#UserRoleType').val() == "Seller") {
+            $('#EditBusinessName').removeClass('d-none').addClass('d-block-new');
+            $('#EditSupplierCategory').removeClass('d-none').addClass('d-block-new');
         } else {
-            $('#BusinessName').removeClass('d-block-new').addClass('d-none');
-            $('#SupplierCategory').removeClass('d-block-new').addClass('d-none');
+            $('#EditBusinessName').removeClass('d-block-new').addClass('d-none');
+            $('#EditSupplierCategory').removeClass('d-block-new').addClass('d-none');
         }
     });
     </script>

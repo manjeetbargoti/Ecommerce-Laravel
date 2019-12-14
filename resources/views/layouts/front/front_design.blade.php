@@ -76,6 +76,7 @@ z-index: 999999">
     <script src="{{ asset('front/plugins/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/plugins/magnific-popup/jquery.magnific.popup.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
     <script src="{{ asset('front/js/main.js') }}"></script>
     <!-- Popper.JS -->
@@ -116,10 +117,48 @@ z-index: 999999">
     });
     </script>
 
+    <script type="text/javascript">
+    var typed = new Typed(".vvvLux-typed2", {
+        strings: [
+            "Beyond Luxury"
+        ],
+        typeSpeed: 50, // Default value
+        backSpeed: 50,
+        loop: true,
+    });
+
+    var typed = new Typed(".vvvLux-typed", {
+        strings: [
+            "Timeless and Valuable"
+        ],
+        typeSpeed: 50, // Default value
+        backSpeed: 50,
+        loop: true,
+    });
+
+    var typed = new Typed(".vvvLux-typed3", {
+        strings: [
+            "Test 1"
+        ],
+        typeSpeed: 50, // Default value
+        backSpeed: 50,
+        loop: true,
+    });
+
+    var typed = new Typed(".vvvLux-type4", {
+        strings: [
+            "Test 2"
+        ],
+        typeSpeed: 50, // Default value
+        backSpeed: 50,
+        loop: true,
+    });
+    </script>
+
     <script>
     // function supplierCheck() {
     $('input:radio').click(function() {
-        if ($(this).val() == 'Supplier' || $(this).val() == 'Vendor') {
+        if ($(this).val() == 'Supplier' || $(this).val() == 'Seller') {
             $('#IfSupplierCheck').removeClass('d-none').addClass('d-block');
         } else {
             $('#IfSupplierCheck').removeClass('d-block').addClass('d-none');

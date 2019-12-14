@@ -59,14 +59,14 @@
 
                             <!-- Business name Field -->
                             @if(!empty($supplierData->business_name))
-                            <div class="form-group row d-none" id="BusinessName">
+                            <div class="form-group row d-none" id="EditBusinessName">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Business Name"
                                         class="col-form-label">{{ __('Business Name *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
                                     <input type="text" name="business_name" id="business_name"
-                                        class="form-control @error(' business_name') is-invalid @enderror" required
+                                        class="form-control @error('business_name') is-invalid @enderror" required
                                             value="{{ $supplierData->business_name }}">
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
 
                             <!-- Supplier Category Select Field -->
                             @if(!empty($supplierData->business_name))
-                            <div class="form-group row d-none" id="SupplierCategory">
+                            <div class="form-group row d-none" id="EditSupplierCategory">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Supplier Category"
                                         class="col-form-label">{{ __('Supplier Category *') }}</label>

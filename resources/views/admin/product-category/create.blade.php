@@ -65,9 +65,8 @@
                                 {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                             </div>
 
-
                             <div class="form-group">
-                                <input class="btn btn-primary" type="submit" value="Add Category">
+                                <input class="btn btn-primary pull-right" type="submit" value="Add Category">
                             </div>
 
                         </form>

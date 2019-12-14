@@ -23,7 +23,7 @@
                     <label class="col-form-label">{{ __('You are?') }}</label>
                 </div>
                 @foreach(Spatie\Permission\Models\Role::whereIn('name',
-                array('user','supplier','vendor'))->get() as $roles)
+                array('Buyer','Supplier','Seller'))->get() as $roles)
                 <div class="col-sm-3 col-12" id="UserOption">
                     <label class="custom-control custom-radio">
                         <input type="radio" id="If{{ $roles->name }}" class="form-check-input" @if($roles->name ==

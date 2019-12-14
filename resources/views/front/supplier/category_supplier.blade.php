@@ -10,7 +10,7 @@
         <div class="row">
             <!-- Page Content -->
             <div class="col-lg-3 mb-5">
-                <h2 class="my-4">Product Categories</h2>
+                <h2 class="my-4">Supplier Categories</h2>
                 <div class="list-group">
                     @foreach($suppliercategory as $sc)
                     <a href="{{ url('/category/'.$sc->name.'/suppliers/') }}"
@@ -28,7 +28,7 @@
                     @foreach($supplier as $supp)
                     <div class="col-lg-4 col-md-6 mb-4" id="watch1">
                         <div class="card h-100">
-                            <a href="{{ url('/category/'.$supp->category.'/supplier/'.$supp->id) }}">
+                            <a href="#">
                                 @if(!empty($supp->image))
                                 <img class="card-img-top" src="{{ asset('images/watch1.png') }}" alt="">
                                 @else
@@ -36,7 +36,7 @@
                                 @endif
                             </a>
                             <div class="card-body">
-                                <h5><a href="{{ url('/category/'.$supp->category.'/supplier/'.$supp->id) }}"
+                                <h5><a href="#"
                                         class="text-white">{{ $supp->business_name }}</a></h5>
                                 <p class="card-text mt-2">{{ $supp->category }}</p>
                                 <h4 class="card-title">

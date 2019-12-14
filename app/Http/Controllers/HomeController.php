@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use \App\Subscriber;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,5 +26,20 @@ class HomeController extends Controller
     {
         return view('homepage');
 
+    }
+
+    // Submit newsletter email
+    public function newsletterEmail(Request $request)
+    {
+        $requestData = $request()->all();
+
+        Subscriber::craete($requestData);
+
+        $notification = array(
+            'message' => 'Subscribe successfully!',
+            'alert-type' => 'success',
+        );
+
+        return redirect()->back()->with($notification);
     }
 }
