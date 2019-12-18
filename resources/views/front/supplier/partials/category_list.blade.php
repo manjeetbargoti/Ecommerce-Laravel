@@ -18,7 +18,7 @@
         <div class="menu-destination-prehome">
             <ul class="list-unstyled text-center">
                 @foreach($suppliercategory as $sc)
-                <li>
+                <li class="{{ (request()->is('category/'.$sc->name.'/*')) ? 'active':'' }}">
                     <span style="display: block;"><a class=""
                             href="{{ url('/category/'.$sc->name.'/suppliers') }}">{{ $sc->name }}</a></span>
                 </li>

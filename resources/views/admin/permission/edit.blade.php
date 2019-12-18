@@ -33,16 +33,14 @@
                         </ul>
                         @endif
 
-                        {!! Form::model($permission, [
-                        'method' => 'PATCH',
-                        'url' => ['/admin/user/permission', $permission->id],
-                        'class' => 'form-horizontal',
-                        'files' => true
-                        ]) !!}
+                        <form method="POST" action="{{ url('/admin/user/permission/' . $permission->id) }}"
+                            accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                            {{ method_field('PATCH') }}
+                            {{ csrf_field() }}
 
                         @include ('admin.permission.form', ['formMode' => 'edit'])
 
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

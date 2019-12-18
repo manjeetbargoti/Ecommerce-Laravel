@@ -66,4 +66,6 @@ class RegisterController extends Controller
     {
         return User::create($data);
     }
+
+    
 }

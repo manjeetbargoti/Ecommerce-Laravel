@@ -58,8 +58,9 @@
                                         <td>{{ $item->featured_image }}</td>
                                         <td><a href="{{ url('/'.$item->slug) }}">{{ $item->name }}</a></td>
                                         <td>@if($item->page_type == 1) <label
-                                                class="badge badge-success badge-lg">Standard</label> @endif</td>
-                                        <td>{{ str_limit($item->content, $limit=150) }}</td>
+                                                class="badge badge-success badge-lg">Standard</label>@elseif($item->page_type
+                                            == 2) <label class="badge badge-info badge-lg">Contact</label> @endif</td>
+                                        <td>{!! str_limit(strip_tags($item->content), $limit=100) !!}</td>
                                         <td>
                                             <a href="{{ url('/admin/pages/' . $item->id) }}" title="View Page"><button
                                                     class="btn btn-info btn-sm"><i class="fa fa-eye"

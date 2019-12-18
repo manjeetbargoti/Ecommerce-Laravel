@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Product;
-use App\ProductQuery;
-use App\ProductEmailToken;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\ProductEmailToken;
+use App\ProductQuery;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ProductQueryController extends Controller
@@ -21,18 +21,55 @@ class ProductQueryController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $productquery = ProductQuery::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('email', 'LIKE', "%$keyword%")
-                ->orWhere('phone', 'LIKE', "%$keyword%")
-                ->orWhere('query_message', 'LIKE', "%$keyword%")
-                ->orWhere('product_id', 'LIKE', "%$keyword%")
-                ->orWhere('product_type', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->orWhere('terms', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+        $user_info = Auth::user();
+
+        $role = $user_info->roles[0]->name;
+
+        // dd($product_info);
+        if ($role == 'Buyer') {
+            if (!empty($keyword)) {
+                $productquery = ProductQuery::where('email', $user_info->email)->orWhere('name', 'LIKE', "%$keyword%")
+                    ->orWhere('email', 'LIKE', "%$keyword%")
+                    ->orWhere('phone', 'LIKE', "%$keyword%")
+                    ->orWhere('query_message', 'LIKE', "%$keyword%")
+                    ->orWhere('product_id', 'LIKE', "%$keyword%")
+                    ->orWhere('product_type', 'LIKE', "%$keyword%")
+                    ->orWhere('status', 'LIKE', "%$keyword%")
+                    ->orWhere('terms', 'LIKE', "%$keyword%")
+                    ->latest()->paginate($perPage);
+            } else {
+                $productquery = ProductQuery::where('email', $user_info->email)->latest()->paginate($perPage);
+                // dd($productquery);
+            }
+        } elseif ($role == 'Seller') {
+            if (!empty($keyword)) {
+                $productquery = ProductQuery::where('user_id', $user_info->id)->orWhere('name', 'LIKE', "%$keyword%")
+                    ->orWhere('email', 'LIKE', "%$keyword%")
+                    ->orWhere('phone', 'LIKE', "%$keyword%")
+                    ->orWhere('query_message', 'LIKE', "%$keyword%")
+                    ->orWhere('product_id', 'LIKE', "%$keyword%")
+                    ->orWhere('product_type', 'LIKE', "%$keyword%")
+                    ->orWhere('status', 'LIKE', "%$keyword%")
+                    ->orWhere('terms', 'LIKE', "%$keyword%")
+                    ->latest()->paginate($perPage);
+            } else {
+                $productquery = ProductQuery::where('user_id', $user_info->id)->latest()->paginate($perPage);
+                // dd($productquery);
+            }
         } else {
-            $productquery = ProductQuery::latest()->paginate($perPage);
+            if (!empty($keyword)) {
+                $productquery = ProductQuery::where('name', 'LIKE', "%$keyword%")
+                    ->orWhere('email', 'LIKE', "%$keyword%")
+                    ->orWhere('phone', 'LIKE', "%$keyword%")
+                    ->orWhere('query_message', 'LIKE', "%$keyword%")
+                    ->orWhere('product_id', 'LIKE', "%$keyword%")
+                    ->orWhere('product_type', 'LIKE', "%$keyword%")
+                    ->orWhere('status', 'LIKE', "%$keyword%")
+                    ->orWhere('terms', 'LIKE', "%$keyword%")
+                    ->latest()->paginate($perPage);
+            } else {
+                $productquery = ProductQuery::latest()->paginate($perPage);
+            }
         }
 
         return view('admin.product-query.index', compact('productquery'));
@@ -111,7 +148,7 @@ class ProductQueryController extends Controller
         $productquery = ProductQuery::findOrFail($id);
         $productquery->update($requestData);
 
-        return redirect('admin/product-query')->with('flash_message', 'ProductQuery updated!');
+        return redirect('admin/support/product-query')->with('flash_message', 'ProductQuery updated!');
     }
 
     /**
@@ -125,7 +162,7 @@ class ProductQueryController extends Controller
     {
         ProductQuery::destroy($id);
 
-        return redirect('admin/product-query')->with('flash_message', 'ProductQuery deleted!');
+        return redirect('admin/support/product-query')->with('flash_message', 'ProductQuery deleted!');
     }
 
     // Send Email
@@ -149,12 +186,12 @@ class ProductQueryController extends Controller
         });
 
         ProductEmailToken::create([
-            'product_id'    => $queryData['product_id'],
-            'email'         => $queryData['email'],
-            'token'         => $token,
+            'product_id' => $queryData['product_id'],
+            'email' => $queryData['email'],
+            'token' => $token,
         ]);
 
-        ProductQuery::where('id',$id)->update(['status' => 1]);
+        ProductQuery::where('id', $id)->update(['status' => 1]);
 
         // dd($messageData);
 
@@ -165,4 +202,7 @@ class ProductQueryController extends Controller
 
         return redirect('/admin/support/product-query')->with($notification);
     }
+
+    // Recent Queries
+    
 }

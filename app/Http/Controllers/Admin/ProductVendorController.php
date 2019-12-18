@@ -24,9 +24,9 @@ class ProductVendorController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Vendor");})->where('first_name', 'LIKE', "%$keyword%")->orWhere('last_name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")->orWhere('phone', 'LIKE', "%$keyword%")->orWhere('username', 'LIKE', "%$keyword%")->latest()->paginate($perPage);
+            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Seller");})->where('first_name', 'LIKE', "%$keyword%")->orWhere('last_name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")->orWhere('phone', 'LIKE', "%$keyword%")->orWhere('username', 'LIKE', "%$keyword%")->latest()->paginate($perPage);
         } else {
-            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Vendor");})->latest()->paginate($perPage);
+            $productvendor = User::whereHas("roles", function ($q) {$q->where("name", "Seller");})->latest()->paginate($perPage);
         }
 
         return view('admin.product-vendor.index', compact('productvendor'));

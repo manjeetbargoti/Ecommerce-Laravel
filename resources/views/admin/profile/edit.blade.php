@@ -1,13 +1,65 @@
 @extends('layouts.panel.panel_design')
 
 @section('content')
+<style>
+.product_image_upload .fileinput-upload-button {
+    display: none;
+}
+
+#filediv {
+    display: inline-block !important;
+}
+
+#file {
+    color: green;
+    padding: 5px;
+    border: 1px dashed #123456;
+    background-color: #f9ffe5
+}
+
+#noerror {
+    color: green;
+    text-align: left
+}
+
+#error {
+    color: red;
+    text-align: left
+}
+
+#img {
+    width: 17px;
+    border: none;
+    height: 17px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.abcd img {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #e8debd
+}
+
+#close {
+    vertical-align: top;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: -13px;
+    margin-top: 1px;
+}
+</style>
 <header class="head">
     <div class="main-bar">
         <div class="row">
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Vendors
+                    Profile
                 </h4>
             </div>
         </div>
@@ -25,8 +77,9 @@
                                     class="fa fa-arrow-left" aria-hidden="true"></i>
                                 Back</button></a>
                         <form class="form-horizontal login_validator" id="tryitForm"
-                            action="{{ url('/admin/profile/'.$user->id.'/edit') }}" method="post">
-                        
+                            action="{{ url('/admin/profile/'.$user->id.'/edit') }}" method="post" accept-charset="UTF-8"
+                            enctype="multipart/form-data">
+
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-12">
@@ -35,19 +88,15 @@
                                             <label class="col-form-label">Profile Pic</label>
                                         </div>
                                         <div class="col-lg-6 text-center text-lg-left">
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new img-thumbnail text-center">
-                                                    <img src="holder.js/230x170.html" id="myImage" alt="not found">
-                                                </div>
-                                                <div class="fileinput-preview fileinput-exists img-thumbnail"></div>
-                                                <div class="m-t-20 text-center">
-                                                    <span class="btn btn-primary btn-file">
-                                                        <span class="fileinput-new">Select image</span>
-                                                        <span class="fileinput-exists">Change</span>
-                                                        <input type="file" name="..."></span>
-                                                    <a href="#" class="btn btn-warning fileinput-exists"
-                                                        data-dismiss="fileinput">Remove</a>
-                                                </div>
+                                            <p>@if(!empty($user->image))<img
+                                                    src="{{ url('/images/user/large/'.$user->image) }}"
+                                                    alt="{{ $user->first_name }} {{ $user->last_name }}">@endif</p>
+                                            <div class="add_image">
+                                                <input type="button" id="add_more" class="btn btn-info"
+                                                    value="Add image" />
+                                                <input type="text" id="CurrentImage" name="current_image"
+                                                    value="{{ $user->image }}" class="d-none" />
+                                                <!-- <i class="fas fa-camera"></i> -->
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +140,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon"> <i class="fa fa-user text-primary"></i>
                                                 </span>
-                                                <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $user->first_name }}">
+                                                <input type="text" name="first_name" id="first_name"
+                                                    class="form-control" value="{{ $user->first_name }}">
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +153,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon"> <i class="fa fa-user text-primary"></i>
                                                 </span>
-                                                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $user->last_name }}">
+                                                <input type="text" name="last_name" id="last_name" class="form-control"
+                                                    value="{{ $user->last_name }}">
                                             </div>
                                         </div>
                                     </div>

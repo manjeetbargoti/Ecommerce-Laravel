@@ -19,10 +19,17 @@
         <div class="menu-destination-prehome">
             <ul class="list-unstyled text-center">
                 @foreach($productcategory as $pcat)
-                <li class="">
-                    <span style="display: block;"><a class=""
+                <li class="{{ (request()->is('category/'.$pcat->name.'/*')) ? 'active':'' }}">
+                    <span style="display: block;"><a class="din{{ $pcat->name }}"
                             href="{{ url('/category/'.$pcat->name.'/products/') }}">{{ $pcat->name }}</a></span>
                 </li>
+                <script>
+                $(document).ready(function() {
+                    $(".din{{ $pcat->name }}").hover(function() {
+                        $(".bg-images").css("background-image", " url({{ url('images/product-category/large/'.$pcat->image) }})");
+                    });
+                });
+                </script>
                 @endforeach
             </ul>
         </div>

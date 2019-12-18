@@ -117,7 +117,7 @@ trait AuthenticatesUsers
         );
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath())->with($notification);
+        ?: redirect()->intended($this->redirectPath())->with($notification);
     }
 
     /**

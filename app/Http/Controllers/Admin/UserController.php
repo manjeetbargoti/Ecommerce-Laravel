@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\ProductQuery;
+use App\SupplierQuery;
 use App\SupplierData;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Input;
+use Image;
 
 class UserController extends Controller
 {
@@ -242,7 +246,25 @@ class UserController extends Controller
 
         $supplierData = SupplierData::where('user_id', $auth_user['id'])->first();
 
-        return view('admin.profile.view', compact('user', 'roleName', 'supplierData'));
+        if($roleName == 'Seller'){
+            $productquery = ProductQuery::where('user_id', $auth_user->id)->latest()->take(12)->get();
+            $supplierquery = '';
+            return view('admin.profile.view', compact('user','roleName','supplierData','productquery'));
+        }elseif($roleName == 'Buyer'){
+            $productquery = ProductQuery::where('email', $auth_user->email)->latest()->take(10)->get();
+            $supplierquery = '';
+            return view('admin.profile.view', compact('user','roleName','supplierData','productquery'));
+        }elseif($roleName == 'Supplier'){
+            $productquery = '';
+            $supplierQuery = SupplierQuery::where('supplier_id',$auth_user->id)->latest()->take(10)->get();
+            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery'));
+        }elseif($roleName == 'Super Admin'){
+            $supplierQuery = SupplierQuery::latest()->take(10)->get();;
+            $productquery = ProductQuery::latest()->take(12)->get();
+            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','productquery'));
+        }
+
+        // return view('admin.profile.view', compact('user','roleName','supplierData','productquery','supplierQuery'));
     }
 
     // Edit Profile Information
@@ -254,8 +276,32 @@ class UserController extends Controller
             $requestData = $request->all();
             // dd($requestData);
 
+            if ($request->hasFile('file')) {
+                $image_array = Input::file('file');
+                // if($image_array->isValid()){
+                $array_len = count($image_array);
+                // dd($array_len);
+                for ($i = 0; $i < $array_len; $i++) {
+                    // $image_name = $image_array[$i]->getClientOriginalName();
+                    $image_size = $image_array[$i]->getClientSize();
+                    $extension = $image_array[$i]->getClientOriginalExtension();
+                    $filename = 'user' . $requestData['first_name'].'_'. rand(0,99999) . '.' . $extension;
+                    $large_image_path = public_path('/images/user/large/' . $filename);
+                    // Resize image
+                    Image::make($image_array[$i])->save($large_image_path);
+
+                    // dd($filename);
+
+                    // Store image in property folder
+                    $requestData['image'] = $filename;
+                    // }
+                }
+            }
+
             DB::beginTransaction();
             try {
+                // dd($requestData);
+
                 $user = User::findOrFail($id);
                 $user->update($requestData);
             } catch (ValidationException $e) {
@@ -281,5 +327,29 @@ class UserController extends Controller
         $roleName = implode(', ', $user->getRoleNames()->toArray());
 
         return view('admin.profile.edit', compact('user', 'roleName'));
+    }
+
+    // Edit Supplier Business Info
+    public function editBusinessInfo(Request $request, $id=null)
+    {
+        $requestData = $request->all();
+
+        if($request->isMethod('post'))
+        {
+            // dd($id);
+            $supplierData = SupplierData::findOrFail($id);
+            $supplierData->update($requestData);
+
+            $notification = array(
+                'message' => 'Business info Updated!',
+                'alert-type' => 'success',
+            );
+
+            return redirect('/admin/profile')->with($notification);
+        }
+        $auth_user = Auth::user();
+        $sdata = SupplierData::where('user_id',$auth_user['id'])->first();
+
+        return view('admin.profile.edit-supplier-info', compact('sdata'));
     }
 }

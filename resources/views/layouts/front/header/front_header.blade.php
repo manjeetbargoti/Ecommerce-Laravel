@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/contact') }}">CONTACT</a>
+                    <a class="nav-link" href="{{ url('/contact') }}">CONTACT &nbsp;&nbsp;|</a>
                 </li>
                 @if (Route::has('login'))
                 @auth
@@ -36,7 +36,7 @@
                 @endauth
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link d-lg-none d-md-none d-sm-block d-xs-block" href="#">ABOUT</a>
+                    <a class="nav-link d-lg-none d-md-none d-sm-block d-xs-block" href="{{ url('/about-us') }}">ABOUT</a>
                 </li>
             </ul>
         </div>

@@ -41,13 +41,13 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 {{ $errors->has('name') ? 'has-error' : ''}}">
                                     <label for="name" class="control-label">{{ 'Name' }}</label>
-                                    <input class="form-control" name="name" type="text" id="name"
+                                    <input class="form-control" name="name" type="text" id="CMSPageName"
                                         value="{{ isset($page->name) ? $page->name : ''}}" required>
                                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="col-sm-6 {{ $errors->has('slug') ? 'has-error' : ''}}">
                                     <label for="slug" class="control-label">{{ 'Slug' }}</label>
-                                    <input class="form-control" name="slug" type="text" id="slug"
+                                    <input class="form-control" name="slug" type="text" id="CMSPageSlug"
                                         value="{{ isset($page->slug) ? $page->slug : ''}}" required>
                                     {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
                                 </div>
@@ -55,7 +55,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-12 {{ $errors->has('content') ? 'has-error' : ''}}">
                                     <label for="content" class="control-label">{{ 'Content' }}</label>
-                                    <textarea class="form-control" rows="5" name="content" type="textarea" id="content"
+                                    <textarea class="form-control my-editor" rows="5" name="content" type="textarea" id="content"
                                         required>{{ isset($page->content) ? $page->content : ''}}</textarea>
                                     {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
                                 </div>
@@ -75,6 +75,7 @@
                                     <select class="form-control" name="page_type" id="page_type"
                                         value="{{ old('page_type') }}" required>
                                         <option value="1">Standard</option>
+                                        <option value="2">Contact</option>
                                     </select>
                                     {!! $errors->first('page_type', '<p class="help-block">:message</p>') !!}
                                 </div>

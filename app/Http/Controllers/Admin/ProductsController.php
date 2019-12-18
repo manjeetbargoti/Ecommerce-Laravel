@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use App\User;
+use App\Http\Controllers\Controller;
 use App\Product;
-use App\ProductQuery;
-use App\ProductVendor;
 use App\ProductCategory;
 use App\ProductEmailToken;
+use App\ProductImage;
+use App\ProductQuery;
+use App\ProductVendor;
+use App\User;
+use DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Image;
 
 class ProductsController extends Controller
 {
@@ -25,12 +28,28 @@ class ProductsController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $products = Product::where('product_name', 'LIKE', "%$keyword%")
-                ->orWhere('product_category', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $products = Product::latest()->paginate($perPage);
+        $user_info = Auth::user();
+
+        $role = $user_info->roles[0]->name;
+
+        // dd($role);
+
+        if ($role == 'Seller') {
+            if (!empty($keyword)) {
+                $products = Product::where('user_id',$user_info->id)->orWhere('product_name', 'LIKE', "%$keyword%")
+                    ->orWhere('product_category', 'LIKE', "%$keyword%")
+                    ->latest()->paginate($perPage);
+            } else {
+                $products = Product::where('user_id',$user_info->id)->latest()->paginate($perPage);
+            }
+        } elseif ($role == 'Super Admin') {
+            if (!empty($keyword)) {
+                $products = Product::where('product_name', 'LIKE', "%$keyword%")
+                    ->orWhere('product_category', 'LIKE', "%$keyword%")
+                    ->latest()->paginate($perPage);
+            } else {
+                $products = Product::latest()->paginate($perPage);
+            }
         }
 
         return view('admin.products.index', compact('products'));
@@ -61,6 +80,8 @@ class ProductsController extends Controller
 
         $data = $request->all();
 
+        // dd($data);
+
         $latestProductCount = Product::orderBy('created_at', 'DESC')->count();
 
         if ($latestProductCount > 0) {
@@ -76,21 +97,65 @@ class ProductsController extends Controller
 
         try {
 
-            auth()->user()->products()->create([
-                'product_name'          => $data['product_name'],
-                'product_slug'          => $data['product_slug'],
-                'product_code'          => $product_code,
-                'product_category'      => $data['product_category'],
-                'vendor'                => $data['vendor'],
-                'quantity'              => $data['quantity'],
-                'initial_stock'         => $data['initial_stock'],
-                'current_stock'         => $data['current_stock'],
-                'buying_price'          => $data['buying_price'],
-                'selling_price'         => $data['selling_price'],
-                'is_premium'            => $data['is_premium'],
-                'status'                => $data['status'],
-                'product_description'   => $data['product_description'],
+            $product = auth()->user()->products()->create([
+                'product_name' => $data['product_name'],
+                'product_slug' => $data['product_slug'],
+                'product_code' => $product_code,
+                'product_category' => $data['product_category'],
+                'vendor' => $data['vendor'],
+                'quantity' => $data['quantity'],
+                'initial_stock' => $data['initial_stock'],
+                'current_stock' => $data['current_stock'],
+                'buying_price' => $data['buying_price'],
+                'selling_price' => $data['selling_price'],
+                'is_premium' => $data['is_premium'],
+                'status' => $data['status'],
+                'product_description' => $data['product_description'],
             ]);
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
+
+            if ($request->hasFile('file')) {
+                $image_array = Input::file('file');
+                // if($image_array->isValid()){
+                $array_len = count($image_array);
+                // dd($array_len);
+                for ($i = 0; $i < $array_len; $i++) {
+                    // $image_name = $image_array[$i]->getClientOriginalName();
+                    $image_size = $image_array[$i]->getClientSize();
+                    $extension = $image_array[$i]->getClientOriginalExtension();
+                    $filename = 'VVV_Lux_' . rand(1, 99999) . '.' . $extension;
+                    $large_image_path = public_path('images/product/large/' . $filename);
+                    // Resize image
+                    Image::make($image_array[$i])->save($large_image_path);
+
+                    // dd($product->id);
+
+                    // Store image in property folder
+                    ProductImage::create([
+                        'image_name' => $filename,
+                        'image_size' => $image_size,
+                        'product_id' => $product->id,
+                    ]);
+                    // }
+                }
+            } else {
+                $filename = "default.png";
+                // $property->image = "default.jpg";
+                ProductImage::create([
+                    'image_name' => $filename,
+                    'image_size' => '7.4',
+                    'product_id' => $product->id,
+                ]);
+            }
 
         } catch (ValidationException $e) {
             DB::rollback();
@@ -259,10 +324,23 @@ class ProductsController extends Controller
         $pcategory = ProductCategory::where('name', $category)->first();
 
         $products = Product::where('product_category', $category)->where('status', 1)->get();
+        $product_count = $products->count();
+        $products = json_decode(json_encode($products));
+
+        foreach($products as $key => $val){
+            $productImage_count = ProductImage::where('product_id',$val->id)->count();
+            if($productImage_count > 0){
+                $productImage = ProductImage::where('product_id',$val->id)->first();
+                $products[$key]->image = $productImage->image_name;
+                // dd($productImage);
+            }
+        }
+
+        // $products = json_encode($products);
 
         // dd($pcategory);
 
-        return view('front.product.category_product', compact('productcategory', 'products', 'pcategory'));
+        return view('front.product.category_product', compact('productcategory', 'products', 'pcategory','product_count'));
     }
 
     // VVV Lux Products
@@ -316,14 +394,28 @@ class ProductsController extends Controller
 
         $productData = Product::where('id', $id)->where('product_category', $category)->where('status', 1)->first();
 
+        $productImage = ProductImage::where('product_id', $id)->get();
+
         if (Auth::check()) {
-            if ($productData->is_premium == 0) {
-                return view('front.product.single_product', compact('productcategory', 'productData'));
-            } else {
-                return redirect()->back();
-            }
+            $auth_condition = 1;
         } else {
-            return redirect('/login');
+            $auth_condition = 0;
+        }
+
+        // if (Auth::check()) {
+        //     if ($productData->is_premium == 0) {
+        //         return view('front.product.single_product', compact('productcategory', 'productData'));
+        //     } else {
+        //         return redirect()->back();
+        //     }
+        // } else {
+        //     return redirect('/login');
+        // }
+
+        if ($productData->is_premium == 0) {
+            return view('front.product.single_product', compact('productcategory', 'productData', 'auth_condition', 'productImage'));
+        } else {
+            return redirect()->back();
         }
     }
 
@@ -347,7 +439,7 @@ class ProductsController extends Controller
 
         $tokenCount = ProductEmailToken::where('product_id', $id)->where('token', $token)->count();
 
-        if($tokenCount > 0){
+        if ($tokenCount > 0) {
             $tokenEmailData = ProductEmailToken::where('product_id', $id)->where('token', $token)->first();
         }
 
@@ -358,17 +450,19 @@ class ProductsController extends Controller
 
             $productData = Product::where('id', $id)->first();
 
+            $productImage = ProductImage::where('product_id', $id)->get();
+
             // $pcategory = ProductCategory::where('name', $category)->first();
 
             // dd($productData);
 
-            ProductEmailToken::where('id',$tokenEmailData->id)->delete();
+            ProductEmailToken::where('id', $tokenEmailData->id)->delete();
 
             return view('front.product.single_product', compact('productcategory', 'productData'));
         } else {
 
             $productcategory = ProductCategory::where('status', 1)->get();
-            
+
             $notification = array(
                 'message' => 'URL has been expired!',
                 'alert-type' => 'success',
@@ -377,6 +471,6 @@ class ProductsController extends Controller
             return view('front.product.partials.expire_email', compact('productcategory'))->with($notification);
         }
 
-        return view('front.product.single_product', compact('productcategory', 'productData'));
+        return view('front.product.single_product', compact('productcategory', 'productData', 'productImage'));
     }
 }

@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-xl-4">
                                     <input type="text" name="roles" id="roles"
-                                        class="form-control @error('roles') is-invalid @enderror" value="Vendor">
+                                        class="form-control @error('roles') is-invalid @enderror" value="Seller">
                                 </div>
                             </div>
                             <!-- /.User Role Select Field -->
@@ -207,10 +207,10 @@
                                     <label for="Status" class="col-form-label">{{ __('Status *') }}</label>
                                 </div>
                                 <div class="col-xl-4">
-                                    <select name="status" id="status" value="{{ $user->status }}"
+                                    <select name="status" id="status" value="{{ $productvendor->status }}"
                                         class="form-control @error('status') is-invalid @enderror">
-                                        <option value="1" @if($user->status == 1) selected @endif>Enable</option>
-                                        <option value="0" @if($user->status == 0) selected @endif>Disable</option>
+                                        <option value="1" @if($productvendor->status == 1) selected @endif>Enable</option>
+                                        <option value="0" @if($productvendor->status == 0) selected @endif>Disable</option>
                                     </select>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">
                                     <input type="reset" value="Reset" class="btn btn-warning pull-left">
-                                    <input type="submit" value="Create Vendor" class="btn btn-primary pull-right">
+                                    <input type="submit" value="Update Vendor" class="btn btn-primary pull-right">
                                 </div>
                             </div>
 

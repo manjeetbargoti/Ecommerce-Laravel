@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\User;
-use App\SupplierData;
-use App\SupplierCategory;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\SupplierCategory;
+use App\SupplierData;
+use App\SupplierQuery;
+use App\User;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class SupplierController extends Controller
 {
@@ -222,10 +224,36 @@ class SupplierController extends Controller
     }
 
     // Category Suppliers
-    public function categorySupplier($category=null)
+    public function categorySupplier(Request $request, $category = null)
     {
+        if ($request->isMethod('POST')) {
+            $requestData = $request->all();
+
+            // dd($requestData);
+
+            $supplierData = User::where('id', $requestData['supplier_id'])->first();
+
+            // dd($supplierData->email);
+
+            $supplier_email = $supplierData->email;
+
+            SupplierQuery::create($requestData);
+
+            $messageData = ['supplier_email' => $supplier_email, 'supplier_name' => $supplierData->first_name, 'name' => $requestData['name'], 'email' => $requestData['email'], 'phone' => $requestData['phone'], 'query_message' => $requestData['query_message'], 'location' => $requestData['location']];
+            Mail::send('emails.supplier_query', $messageData, function ($message) use ($supplier_email) {
+                $message->to($supplier_email)->subject('A user query about you on VVV Luxury');
+            });
+
+            $notification = array(
+                'message' => 'Query Submited successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
         $suppliercategory = SupplierCategory::where('status', 1)->get();
-        
+
         $supplier = User::whereHas("roles", function ($q) {$q->where("name", "Supplier");})->where('category', $category)->where('status', 1)->get();
 
         $supplier_count = $supplier->count();
@@ -233,19 +261,19 @@ class SupplierController extends Controller
         // $supplierData = SupplierData::where('category',$category)->get();
         $supplier = json_decode(json_encode($supplier));
 
-        foreach($supplier as $key => $val){
-            $supplier_count = SupplierData::where('user_id', $val->id)->where('category',$category)->count();
-            if($supplier_count > 0) {
-                $supplier_data = SupplierData::where('user_id', $val->id)->where('category',$category)->first();
+        foreach ($supplier as $key => $val) {
+            $supplier_count = SupplierData::where('user_id', $val->id)->where('category', $category)->count();
+            if ($supplier_count > 0) {
+                $supplier_data = SupplierData::where('user_id', $val->id)->where('category', $category)->first();
                 $supplier[$key]->business_name = $supplier_data->business_name;
                 $supplier[$key]->image = $supplier_data->image;
             }
-            
+
             // dd($supplier);
         }
 
         // dd($supplier_count);
 
-        return view('front.supplier.category_supplier', compact('suppliercategory','supplier','supplier_count'));
+        return view('front.supplier.category_supplier', compact('suppliercategory', 'supplier', 'supplier_count'));
     }
 }

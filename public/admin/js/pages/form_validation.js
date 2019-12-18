@@ -165,6 +165,21 @@ $(document).ready(function() {
                     }
                 }
             },
+            confemail: {
+                validators: {
+                    notEmpty: {
+                        message: 'The confirm email address is required'
+                    },
+                    regexp: {
+                        regexp: /^\S+@\S{1,}\.\S{1,}$/,
+                        message: 'The input is not a valid email address.'
+                    },
+                    identical: {
+                        field: 'email',
+                        message: 'Please enter the same email as above'
+                    }
+                }
+            },
             password: {
                 validators: {
                     notEmpty: {

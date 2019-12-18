@@ -30,9 +30,9 @@
                         <div class="card h-100">
                             <a href="#">
                                 @if(!empty($supp->image))
-                                <img class="card-img-top" src="{{ asset('images/watch1.png') }}" alt="">
+                                <!-- <img class="card-img-top" src="{{ asset('images/watch1.png') }}" alt=""> -->
                                 @else
-                                <img class="card-img-top" src="{{ asset('images/supplier.png') }}" alt="">
+                                <!-- <img class="card-img-top" src="{{ asset('images/supplier.png') }}" alt=""> -->
                                 @endif
                             </a>
                             <div class="card-body">
@@ -79,8 +79,8 @@
                                                 placeholder="Phone number" required>
                                         </div>
                                         <div class="form-group d-none">
-                                            <input type="text" name="product_id" id="ProductId"
-                                                class="form-control mb-2" placeholder="Product ID"
+                                            <input type="text" name="supplier_id" id="SupplierId"
+                                                class="form-control mb-2" placeholder="Supplier ID"
                                                 value="{{ $supp->id }}">
                                         </div>
                                         <!-- <div class="form-group d-none">

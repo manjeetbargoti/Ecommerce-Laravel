@@ -37,10 +37,19 @@
                                 <div class="text-center">
                                     <div class="form-group">
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumb_zoom zoom admin_img_width image-circle">
-                                                <img src="{{ url('/images/230x170.jpg') }}"
+                                            <div class="fileinput-new zoom image-circle">
+                                                @if(!empty($user->image))
+                                                <img class="img-responsive" width="150"
+                                                    src="{{ url('/images/user/large/'.$user->image) }}"
                                                     alt="{{ $user->first_name }} {{ $user->last_name }}"
-                                                    class="admin_img_width"></div>
+                                                    class="admin_img_width">
+                                                @else
+                                                <img class="img-responsive" width="150"
+                                                    src="{{ url('/images/user/user.png') }}"
+                                                    alt="{{ $user->first_name }} {{ $user->last_name }}"
+                                                    class="admin_img_width">
+                                                @endif
+                                                </div>
                                             <div
                                                 class="fileinput-preview fileinput-exists thumb_zoom zoom admin_img_width">
                                             </div>
@@ -107,7 +116,8 @@
                                                 <tr>
                                                     <td>Role</td>
                                                     <td>
-                                                        <span><label class="badge badge-success badge-lg badge-pill">{{ implode(', ', $user->getRoleNames()->toArray()) }}</label></span>
+                                                        <span><label
+                                                                class="badge badge-success badge-lg badge-pill">{{ implode(', ', $user->getRoleNames()->toArray()) }}</label></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -133,6 +143,47 @@
                                                             <span>@if(!empty($supplierData->business_name))
                                                                 {{ $supplierData->category }} @endif</span>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>License Number</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->license_number))
+                                                                {{ $supplierData->license_number }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Website</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->website))
+                                                                {{ $supplierData->website }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Country</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->country))
+                                                                @foreach(\App\Country::where('iso3',$supplierData->country)->get()
+                                                                as $cnt) {{ $cnt->name }}
+                                                                @endforeach @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>State</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->state))
+                                                                {{ $supplierData->state }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>City</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->city))
+                                                                {{ $supplierData->city }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@if(!empty($supplierData))<a href="{{ url('/supplier-info/'.$supplierData->id.'/edit') }}"
+                                                                class="btn btn-md btn-info pull-right">Edit</a>@endif</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -161,14 +212,131 @@
                     </div>
                     <div class="card-body padding">
                         <div class="feed">
-                            <ul>
+                            @if(!empty($productquery))
+                            <h4>Product Queries</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Product</th>
+                                            <th>Product Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($productquery as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            @foreach(\App\Product::where('id', $item->product_id)->get() as $prod)
+                                            <td>{{ $prod->product_name }}</td>
+                                            @endforeach
+                                            <td>@if($item->product_type == 1)<label
+                                                    class="badge badge-success">VVIP</label>@elseif($item->product_type
+                                                == 0) <label class="badge badge-info">Basic</label> @endif</td>
+                                            <td>@if($item->status == 1)<label
+                                                    class="badge badge-success">Done</label>@elseif($item->status == 0)
+                                                <label class="badge badge-danger">Pending</label> @endif</td>
+                                            <td>
+                                                <a href="{{ url('/admin/support/product-query/' . $item->id) }}"
+                                                    title="View Query"><button class="btn btn-info btn-sm"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i> </button></a>
+                                                <a href="{{ url('/admin/support/product-query/' . $item->id . '/edit') }}"
+                                                    title="Edit Query"><button class="btn btn-primary btn-sm"><i
+                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                    </button></a>
+
+                                                <form method="POST"
+                                                    action="{{ url('/admin/support/product-query' . '/' . $item->id) }}"
+                                                    accept-charset="UTF-8" style="display:inline">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        title="Delete Query"
+                                                        onclick="return confirm('Confirm delete?')"><i
+                                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                </form>
+
+                                                <a href="{{ url('/admin/send-email/' . $item->id) }}"
+                                                    title="Send Email"><button class="btn btn-info btn-sm"><i
+                                                            class="fa fa-envelope" aria-hidden="true"></i> </button></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @endif
+                                @if(!empty($supplierQuery))
+                                <h4>Supplier Queries</h4>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Supplier</th>
+                                                <th>Location</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($supplierQuery as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->phone }}</td>
+
+                                                <td>@foreach(\App\User::where('id', $item->supplier_id)->get() as
+                                                    $supp){{ $supp->first_name }} {{ $supp->last_name }}@endforeach</td>
+
+                                                <td>{{ $item->location }}</td>
+                                                <td>@if($item->status == 1)<label
+                                                        class="badge badge-success">Done</label>@elseif($item->status ==
+                                                    0)
+                                                    <label class="badge badge-danger">Pending</label> @endif</td>
+                                                <td>
+                                                    <a href="{{ url('/admin/support/supplier-query/' . $item->id) }}"
+                                                        title="View Query"><button class="btn btn-info btn-sm"><i
+                                                                class="fa fa-eye" aria-hidden="true"></i> </button></a>
+                                                    <a href="{{ url('/admin/support/supplier-query/' . $item->id . '/edit') }}"
+                                                        title="Edit Query"><button class="btn btn-primary btn-sm"><i
+                                                                class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                        </button></a>
+
+                                                    <form method="POST"
+                                                        action="{{ url('/admin/support/supplier-query' . '/' . $item->id) }}"
+                                                        accept-charset="UTF-8" style="display:inline">
+                                                        {{ method_field('DELETE') }}
+                                                        {{ csrf_field() }}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Delete Query"
+                                                            onclick="return confirm('Confirm delete?')"><i
+                                                                class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-wrapper"> </div>
+                                </div>
+                                @endif
+                            </div>
+                            <!-- <ul>
                                 <li>
-                                    <span>
-                                        <img src="img/roundicons/flat/Office-27.png" alt="text_image"
-                                            class="rounded-circle img-fluid recent_feeds_img" />
-                                    </span>
                                     <h5>
-                                        Important Mails
+                                        test
                                     </h5>
                                     <p>
                                         Mail received from
@@ -176,7 +344,7 @@
                                     </p>
                                     <i>1 hr back</i>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                 </div>

@@ -52,7 +52,7 @@
                     <div class="col-6 text-right forgot_pwd">
                         @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}"
-                            class="custom-control-description forgottxt_clr text-success">{{ __('Forgot Password?') }}</a>
+                            class="custom-control-description forgottxt_clr text-success" style="color: #67d5ae !important;">{{ __('Forgot Password?') }}</a>
                         @endif
                     </div>
                 </div>
@@ -65,9 +65,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-form-label">Don't you have an Account? </label>
+                <label class="col-form-label"> </label>
                 <a href="{{ route('register') }}" class=""
-                    style="color:#67d5ae;font-size:18px;font-weight:bold;"><b>Sign Up</b></a>
+                    style="color:#67d5ae;font-size:18px;font-weight:bold;"><b>CREATE AN ACCOUNT</b></a>
             </div>
         </form>
     </div>

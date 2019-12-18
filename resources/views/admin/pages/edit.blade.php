@@ -55,8 +55,8 @@
                             <div class="form-group row">
                                 <div class="col-sm-12 {{ $errors->has('content') ? 'has-error' : ''}}">
                                     <label for="content" class="control-label">{{ 'Content' }}</label>
-                                    <textarea class="form-control" rows="5" name="content" type="textarea" id="content"
-                                        required>{{ isset($page->content) ? $page->content : ''}}</textarea>
+                                    <textarea class="form-control my-editor" rows="5" name="content" type="textarea" id="CMSPageContent"
+                                        >{{ $page->content }}</textarea>
                                     {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
@@ -75,6 +75,7 @@
                                     <select class="form-control" name="page_type" id="page_type"
                                         value="{{ old('page_type') }}" required>
                                         <option value="1" @if($page->page_type == 1) selected @endif>Standard</option>
+                                        <option value="2" @if($page->page_type == 2) selected @endif>Contact</option>
                                     </select>
                                     {!! $errors->first('page_type', '<p class="help-block">:message</p>') !!}
                                 </div>

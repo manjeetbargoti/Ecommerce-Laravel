@@ -8,8 +8,11 @@
             </div>
             <div class="user-wrapper">
                 <a class="user-link" href="#">
-                    <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="User Picture"
-                        src="<?php echo e(asset('admin/img/admin.jpg')); ?>">
+                    <?php if(!empty(Auth::user()->image)): ?><img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="<?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?>"
+                        src="<?php echo e(asset('/images/user/large/'.Auth::user()->image)); ?>"><?php else: ?>
+                        <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="<?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?>"
+                        src="<?php echo e(asset('/images/user/user.png')); ?>">
+                        <?php endif; ?>
                     <p class="text-white user-info"><?php echo e(Auth::user()->first_name); ?></p>
                 </a>
             </div>
@@ -17,12 +20,14 @@
         <!-- #menu -->
         <ul id="menu">
             <!-- Dashboard -->
+            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <li class="<?php echo e((request()->is('admin/dashboard')) ? 'active':''); ?>">
                 <a href="<?php echo e(route('dashboard')); ?>">
                     <i class="fa fa-home"></i>
                     <span class="link-title menu_hide">&nbsp;Dashboard</span>
                 </a>
             </li>
+            <?php endif; ?>
             <!-- /.Dashboard -->
 
             <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
@@ -122,8 +127,8 @@
             <!-- /.Page Management -->
             <?php endif; ?>
 
-            <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- Product Management -->
+            <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin|Seller')): ?>
             <li class="dropdown_menu <?php echo e((request()->is('admin/product*')) ? 'active':''); ?>">
                 <a href="<?php echo e(url('/admin/product')); ?>">
                     <i class="fa fa-file-text-o"></i>
@@ -131,11 +136,14 @@
                     <span class="fa arrow menu_hide"></span>
                 </a>
                 <ul>
+                    <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin|Seller')): ?>
                     <li class="<?php echo e((request()->is('admin/product')) ? 'active':''); ?>">
                         <a href="<?php echo e(url('admin/product')); ?>">
                             <i class="fa fa-angle-right"></i> &nbsp; Products
                         </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
                     <li class="<?php echo e((request()->is('admin/product-category*')) ? 'active':''); ?>">
                         <a href="<?php echo e(url('admin/product-category')); ?>">
                             <i class="fa fa-angle-right"></i>
@@ -148,10 +156,11 @@
                             <span class="link-title"> &nbsp; Product Vendor</span>
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </li>
-            <!-- /.Product Management -->
             <?php endif; ?>
+            <!-- /.Product Management -->
 
             <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
             <!-- Suppliers Management -->
@@ -179,7 +188,7 @@
         <!-- /.Suppliers Management -->
         <?php endif; ?>
 
-        <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
+        <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin|Buyer|Supplier|Seller')): ?>
         <!-- Support Center -->
         <li class="dropdown_menu <?php echo e((request()->is('admin/support*')) ? 'active':''); ?>">
             <a href="<?php echo e(url('/admin/supports')); ?>">
@@ -188,16 +197,32 @@
                 <span class="fa arrow menu_hide"></span>
             </a>
             <ul>
+                <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin|Buyer|Seller')): ?>
                 <li class="<?php echo e((request()->is('admin/support/product-query*')) ? 'active':''); ?>">
                     <a href="<?php echo e(url('admin/support/product-query')); ?>">
                         <i class="fa fa-angle-right"></i> &nbsp; Product Queries
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if(auth()->check() && auth()->user()->hasAnyRole('Super Admin|Supplier')): ?>
                 <li class="<?php echo e((request()->is('admin/support/supplier-query')) ? 'active':''); ?>">
                     <a href="<?php echo e(url('admin/support/supplier-query')); ?>">
                         <i class="fa fa-angle-right"></i> &nbsp; Supplier Queries
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
+                <li class="<?php echo e((request()->is('admin/support/contact-query')) ? 'active':''); ?>">
+                    <a href="<?php echo e(url('admin/support/contact-query')); ?>">
+                        <i class="fa fa-angle-right"></i> &nbsp; Contact Queries
+                    </a>
+                </li>
+                <li class="<?php echo e((request()->is('admin/support/subscribers')) ? 'active':''); ?>">
+                    <a href="<?php echo e(url('admin/support/subscribers')); ?>">
+                        <i class="fa fa-angle-right"></i> &nbsp; Subscribers
+                    </a>
+                </li>
+                <?php endif; ?>
             </ul>
         </li>
         <!-- /.Support Center -->

@@ -67,16 +67,16 @@
                                         <td>@if($item->product_type == 1)<label class="badge badge-success">VVIP</label>@elseif($item->product_type == 0) <label class="badge badge-info">Basic</label> @endif</td>
                                         <td>@if($item->status == 1)<label class="badge badge-success">Done</label>@elseif($item->status == 0) <label class="badge badge-danger">Pending</label> @endif</td>
                                         <td>
-                                            <a href="{{ url('/admin/product-query/' . $item->id) }}"
+                                            <a href="{{ url('/admin/support/product-query/' . $item->id) }}"
                                                 title="View Query"><button class="btn btn-info btn-sm"><i
                                                         class="fa fa-eye" aria-hidden="true"></i> </button></a>
-                                            <a href="{{ url('/admin/product-query/' . $item->id . '/edit') }}"
+                                            <a href="{{ url('/admin/support/product-query/' . $item->id . '/edit') }}"
                                                 title="Edit Query"><button class="btn btn-primary btn-sm"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </button></a>
 
                                             <form method="POST"
-                                                action="{{ url('/admin/product-query' . '/' . $item->id) }}"
+                                                action="{{ url('/admin/support/product-query' . '/' . $item->id) }}"
                                                 accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}

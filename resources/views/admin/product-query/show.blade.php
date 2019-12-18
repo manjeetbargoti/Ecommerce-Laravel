@@ -58,6 +58,10 @@
                                         <th> Phone </th>
                                         <td> {{ $productquery->phone }} </td>
                                     </tr>
+                                    <tr>
+                                        <th> Message </th>
+                                        <td> {{ $productquery->query_message }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

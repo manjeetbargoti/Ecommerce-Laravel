@@ -21,7 +21,7 @@
         <div class="menu-destination-prehome">
             <ul class="list-unstyled text-center">
                 @foreach($productcategory as $pcat)
-                <li class="">
+                <li class="{{ (request()->is('category/'.$pcat->name.'/*')) ? 'active':'' }}">
                     <span style="display: block;"><a class=""
                             href="{{ url('/category/'.$pcat->name.'/products/') }}">{{ $pcat->name }}</a></span>
                 </li>
@@ -74,6 +74,7 @@
                                         class="text-white">{{ $prod->product_name }}</a></h5>
                                 <p class="card-text mt-2">{{ str_limit($prod->product_description, $limit=100) }}</p>
                                 <h4 class="card-title">
+                                @if(Auth::check())
                                     @if($prod->is_premium == 1)
                                     <a href="" class="green-txt" data-toggle="modal"
                                         data-target="#Product{{ $prod->id }}">Get
@@ -81,8 +82,11 @@
                                     @elseif($prod->is_premium == 0)
                                     <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"
                                         class="green-txt">More Info</a>
-
                                     @endif
+                                @else
+                                <a href="{{ route('login') }}" class="green-txt">Get
+                                        Inquired</a>
+                                @endif
                                 </h4>
                             </div>
                             <!-- <div class="card-footer gry-bg">

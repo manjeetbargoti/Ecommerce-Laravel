@@ -32,6 +32,7 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'T' => 
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
+            'Tests\\' => 6,
         ),
         'S' => 
         array (
@@ -135,6 +136,10 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
+        ),
+        'Tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'Symfony\\Polyfill\\Php73\\' => 
         array (
@@ -342,6 +347,8 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\ContactQuery' => __DIR__ . '/../..' . '/app/ContactQuery.php',
+        'App\\Country' => __DIR__ . '/../..' . '/app/Country.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Admin\\PagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PagesController.php',
@@ -361,6 +368,7 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\SupplierController' => __DIR__ . '/../..' . '/app/Http/Controllers/SupplierController.php',
+        'App\\Http\\Controllers\\SupplierQueryController' => __DIR__ . '/../..' . '/app/Http/Controllers/SupplierQueryController.php',
         'App\\Http\\Controllers\\SystemController' => __DIR__ . '/../..' . '/app/Http/Controllers/SystemController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -375,6 +383,7 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',
         'App\\ProductCategory' => __DIR__ . '/../..' . '/app/ProductCategory.php',
         'App\\ProductEmailToken' => __DIR__ . '/../..' . '/app/ProductEmailToken.php',
+        'App\\ProductImage' => __DIR__ . '/../..' . '/app/ProductImage.php',
         'App\\ProductQuery' => __DIR__ . '/../..' . '/app/ProductQuery.php',
         'App\\ProductVendor' => __DIR__ . '/../..' . '/app/ProductVendor.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -385,6 +394,7 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'App\\Subscriber' => __DIR__ . '/../..' . '/app/Subscriber.php',
         'App\\SupplierCategory' => __DIR__ . '/../..' . '/app/SupplierCategory.php',
         'App\\SupplierData' => __DIR__ . '/../..' . '/app/SupplierData.php',
+        'App\\SupplierQuery' => __DIR__ . '/../..' . '/app/SupplierQuery.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonImmutable.php',
@@ -2803,6 +2813,10 @@ class ComposerStaticInit095ef8bfe1fa8f0d1b8736b41d771c30
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php72\\Php72' => __DIR__ . '/..' . '/symfony/polyfill-php72/Php72.php',
         'Symfony\\Polyfill\\Php73\\Php73' => __DIR__ . '/..' . '/symfony/polyfill-php73/Php73.php',
+        'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
+        'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
+        'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
+        'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',

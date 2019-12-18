@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use App\Page;
+use App\ContactQuery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
@@ -121,5 +121,41 @@ class PagesController extends Controller
         Page::destroy($id);
 
         return redirect('admin/pages')->with('flash_message', 'Page deleted!');
+    }
+
+    // View Single Page
+    public function singleCms(Request $request, $url=null)
+    {
+        if($request->isMethod('post') && request()->is('contact')){
+            $requestData = $request->all();
+            ContactQuery::create($requestData);
+
+            $admin_email = 'msb.2905@gmail.com';
+
+            $messageData = ['email' => $requestData['email'], 'name' => $requestData['name'], 'phone' => $requestData['phone'], 'query_message' => $requestData['query_message']];
+            Mail::send('emails.contact_email', $messageData, function ($message) use ($admin_email) {
+                $message->to($admin_email)->subject('Contact us Query form VVV Luxury website');
+            });
+
+            $notification = array(
+                'message' => 'Query Submitted successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->back()->with($notification);
+
+        }
+
+        $pageData = Page::where('slug',$url)->first();
+        if($pageData['status'] == 1){
+            if($pageData['page_type'] == 1){
+                return view('front.pages.single_page',compact('pageData'));
+            }elseif($pageData['page_type'] == 2){
+                return view('front.pages.contact_us',compact('pageData'));
+            }
+        }else{
+            abort('Page not found!');
+        }
+        
     }
 }

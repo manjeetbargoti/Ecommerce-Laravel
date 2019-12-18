@@ -22,28 +22,38 @@
             <div class="col-lg-9 all-products">
                 <div class="row">
 
-                    @if($products->count() == 0)
+                    @if($product_count == 0)
                     <p style="margin: auto;padding-top: 6rem;">Sorry! We have no product in this category.</p>
                     @else
                     @foreach($products as $prod)
                     <div class="col-lg-4 col-md-6 mb-4" id="watch1">
                         <div class="card h-100">
-                            <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"><img
-                                    class="card-img-top @if($prod->is_premium == 1) blur-img @endif"
-                                    src="{{ asset('images/watch1.png') }}" alt=""></a>
+                            <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}">
+                                @if(!empty($prod->image))<img class="card-img-top @if($prod->is_premium == 1) blur-img @endif"
+                                    src="{{ asset('images/product/large/'.$prod->image) }}" alt="">
+                                    @else
+                                    <img class="card-img-top @if($prod->is_premium == 1) blur-img @endif"
+                                    src="{{ asset('images/product/large/default.png') }}" alt="">
+                                    @endif
+                                </a>
                             <div class="card-body">
                                 <h5><a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"
                                         class="text-white">{{ $prod->product_name }}</a></h5>
                                 <p class="card-text mt-2">{{ str_limit($prod->product_description, $limit=100) }}</p>
                                 <h4 class="card-title">
+                                    @if(Auth::check())
                                     @if($prod->is_premium == 1)
                                     <a href="" class="green-txt" data-toggle="modal"
                                         data-target="#Product{{ $prod->id }}">Get
                                         Inquired</a>
                                     @elseif($prod->is_premium == 0)
                                     <a href="{{ url('/category/'.$prod->product_category.'/product/'.$prod->id) }}"
-                                        class="green-txt">More Info</a>
+                                        class="green-txt">Know More</a>
 
+                                    @endif
+                                    @else
+                                    <a href="{{ route('login') }}" class="green-txt">Get
+                                        Inquired</a>
                                     @endif
                                 </h4>
                             </div>

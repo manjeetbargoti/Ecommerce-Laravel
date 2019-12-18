@@ -108,8 +108,8 @@ height:400px;
 .product-page-heading ul li a{
 	color: #67d5ae !important;
     font-size: 40px !important;
-    font-weight: bold !important;	
-	font-family: 'Cinzel', serif;
+    /* font-weight: bold !important;	 */
+	font-family: 'Roboto';
 }
 
 
@@ -408,4 +408,24 @@ canvas {
     border-radius: 0 0 3px 3px;
 }
 
+#myCarousel .list-inline {
+    white-space:nowrap;
+    overflow-x:auto;
+}
 
+#myCarousel .carousel-indicators {
+    position: static;
+    left: initial;
+    width: initial;
+    margin-left: initial;
+}
+
+#myCarousel .carousel-indicators > li {
+    width: initial;
+    height: initial;
+    text-indent: initial;
+}
+
+#myCarousel .carousel-indicators > li.active img {
+    opacity: 0.7;
+}

@@ -57,4 +57,22 @@ class AdminController extends Controller
         }
     }
 
+    // Verify Email
+    public function verifyEmail(Request $request, $token=null, $code=null)
+    {
+        $email = base64_decode($token);
+        $username = base64_decode($code);
+
+        // dd($username);
+
+        User::where('email',$email)->where('username',$username)->update(['status' => 1]);
+
+        $notification = array(
+            'message' => 'Account activated successfully! Please login with your details.',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/login')->with($notification);
+    }
+
 }

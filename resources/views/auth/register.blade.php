@@ -1,5 +1,16 @@
 @extends('layouts.front.front_design')
 @section('content')
+<style>
+@media (min-width: 768px) {
+    .product-page-heading {
+        margin: 5% 0 0 !important;
+    }
+}
+.inquireform {
+    padding-bottom: 1%;
+}
+</style>
+
 <div id="particles-js"></div>
 <div class="product-page-heading ">
     <div class="menu-destination-prehome">
@@ -15,25 +26,27 @@
     <div class="col-lg-3 col-md-3 d-none d-md-block d-lg-block"></div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <!-- Default form contact -->
-        <form class=" p-4 form-horizontal register_valid m-b-20" id="register_valid" action="{{ route('register') }}"
-            method="POST">
+        <form class="form-horizontal register_valid" id="register_valid" action="{{ route('register') }}" method="POST">
             @csrf
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <label class="col-form-label">{{ __('You are?') }}</label>
+                    <label class="col-form-label">{{ __('SELECT A PROFILE') }}</label>
                 </div>
                 @foreach(Spatie\Permission\Models\Role::whereIn('name',
                 array('Buyer','Supplier','Seller'))->get() as $roles)
-                <div class="col-sm-3 col-12" id="UserOption">
+                <div class="col-sm-4 col-12" id="UserOption">
                     <label class="custom-control custom-radio">
                         <input type="radio" id="If{{ $roles->name }}" class="form-check-input" @if($roles->name ==
-                        'User')
+                        'Buyer')
                         checked @endif name="roles"
                         value="{{ $roles->name }}"
                         class="custom-control-input @error('roles') is-invalid
                         @enderror">
                         <span class="custom-control-indicator"></span>
-                        <a class="custom-control-description">{{ $roles->name }}</a>
+                        <a class="custom-control-description">@if($roles->name ==
+                            'Buyer'){{ $roles->name }}@elseif($roles->name ==
+                            'Supplier')Supplier(Service)@elseif($roles->name ==
+                            'Seller')Supplier(Product)@endif</a>
                     </label>
                     @error('roles')
                     <span class="invalid-feedback text-white" role="alert">
@@ -149,6 +162,21 @@
                     @enderror
                 </div>
                 <!-- /.Email Address field -->
+                <!-- Email Address field -->
+                <div class="col-sm-6">
+                    <label for="Confirm Email" class="col-form-label">{{ __('Confirm Email Address *') }}</label>
+                    <input type="email" placeholder="Confirm Email Address" name="confemail" id="confEmail"
+                        class="form-control @error('conf_email') is-invalid @enderror" value="{{ old('conf_email') }}"
+                        required autocomplete="conf_email" />
+                    @error('conf_email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <!-- /.Email Address field -->
+            </div>
+            <div class="form-group row">
                 <!-- Phone number field -->
                 <div class="col-sm-6">
                     <label for="phone" class="col-form-label">{{ __('Phone *') }}</label>
@@ -162,6 +190,22 @@
                     @enderror
                 </div>
                 <!-- /.Phone number field -->
+                <!-- Select Country -->
+                <div class="col-sm-6">
+                    <label for="Country" class="col-form-label">{{ __('Country *') }}</label>
+                    <select name="country" class="form-control" id="Country">
+                        <option value=""> -- Select Country -- </option>
+                        @foreach(\App\Country::get() as $cn)
+                        <option value="{{ $cn->iso3 }}">{{ $cn->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('country')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <!-- /.Select Country -->
             </div>
             <div class="form-group row">
                 <!-- Password field -->
@@ -197,15 +241,14 @@
                         <input type="checkbox" class="form-check-input" name="terms" id="Terms" required>
                         <span class="custom-control-indicator"></span>
                         <span href="#" class="custom-control-description">I agree with the <a href="#"
-                                style="text-decoration:underline;">Terms and
-                                Conditions</a>.</span>
+                                style="text-decoration:underline;color: #fff;">Terms and Conditions</a>.</span>
                     </label>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <button type="reset" class="btn btn-danger btn-lg pull-left">Reset</button>
-                    <input type="submit" value="Register" class="btn btn-primary btn-lg pull-right" />
+                    <button type="reset" class="btn btn-info btn-md pull-left">Reset</button>
+                    <input type="submit" value="Register" class="btn btn-info btn-md pull-right" />
                 </div>
             </div>
         </form>
@@ -213,5 +256,14 @@
 </div>
 <div class="col-lg-3 col-md-3 d-none d-md-block d-lg-block"></div>
 </div>
+
+<script>
+window.onload = function() {
+    const myInput = document.getElementById('confEmail');
+    confEmail.onpaste = function(e) {
+        e.preventDefault();
+    }
+}
+</script>
 
 @endsection

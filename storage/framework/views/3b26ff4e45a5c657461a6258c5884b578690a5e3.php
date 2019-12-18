@@ -5,7 +5,8 @@
     <nav class="navbar navbar-static-top">
         <div class="container-fluid m-0">
             <a class="navbar-brand mr-0" href="<?php echo e(route('dashboard')); ?>">
-                <h4 class="text-white"><img src="<?php echo e(asset('admin/img/logow.png')); ?>" class="admin_img" alt="logo"> <?php echo e(config('app.name')); ?></h4>
+                <h4 class="text-white"><img src="<?php echo e(asset('admin/img/logow.png')); ?>" class="admin_img" alt="logo">
+                    <?php echo e(config('app.name')); ?></h4>
             </a>
             <div class="menu mr-sm-auto">
                 <span class="toggle-left" id="menu-toggle">
@@ -14,6 +15,7 @@
             </div>
             <div class="navbar-toggleable-sm m-lg-auto d-none d-lg-flex top_menu" id="nav-content">
                 <ul class="nav navbar-nav flex-row top_menubar">
+                    <?php if(auth()->check() && auth()->user()->hasRole('Super Admin')): ?>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="<?php echo e(url('/admin/dashboard')); ?>">
                             <i class="fa fa-inbox"></i> <span class="quick_text">Dashboard</span>
@@ -34,10 +36,11 @@
                             <i class="fa fa-picture-o"></i> <span class="quick_text">Suppliers</span>
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
             <div class="topnav dropdown-menu-right ml-auto">
-                <div class="btn-group">
+                <div class="btn-group d-none">
                     <div class="notifications no-bg">
                         <a class="btn btn-default btn-sm messages" data-toggle="dropdown"> <i
                                 class="fa fa-envelope fa-1x text-white"></i>
@@ -49,8 +52,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/5.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/5.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data"><strong>hally</strong> sent you an image.
                                             <br>
                                             <small>add to timeline</small>
@@ -60,8 +63,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/8.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/8.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data"><strong>Meri</strong> invitation for party.
                                             <br>
                                             <small>add to timeline</small>
@@ -71,8 +74,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/7.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/7.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <strong>Remo</strong> meeting details .
                                             <br>
@@ -83,8 +86,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <strong>David</strong> upcoming events list.
                                             <br>
@@ -95,8 +98,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/5.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/5.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data"><strong>hally</strong> sent you an image.
                                             <br>
                                             <small>add to timeline</small>
@@ -106,8 +109,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/8.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/8.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data"><strong>Meri</strong> invitation for party.
                                             <br>
                                             <small>add to timeline</small>
@@ -117,8 +120,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/7.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/7.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <strong>Remo</strong> meeting details .
                                             <br>
@@ -129,8 +132,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <strong>David</strong> upcoming events list.
                                             <br>
@@ -145,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn-group">
+                <div class="btn-group d-none">
                     <div class="notifications messages no-bg">
                         <a class="btn btn-default btn-sm" data-toggle="dropdown"> <i class="fa fa-bell text-white"></i>
                             <span class="badge badge-danger">9</span>
@@ -156,8 +159,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>Remo</strong> sent you an image
@@ -170,8 +173,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/2.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/2.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>clay</strong> business propasals
@@ -184,8 +187,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/3.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/3.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>John</strong> meeting at Ritz
@@ -198,8 +201,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>Luicy</strong> Request Invitation
@@ -212,8 +215,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>Remo</strong> sent you an image
@@ -226,8 +229,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/2.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/2.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>clay</strong> business propasals
@@ -240,8 +243,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/3.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/3.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>John</strong> meeting at Ritz
@@ -254,8 +257,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/6.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>Luicy</strong> Request Invitation
@@ -268,8 +271,8 @@
                                 <div class="data">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>" class="message-img avatar rounded-circle"
-                                                alt="avatar1"></div>
+                                            <img src="<?php echo e(asset('admin/img/mailbox_imgs/1.jpg')); ?>"
+                                                class="message-img avatar rounded-circle" alt="avatar1"></div>
                                         <div class="col-10 message-data">
                                             <i class="fa fa-clock-o"></i>
                                             <strong>Remo</strong> sent you an image
@@ -286,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn-group">
+                <div class="btn-group d-none">
                     <a class="btn btn-default btn-sm messages toggle-right">
                         &nbsp;
                         <i class="fa fa-cog text-white"></i>
@@ -296,23 +299,29 @@
                 <div class="btn-group">
                     <div class="user-settings no-bg">
                         <button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown">
-                            <img src="<?php echo e(asset('admin/img/admin.jpg')); ?>" class="admin_img2 rounded-circle avatar-img" alt="avatar">
+
+                            <?php if(!empty(Auth::user()->image)): ?><img src="<?php echo e(asset('/images/user/large/'.Auth::user()->image)); ?>" class="admin_img2 rounded-circle avatar-img"
+                                alt="<?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?>"><?php else: ?>
+                                    <img src="<?php echo e(asset('/images/user/user.png/')); ?>" class="admin_img2 rounded-circle avatar-img"
+                                alt="<?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?>">
+                                <?php endif; ?>
                             <strong><?php echo e(Auth::user()->first_name); ?></strong>
                             <span class="fa fa-sort-down white_bg"></span>
                         </button>
                         <div class="dropdown-menu admire_admin">
-                            <div class="popover-header"><?php echo e(config('app.name')); ?></div>
-                            <a class="dropdown-item" href="<?php echo e(url('/admin/profile')); ?>"><i class="fa fa-cogs"></i> 
+                            <div class="popover-header"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></div>
+                            <a class="dropdown-item" href="<?php echo e(url('/admin/profile')); ?>"><i class="fa fa-cogs"></i>
                                 Profile Settings</a>
                             <a class="dropdown-item" href="#">
                                 <i class="fa fa-user"></i> User Status
                             </a>
                             <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>
+                                                     document.getElementById('logout-form').submit();"><i
+                                    class="fa fa-sign-out"></i>
                                 <?php echo e(__('Logout')); ?></a>
-                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                        <?php echo csrf_field(); ?>
-                                    </form>
+                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                <?php echo csrf_field(); ?>
+                            </form>
                         </div>
                     </div>
                 </div>

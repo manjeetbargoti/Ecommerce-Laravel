@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -16,7 +18,22 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return [
+            'email' => $request->{$this->username()},
+            'password' => $request->password,
+            'status' => '1',
+        ];
+    }
 
     use AuthenticatesUsers;
 
@@ -25,7 +42,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/dashboard';
+    // protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -35,5 +52,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function redirectTo()
+    {
+        // User role
+        $role = Auth::user()->roles[0]->name;
+
+        // Check user role
+        switch ($role) {
+            case 'Super Admin':
+                return '/admin/dashboard';
+                break;
+            case 'Seller':
+                return '/admin/profile';
+            case 'Supplier':
+                return '/admin/profile';
+                break;
+            default:
+                return '/';
+                break;
+        }
     }
 }

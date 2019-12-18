@@ -36,7 +36,7 @@
 
 </head>
 
-<body class="d-flex flex-column">
+<body class="d-flex flex-column bg-images"  style="background-repeat:no-repeat; background-image:100%; background-size: cover;transition: 0.5s;">
     <div class="preloader" style=" position: fixed;
   width: 100%;
   height: 100%;
@@ -190,6 +190,7 @@ z-index: 999999">
     }
     @endif
     </script>
+
 </body>
 
 </html>

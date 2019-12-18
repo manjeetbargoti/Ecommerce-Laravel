@@ -25,18 +25,14 @@
                         <a href="{{ url('/admin/user/role/' . $role->id . '/edit') }}" title="Edit Role"><button
                                 class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Edit</button></a>
-                        {!! Form::open([
-                        'method'=>'DELETE',
-                        'url' => ['admin/user/role', $role->id],
-                        'style' => 'display:inline'
-                        ]) !!}
-                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                        'type' => 'submit',
-                        'class' => 'btn btn-danger btn-sm',
-                        'title' => 'Delete Role',
-                        'onclick'=>'return confirm("Confirm delete?")'
-                        ))!!}
-                        {!! Form::close() !!}
+                        <form method="POST" action="{{ url('/admin/user/role' . '/' . $role->id) }}"
+                            accept-charset="UTF-8" style="display:inline">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Role"
+                                onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o"
+                                    aria-hidden="true"></i> </button>
+                        </form>
                         <br />
                         <br />
 

@@ -1,10 +1,10 @@
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
-    {!! Form::text('name', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    <label for="Name" class="control-label"></label>
+    <input type="text" name="name" id="Name" class="form-control" value="{{ isset($permission->name) ? $permission->name : ''}}" required>
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
 
 
 <div class="form-group">
-    {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
+    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>

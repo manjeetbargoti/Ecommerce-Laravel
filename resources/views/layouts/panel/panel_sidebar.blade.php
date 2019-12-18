@@ -8,8 +8,11 @@
             </div>
             <div class="user-wrapper">
                 <a class="user-link" href="#">
-                    <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="User Picture"
-                        src="{{ asset('admin/img/admin.jpg') }}">
+                    @if(!empty(Auth::user()->image))<img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
+                        src="{{ asset('/images/user/large/'.Auth::user()->image) }}">@else
+                        <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
+                        src="{{ asset('/images/user/user.png') }}">
+                        @endif
                     <p class="text-white user-info">{{ Auth::user()->first_name }}</p>
                 </a>
             </div>
@@ -17,12 +20,14 @@
         <!-- #menu -->
         <ul id="menu">
             <!-- Dashboard -->
+            @role('Super Admin')
             <li class="{{ (request()->is('admin/dashboard')) ? 'active':'' }}">
                 <a href="{{ route('dashboard') }}">
                     <i class="fa fa-home"></i>
                     <span class="link-title menu_hide">&nbsp;Dashboard</span>
                 </a>
             </li>
+            @endrole
             <!-- /.Dashboard -->
 
             @role('Super Admin')
@@ -122,8 +127,8 @@
             <!-- /.Page Management -->
             @endrole
 
-            @role('Super Admin')
             <!-- Product Management -->
+            @hasanyrole('Super Admin|Seller')
             <li class="dropdown_menu {{ (request()->is('admin/product*')) ? 'active':'' }}">
                 <a href="{{ url('/admin/product') }}">
                     <i class="fa fa-file-text-o"></i>
@@ -131,11 +136,14 @@
                     <span class="fa arrow menu_hide"></span>
                 </a>
                 <ul>
+                    @hasanyrole('Super Admin|Seller')
                     <li class="{{ (request()->is('admin/product')) ? 'active':'' }}">
                         <a href="{{ url('admin/product') }}">
                             <i class="fa fa-angle-right"></i> &nbsp; Products
                         </a>
                     </li>
+                    @endrole
+                    @role('Super Admin')
                     <li class="{{ (request()->is('admin/product-category*')) ? 'active':'' }}">
                         <a href="{{ url('admin/product-category') }}">
                             <i class="fa fa-angle-right"></i>
@@ -148,10 +156,11 @@
                             <span class="link-title"> &nbsp; Product Vendor</span>
                         </a>
                     </li>
+                    @endrole
                 </ul>
             </li>
-            <!-- /.Product Management -->
             @endrole
+            <!-- /.Product Management -->
 
             @role('Super Admin')
             <!-- Suppliers Management -->
@@ -179,7 +188,7 @@
         <!-- /.Suppliers Management -->
         @endrole
 
-        @role('Super Admin')
+        @hasanyrole('Super Admin|Buyer|Supplier|Seller')
         <!-- Support Center -->
         <li class="dropdown_menu {{ (request()->is('admin/support*')) ? 'active':'' }}">
             <a href="{{ url('/admin/supports') }}">
@@ -188,16 +197,32 @@
                 <span class="fa arrow menu_hide"></span>
             </a>
             <ul>
+                @hasanyrole('Super Admin|Buyer|Seller')
                 <li class="{{ (request()->is('admin/support/product-query*')) ? 'active':'' }}">
                     <a href="{{ url('admin/support/product-query') }}">
                         <i class="fa fa-angle-right"></i> &nbsp; Product Queries
                     </a>
                 </li>
+                @endrole
+                @hasanyrole('Super Admin|Supplier')
                 <li class="{{ (request()->is('admin/support/supplier-query')) ? 'active':'' }}">
                     <a href="{{ url('admin/support/supplier-query') }}">
                         <i class="fa fa-angle-right"></i> &nbsp; Supplier Queries
                     </a>
                 </li>
+                @endrole
+                @role('Super Admin')
+                <li class="{{ (request()->is('admin/support/contact-query')) ? 'active':'' }}">
+                    <a href="{{ url('admin/support/contact-query') }}">
+                        <i class="fa fa-angle-right"></i> &nbsp; Contact Queries
+                    </a>
+                </li>
+                <li class="{{ (request()->is('admin/support/subscribers')) ? 'active':'' }}">
+                    <a href="{{ url('admin/support/subscribers') }}">
+                        <i class="fa fa-angle-right"></i> &nbsp; Subscribers
+                    </a>
+                </li>
+                @endrole
             </ul>
         </li>
         <!-- /.Support Center -->

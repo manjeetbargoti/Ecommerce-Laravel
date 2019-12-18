@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-xl-4">
                                     <textarea name="address" id="address" rows="8"
-                                        class="form-control">{{ config('app.address') }}</textarea>
+                                        class="form-control my-editor">{{ config('app.address') }}</textarea>
                                 </div>
                             </div>
                             <!-- /.Address Field -->

@@ -33,12 +33,12 @@
                         </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/admin/user/permission', 'class' => 'form-horizontal', 'files' => true])
-                        !!}
+                        <form method="POST" action="{{ url('/admin/user/permission') }}" accept-charset="UTF-8"
+                            class="form-horizontal" enctype="multipart/form-data">
 
                         @include ('admin.permission.form', ['formMode' => 'create'])
 
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

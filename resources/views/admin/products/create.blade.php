@@ -5,6 +5,52 @@
 .product_image_upload .fileinput-upload-button {
     display: none;
 }
+#filediv {
+    display: inline-block !important;
+}
+
+#file {
+    color: green;
+    padding: 5px;
+    border: 1px dashed #123456;
+    background-color: #f9ffe5
+}
+
+#noerror {
+    color: green;
+    text-align: left
+}
+
+#error {
+    color: red;
+    text-align: left
+}
+
+#img {
+    width: 17px;
+    border: none;
+    height: 17px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.abcd img {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #e8debd
+}
+
+#close {
+    vertical-align: top;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: -13px;
+    margin-top: 1px;
+}
 </style>
 <header class="head">
     <div class="main-bar">
@@ -45,7 +91,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-6">
                                     <label for="product_category" class="control-label">{{ 'Product Category' }}</label>
-                                    <select name="product_category" class="form-control" id="product_category">
+                                    <select name="product_category" class="form-control" id="product_category" required>
                                         <option value=""> -- Select Category -- </option>
                                         @foreach($productCategory as $pcat)
                                         <option value="{{ $pcat->name }}">{{ $pcat->name }}</option>
@@ -57,17 +103,26 @@
                                 <div class="col-sm-6 col-12">
                                     <label for="product_name" class="control-label">{{ 'Product Name' }}</label>
                                     <input class="form-control" name="product_name" type="text" id="product_name"
-                                        value="{{ isset($product->product_name) ? $product->product_name : ''}}">
+                                        value="{{ isset($product->product_name) ? $product->product_name : ''}}" required>
                                     {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-sm-6 col-12">
+                                <div class="col-sm-6 col-12 d-none">
                                     <label for="product_slug" class="control-label">{{ 'Product Url' }}</label>
-                                    <input class="form-control" name="product_slug" type="text" id="slug"
+                                    <input class="form-control" name="product_slug" type="text" id="ProductSlug"
                                         value="{{ old('product_slug') }}">
                                     {!! $errors->first('product_slug', '<p class="help-block">:message</p>') !!}
+                                </div>
+
+                                <div class="col-sm-6 col-12">
+                                    <label for="is Premium" class="control-label">{{ 'is VVV' }}</label>
+                                    <select name="is_premium" class="form-control" id="IsPremium">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    {!! $errors->first('is_premium', '<p class="help-block">:message</p>') !!}
                                 </div>
 
                                 <div class="col-sm-6">
@@ -136,7 +191,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row d-none">
                                 <div class="col-sm-4 col-12">
                                     <label for="is Premium" class="control-label">{{ 'is VVV' }}</label>
                                     <select name="is_premium" class="form-control" id="IsPremium">
@@ -160,10 +215,23 @@
                             <div class="form-group row">
                                 <div class="col-sm-12 col-12 product_image_upload">
                                     <label for="Product Description" class="control-label">{{ 'File Upload' }}</label>
-                                    <input id="input-fa" name="product_image[]" accept="image/*" type="file"
-                                        class="file-loading" accept="image/*" multiple>
+                                    <!-- <input id="input-f" name="product_image[]" accept="image/*" type="file" accept="image/*" multiple> -->
+                                    <div class="add_image">
+                                        <input type="button" id="add_more" class="btn btn-info" value="add image" />
+                                        <!-- <i class="fas fa-camera"></i> -->
+                                    </div>
                                 </div>
                             </div>
+
+                            <!-- <div class="form-group row"> -->
+                            <!-- <label for="Property Images">Add Images</label> -->
+                            <!-- <input type="file" id="property_images" name="property_images"> -->
+                            <!-- <div class="add_image"> -->
+                            <!-- <input type="button" id="add_more" class="btn btn-info" value="add image" /> -->
+                            <!-- <i class="fas fa-camera"></i> -->
+                            <!-- </div> -->
+                            <!-- <p class="help-block">Example block-level help text here.</p> -->
+                            <!-- </div> -->
 
                             <hr>
 

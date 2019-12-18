@@ -43,17 +43,17 @@ $(document).ready(function() {
                     }
                 }
             },
-            phone: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please enter valid phone number'
-                    },
-                    regexp: {
-                        regexp: /^[0-9]{10}$/,
-                        message: 'The phone number can only consist of numbers with 10 digits'
-                    }
-                }
-            },
+            // phone: {
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'Please enter valid phone number'
+            //         },
+            //         regexp: {
+            //             regexp: /^[0-9]{10}$/,
+            //             message: 'The phone number can only consist of numbers with 10 digits'
+            //         }
+            //     }
+            // },
             check: {
                 validators: {
                     notEmpty: {

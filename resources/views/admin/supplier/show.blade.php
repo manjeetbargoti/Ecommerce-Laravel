@@ -26,18 +26,14 @@
                         <a href="{{ url('/admin/supplier/' . $user->id . '/edit') }}" title="Edit Supplier"><button
                                 class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Edit</button></a>
-                        {!! Form::open([
-                        'method'=>'DELETE',
-                        'url' => ['admin/supplier', $user->id],
-                        'style' => 'display:inline'
-                        ]) !!}
-                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                        'type' => 'submit',
-                        'class' => 'btn btn-danger btn-sm',
-                        'title' => 'Delete Supplier',
-                        'onclick'=>'return confirm("Confirm delete?")'
-                        ))!!}
-                        {!! Form::close() !!}
+                        <form method="POST" action="{{ url('admin/supplier' . '/' . $user->id) }}"
+                            accept-charset="UTF-8" style="display:inline">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Supplier"
+                                onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o"
+                                    aria-hidden="true"></i> Delete</button>
+                        </form>
                         <br />
                         <br />
 
@@ -50,7 +46,8 @@
                                     </tr>
                                     <tr>
                                         <th> Name </th>
-                                        <td>{{ $user->title }} {{ $user->first_name }} {{ $user->last_name }} ({{ $user->username }})</td>
+                                        <td>{{ $user->title }} {{ $user->first_name }} {{ $user->last_name }}
+                                            ({{ $user->username }})</td>
                                     </tr>
                                     <tr>
                                         <th> Phone </th>
@@ -71,12 +68,16 @@
                                     </tr>
                                     <tr>
                                         <th> Category </th>
-                                        <td> <label class="badge badge-info badge-lg badge-pill">{{ $supplierData->category }}</label> </td>
+                                        <td> <label
+                                                class="badge badge-info badge-lg badge-pill">{{ $supplierData->category }}</label>
+                                        </td>
                                     </tr>
                                     @endif
                                     <tr>
                                         <th> Status </th>
-                                        <td> @if($user->status == 1)<label class="badge badge-success badge-lg badge-pill">Enable</label>@elseif($user->status == 0) <label class="badge badge-danger badge-lg">Disable</label> @endif</td>
+                                        <td> @if($user->status == 1)<label
+                                                class="badge badge-success badge-lg badge-pill">Enable</label>@elseif($user->status
+                                            == 0) <label class="badge badge-danger badge-lg">Disable</label> @endif</td>
                                     </tr>
                                     <tr>
                                         <th> Created on </th>
