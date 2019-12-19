@@ -7,6 +7,7 @@ use App\ProductQuery;
 use App\SupplierQuery;
 use App\SupplierData;
 use App\User;
+use App\UserAddress;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -246,22 +247,24 @@ class UserController extends Controller
 
         $supplierData = SupplierData::where('user_id', $auth_user['id'])->first();
 
+        $userAddress = UserAddress::where('user_id',$auth_user['id'])->first();
+
         if($roleName == 'Seller'){
             $productquery = ProductQuery::where('user_id', $auth_user->id)->latest()->take(12)->get();
             $supplierquery = '';
-            return view('admin.profile.view', compact('user','roleName','supplierData','productquery'));
+            return view('admin.profile.view', compact('user','roleName','supplierData','productquery','userAddress'));
         }elseif($roleName == 'Buyer'){
             $productquery = ProductQuery::where('email', $auth_user->email)->latest()->take(10)->get();
             $supplierquery = '';
-            return view('admin.profile.view', compact('user','roleName','supplierData','productquery'));
+            return view('admin.profile.view', compact('user','roleName','supplierData','productquery','userAddress'));
         }elseif($roleName == 'Supplier'){
             $productquery = '';
             $supplierQuery = SupplierQuery::where('supplier_id',$auth_user->id)->latest()->take(10)->get();
-            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery'));
+            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','userAddress'));
         }elseif($roleName == 'Super Admin'){
             $supplierQuery = SupplierQuery::latest()->take(10)->get();;
             $productquery = ProductQuery::latest()->take(12)->get();
-            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','productquery'));
+            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','productquery','userAddress'));
         }
 
         // return view('admin.profile.view', compact('user','roleName','supplierData','productquery','supplierQuery'));
@@ -351,5 +354,26 @@ class UserController extends Controller
         $sdata = SupplierData::where('user_id',$auth_user['id'])->first();
 
         return view('admin.profile.edit-supplier-info', compact('sdata'));
+    }
+
+    // Change Password
+    public function changePassword(Request $request, $id=null)
+    {
+        $requestData = $request->all();
+
+        if($request->isMethod('post'))
+        {
+            $user = User::findOrFail($id);
+            $user->update($requestData);
+
+            $notification = array(
+                'message' => 'Password changed successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect('/admin/profile')->with($notification);
+        }
+
+        return view('admin.profile.change-password');
     }
 }

@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Profile Access
     Route::match(['get','post'], '/admin/profile', 'Admin\\UserController@profile');
     Route::match(['get','post'], '/admin/profile/{id}/edit', 'Admin\\UserController@profileEdit');
+    Route::match(['get','post'], '/admin/profile/{id}/change-password', 'Admin\\UserController@changePassword');
 
     // Email and Username velidation
     Route::match(['get', 'post'], '/checkemail', 'AdminController@checkEmail');
@@ -85,6 +86,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Edit Supplier Business info
     Route::match(['get','post'], '/supplier-info/{id}/edit', 'Admin\\UserController@editBusinessInfo');
+
+    // User Address Management
+    Route::resource('/admin/user/address', 'UserAddressController');
 });
 
 //#################################################################################//

@@ -190,8 +190,61 @@
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="address">
                                             <div class="card_nav_body_padding follower_images">
+                                            <table class="table" id="users">
+                                                    <tr>
+                                                        <td>Name</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->name)){{ $userAddress->name }}
+                                                                @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->phone))
+                                                                {{ $userAddress->phone }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Address</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->address1)){{ $userAddress->address1 }}
+                                                                @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Country</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->country))
+                                                                @foreach(\App\Country::where('iso3',$userAddress->country)->get()
+                                                                as $cnt) {{ $cnt->name }}
+                                                                @endforeach @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>State</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->state))
+                                                                {{ $userAddress->state }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>City</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->city))
+                                                                {{ $userAddress->city }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>City</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($userAddress->zipcode))
+                                                                {{ $userAddress->zipcode }} @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                                 <div class="row">
-                                                    <a class="btn btn-info btn-sm pull-right" href="#">Add New</a>
+                                                    @if(!empty($userAddress)) <a class="btn btn-info btn-sm pull-right" href="{{ url('/admin/user/address/'.$userAddress->id.'/edit') }}">Edit Address</a> @else<a class="btn btn-info btn-sm pull-right" href="{{ url('/admin/user/address/create') }}">Add Address</a>@endif
                                                 </div>
                                             </div>
                                         </div>

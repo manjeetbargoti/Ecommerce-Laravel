@@ -131,7 +131,7 @@ button, .btn {
 #top .navbar {
   padding: 0;
   margin-bottom: 0;
-  background: #1b2d6d; }
+  background: #000; }
 
 #top .topnav {
   padding: 0 !important;
@@ -614,7 +614,7 @@ button, .btn {
     float: left;
     left: auto;
     height: auto;
-    background-color: #02165d; }
+    background-color: #000; }
   .sidebar-left-hidden #left {
     width: 0;
     height: 0;
