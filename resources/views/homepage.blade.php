@@ -3,7 +3,7 @@
 <div id="particles-js"></div> <!-- stats - count particles -->
 <!-- <div class="count-particles"> <span class="js-count-particles"></span> particles </div> -->
 <div class="container">
-<!-- <h2 class="vvvLux-typed" style="position:relative;text-align:center;top:7em;left:4em;color:#fff;font-family: 'Roboto';"></h2>
+    <!-- <h2 class="vvvLux-typed" style="position:relative;text-align:center;top:7em;left:4em;color:#fff;font-family: 'Roboto';"></h2>
 <h3 class="vvvLux-typed2" style="position:fixed;top:4em;color:#fff;left:5em;font-size:40px;font-family: 'Pinyon Script', cursive;margin:auto;"></h3> -->
 </div>
 <div class="page-content" style="margin: 12% 0 0 !important;">
@@ -15,12 +15,22 @@
             <div class="col-lg-3 hidden-md hidden-sm hidden-xs"></div>
         </div>
         <div class="row">
-        <div class="col-lg-12 col-md-12" style="text-align: center;"><a><img width="400" class="img-responsive" src="{{ url('/images/vvv.png') }}" alt="{{ config('app.name') }}"></a></div>
+            <div class="col-lg-12 col-md-12" style="text-align: center;"><a><img width="400" class="img-responsive"
+                        src="{{ url('/images/vvv.png') }}" alt="{{ config('app.name') }}"></a></div>
         </div>
+        <!-- <div class="row">
+            <ul class="list-unstyled text-center">
+                <li class="">
+                    <span style="display: block;"><a class="" href="{{ url('/vvv-lux/products/') }}"
+                            style="font-size: 3em !important;color: #fff; text-align: center;">VVV LUXURY</a></span>
+                </li>
+            </ul>
+        </div> -->
+
     </div>
 </div>
 <div class="container">
-<!-- <h2 class="vvvLux-typed3" style="position:relative;text-align:center;top:7em;left:4em;color:#fff;font-family: 'Roboto';"></h2>
+    <!-- <h2 class="vvvLux-typed3" style="position:relative;text-align:center;top:7em;left:4em;color:#fff;font-family: 'Roboto';"></h2>
 <h3 class="vvvLux-typed4" style="position:fixed;top:4em;color:#fff;left:5em;font-size:40px;font-family: 'Pinyon Script', cursive;margin:auto;"></h3> -->
 </div>
 @endsection

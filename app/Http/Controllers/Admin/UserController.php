@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\ProductQuery;
-use App\SupplierQuery;
 use App\SupplierData;
+use App\SupplierQuery;
 use App\User;
 use App\UserAddress;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Input;
 use Image;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -62,7 +62,7 @@ class UserController extends Controller
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        // dd($roles[0]);
+        // dd($requestData);
 
         DB::beginTransaction();
 
@@ -159,7 +159,7 @@ class UserController extends Controller
         $requestData = $request->except('roles');
         $roles = $request->roles;
 
-        // dd($requestData);
+        // dd($roles[0]);
 
         DB::beginTransaction();
         try {
@@ -174,10 +174,13 @@ class UserController extends Controller
         }
 
         try {
-            SupplierData::where('user_id', $id)->update([
-                'business_name' => $requestData['business_name'],
-                'category' => $requestData['category'],
-            ]);
+            if ($roles[0] == "Supplier" || $roles[0] == "Seller") {
+                SupplierData::where('user_id', $id)->update([
+                    'business_name' => $requestData['business_name'],
+                    'category' => $requestData['category'],
+                ]);
+            }
+
         } catch (ValidationException $e) {
             DB::rollback();
             return Redirect()->back()->withErrors($e->getErrors())->withInput();
@@ -247,24 +250,24 @@ class UserController extends Controller
 
         $supplierData = SupplierData::where('user_id', $auth_user['id'])->first();
 
-        $userAddress = UserAddress::where('user_id',$auth_user['id'])->first();
+        $userAddress = UserAddress::where('user_id', $auth_user['id'])->first();
 
-        if($roleName == 'Seller'){
+        if ($roleName == 'Seller') {
             $productquery = ProductQuery::where('user_id', $auth_user->id)->latest()->take(12)->get();
             $supplierquery = '';
-            return view('admin.profile.view', compact('user','roleName','supplierData','productquery','userAddress'));
-        }elseif($roleName == 'Buyer'){
+            return view('admin.profile.view', compact('user', 'roleName', 'supplierData', 'productquery', 'userAddress'));
+        } elseif ($roleName == 'Buyer') {
             $productquery = ProductQuery::where('email', $auth_user->email)->latest()->take(10)->get();
             $supplierquery = '';
-            return view('admin.profile.view', compact('user','roleName','supplierData','productquery','userAddress'));
-        }elseif($roleName == 'Supplier'){
+            return view('admin.profile.view', compact('user', 'roleName', 'supplierData', 'productquery', 'userAddress'));
+        } elseif ($roleName == 'Supplier') {
             $productquery = '';
-            $supplierQuery = SupplierQuery::where('supplier_id',$auth_user->id)->latest()->take(10)->get();
-            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','userAddress'));
-        }elseif($roleName == 'Super Admin'){
-            $supplierQuery = SupplierQuery::latest()->take(10)->get();;
+            $supplierQuery = SupplierQuery::where('supplier_id', $auth_user->id)->latest()->take(10)->get();
+            return view('admin.profile.view', compact('user', 'roleName', 'supplierData', 'supplierQuery', 'userAddress'));
+        } elseif ($roleName == 'Super Admin') {
+            $supplierQuery = SupplierQuery::latest()->take(10)->get();
             $productquery = ProductQuery::latest()->take(12)->get();
-            return view('admin.profile.view', compact('user','roleName','supplierData','supplierQuery','productquery','userAddress'));
+            return view('admin.profile.view', compact('user', 'roleName', 'supplierData', 'supplierQuery', 'productquery', 'userAddress'));
         }
 
         // return view('admin.profile.view', compact('user','roleName','supplierData','productquery','supplierQuery'));
@@ -288,7 +291,7 @@ class UserController extends Controller
                     // $image_name = $image_array[$i]->getClientOriginalName();
                     $image_size = $image_array[$i]->getClientSize();
                     $extension = $image_array[$i]->getClientOriginalExtension();
-                    $filename = 'user' . $requestData['first_name'].'_'. rand(0,99999) . '.' . $extension;
+                    $filename = 'user' . $requestData['first_name'] . '_' . rand(0, 99999) . '.' . $extension;
                     $large_image_path = public_path('/images/user/large/' . $filename);
                     // Resize image
                     Image::make($image_array[$i])->save($large_image_path);
@@ -333,12 +336,11 @@ class UserController extends Controller
     }
 
     // Edit Supplier Business Info
-    public function editBusinessInfo(Request $request, $id=null)
+    public function editBusinessInfo(Request $request, $id = null)
     {
         $requestData = $request->all();
 
-        if($request->isMethod('post'))
-        {
+        if ($request->isMethod('post')) {
             // dd($id);
             $supplierData = SupplierData::findOrFail($id);
             $supplierData->update($requestData);
@@ -351,18 +353,17 @@ class UserController extends Controller
             return redirect('/admin/profile')->with($notification);
         }
         $auth_user = Auth::user();
-        $sdata = SupplierData::where('user_id',$auth_user['id'])->first();
+        $sdata = SupplierData::where('user_id', $auth_user['id'])->first();
 
         return view('admin.profile.edit-supplier-info', compact('sdata'));
     }
 
     // Change Password
-    public function changePassword(Request $request, $id=null)
+    public function changePassword(Request $request, $id = null)
     {
         $requestData = $request->all();
 
-        if($request->isMethod('post'))
-        {
+        if ($request->isMethod('post')) {
             $user = User::findOrFail($id);
             $user->update($requestData);
 

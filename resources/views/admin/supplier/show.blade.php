@@ -80,6 +80,11 @@
                                             == 0) <label class="badge badge-danger badge-lg">Disable</label> @endif</td>
                                     </tr>
                                     <tr>
+                                        <th> Country </th>
+                                        <td>@foreach(\App\Country::where('iso3',$user->country)->get() as $cont)
+                                            {{ $cont->name }} @endforeach</td>
+                                    </tr>
+                                    <tr>
                                         <th> Created on </th>
                                         <td> {{ date('d M, Y (h:i:s A)', strtotime($user->created_at)) }} </td>
                                     </tr>
@@ -90,6 +95,65 @@
                     </div>
                 </div>
             </div>
+
+            <!-- User infromation -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Business info</div>
+                    <div class="card-body">
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th>Business Name</th>
+                                        <td>@if(!empty($supplierData->business_name)) {{ $supplierData->business_name }}
+                                            @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Category </th>
+                                        <td>@if(!empty($supplierData->category)) {{ $supplierData->category }}
+                                            @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <th> License Number </th>
+                                        <td> @if(!empty($supplierData->license_number))
+                                            {{ $supplierData->license_number }}
+                                            @endif </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Website </th>
+                                        <td> @if(!empty($supplierData->website)) {{ $supplierData->website }}
+                                            @endif </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Country </th>
+                                        <td>@foreach(\App\Country::where('iso3',$supplierData->country)->get() as $cont)
+                                            {{ $cont->name }} @endforeach</td>
+                                    </tr>
+                                    <tr>
+                                        <th> State </th>
+                                        <td>@if(!empty($supplierData->state)) {{ $supplierData->state }}
+                                            @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <th> City </th>
+                                        <td>@if(!empty($supplierData->city)) {{ $supplierData->city }}
+                                            @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Created on </th>
+                                        <td> {{ date('d M, Y (h:i:s A)', strtotime($supplierData->created_at)) }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /. Supplier Business -->
         </div>
     </div>
 </div>

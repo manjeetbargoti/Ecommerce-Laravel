@@ -63,7 +63,7 @@
                                     id="query_message">{{ isset($supplierQuery->query_message) ? $supplierQuery->query_message : ''}}</textarea>
                                 {!! $errors->first('query_message', '<p class="help-block">:message</p>') !!}
                             </div>
-                            <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
+                            <!-- <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
                                 <label for="status" class="control-label">{{ 'Status' }}</label>
                                 <div class="radio">
                                     <label><input name="status" type="radio" value="1"
@@ -76,8 +76,8 @@
                                             @endif> No</label>
                                 </div>
                                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-                            </div>
-                            <div class="form-group {{ $errors->has('terms') ? 'has-error' : ''}}">
+                            </div> -->
+                            <!-- <div class="form-group {{ $errors->has('terms') ? 'has-error' : ''}}">
                                 <label for="terms" class="control-label">{{ 'Terms' }}</label>
                                 <div class="form-group {{ $errors->has('terms') ? 'has-error' : ''}}">
                                     <label for="terms" class="control-label">{{ 'Terms' }}</label>
@@ -88,7 +88,7 @@
                                     {!! $errors->first('terms', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 {!! $errors->first('terms', '<p class="help-block">:message</p>') !!}
-                            </div>
+                            </div> -->
 
 
                             <div class="form-group">

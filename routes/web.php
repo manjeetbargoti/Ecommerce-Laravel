@@ -21,6 +21,9 @@ Route::group(['middleware' => 'role:Super Admin', 'auth'], function () {
     Route::resource('admin/product-vendor', 'Admin\\ProductVendorController');
     // Route::match(['get', 'post'], 'admin/product/create', 'Admin\\ProductsController@checkSlug');
 
+    // Delete Product Image
+    ROute::match(['get','post'],'/admin/product/{id}/delete-image', 'Admin\\ProductsController@deleteProductImage');
+
     // Supplier Management
     Route::resource('admin/supplier', 'SupplierController');
     Route::resource('admin/supplier-category', 'Admin\\SupplierCategoryController');
@@ -52,12 +55,16 @@ Route::group(['middleware' => 'role:Super Admin', 'auth'], function () {
     Route::post('/admin/system/custom-code', 'SystemController@postCodes');
     Route::get('/admin/system/contact-info', 'SystemController@getContactInfo');
     Route::post('/admin/system/contact-info', 'SystemController@postContactInfo');
+    Route::get('/admin/system/terms-condition', 'SystemController@getTerms');
+    Route::post('/admin/system/terms-condition', 'SystemController@postTerms');
 });
 
 Route::group(['middleware' => 'role:Super Admin|Seller', 'auth'], function () {
 
     // Product Management
     Route::resource('admin/product', 'Admin\\ProductsController');
+    // Delete Product Image
+    ROute::match(['get','post'],'/admin/product/{id}/delete-image', 'Admin\\ProductsController@deleteProductImage');
 });
 
 Route::group(['middleware' => 'role:Buyer|Super Admin|Seller', 'auth'], function () {
@@ -121,3 +128,7 @@ Route::match(['get','post'], '/verify/token={token}/code={code}', 'AdminControll
 
 // Subscribe form url
 Route::match(['get','post'], '/subscribe/form/', 'SubscriberController@subscribeNow');
+
+// Email and Username velidation
+Route::match(['get', 'post'], '/valid/checkemail', 'AdminController@checkEmail');
+Route::match(['get', 'post'], '/valid/checkusername', 'AdminController@checkUsername');

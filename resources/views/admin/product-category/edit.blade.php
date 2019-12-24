@@ -54,8 +54,10 @@
                             <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
                                 <label for="status" class="control-label">{{ 'Status' }}</label>
                                 <select name="status" id="Status" class="form-control">
-                                    <option value="1" @if($productcategory->status == '1') selected @endif>Enable</option>
-                                    <option value="0" @if($productcategory->status == '0') selected @endif>Disable</option>
+                                    <option value="1" @if($productcategory->status == '1') selected @endif>Enable
+                                    </option>
+                                    <option value="0" @if($productcategory->status == '0') selected @endif>Disable
+                                    </option>
                                 </select>
                                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                             </div>
@@ -64,8 +66,12 @@
                                 <input class="form-control" name="image" type="file" id="image"
                                     value="{{ isset($productcategory->image) ? $productcategory->image : ''}}">
                                 {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+                                @if(!empty($productcategory->image))
+                                <img style="padding-top: 1em;"
+                                    src="{{ url('/images/product-category/large/'.$productcategory->image) }}"
+                                    width="200" class="img-responsive" alt="{{ $productcategory->name }}">
+                                @endif
                             </div>
-
 
                             <div class="form-group">
                                 <input class="btn btn-primary" type="submit" value="Update Category">

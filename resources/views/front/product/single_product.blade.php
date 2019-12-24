@@ -14,13 +14,13 @@
                 <div id="myCarousel" class="carousel slide shadow">
                     <!-- main slider carousel items -->
                     <div class="carousel-inner">
-                        @if($productImage->count() > 0)
-                            @foreach($productImage as $key => $pi)
-                            <div class="carousel-item {{ $key == 0 ? ' active' : '' }}" data-slide-number="{{ $key }}">
-                                <img src="{{ asset('/images/product/large/'.$pi->image_name) }}" width="350"
-                                    class="img-responsive">
-                            </div>
-                            @endforeach
+                        @if(\App\ProductImage::where('product_id',$productData->id)->count() > 0)
+                        @foreach(\App\ProductImage::where('product_id',$productData->id)->get() as $key => $pi)
+                        <div class="carousel-item {{ $key == 0 ? ' active' : '' }}" data-slide-number="{{ $key }}">
+                            <img src="{{ asset('/images/product/large/'.$pi->image_name) }}" width="350"
+                                class="img-responsive">
+                        </div>
+                        @endforeach
                         @else
                         <div class="carousel-item active" data-slide-number="0">
                             <img src="{{ asset('/images/product/large/default.png') }}" width="350"
@@ -42,8 +42,8 @@
 
 
                     <ul class="carousel-indicators list-inline mx-auto border px-2">
-                        @if($productImage->count() > 0)
-                        @foreach($productImage as $key => $pti)
+                        @if(\App\ProductImage::where('product_id',$productData->id)->count() > 0)
+                        @foreach(\App\ProductImage::where('product_id',$productData->id)->get() as $key => $pti)
                         <li class="list-inline-item {{ $key == 0 ? ' active' : '' }}">
                             <a id="carousel-selector-0" class="selected" data-slide-to="{{ $key }}"
                                 data-target="#myCarousel">
@@ -54,8 +54,7 @@
                         @endforeach
                         @else
                         <li class="list-inline-item active">
-                            <a id="carousel-selector-0" class="selected" data-slide-to="0"
-                                data-target="#myCarousel">
+                            <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#myCarousel">
                                 <img width="60" src="{{ asset('/images/product/large/default.png') }}"
                                     class="img-responsive">
                             </a>
@@ -160,8 +159,8 @@
                             placeholder="Product Type" value="{{ $productData->is_premium }}">
                     </div>
                     <div class="form-group d-none">
-                        <input type="text" name="user_id" id="UserID" class="form-control mb-2"
-                            placeholder="User ID" value="{{ $productData->user_id }}">
+                        <input type="text" name="user_id" id="UserID" class="form-control mb-2" placeholder="User ID"
+                            value="{{ $productData->user_id }}">
                     </div>
                     <div class="form-group">
                         <textarea name="location" id="Location" cols="30" rows="2" class="form-control"
@@ -173,11 +172,11 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" name="terms" id="Terms" class="mb-2" value="1" required>
-                        I accept <a href="#">Terms and Conditions</a>.
+                        I accept <a href="#" data-toggle="modal" data-target="#TermCondition" style="color: #67d5ae;">Terms and Conditions</a>.
                     </div>
                     <div class="form-group">
-                        <button type="reset" class="btn btn-warning" data-dismiss="modal">Reset</button>
-                        <button type="submit" class="btn btn-primary pull-right">Submit
+                        <button type="reset" class="btn btn-info" style="background: #67d5ae;border: 1px solid #67d5ae;" data-dismiss="modal">Reset</button>
+                        <button type="submit" class="btn btn-info pull-right" style="background: #67d5ae;border: 1px solid #67d5ae;">Submit
                             Query</button>
                     </div>
                 </form>

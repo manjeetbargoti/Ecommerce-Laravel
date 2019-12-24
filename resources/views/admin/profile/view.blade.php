@@ -138,6 +138,13 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
+                                                        <td>Description</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->description)){{ $supplierData->description }}
+                                                                @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>Category</td>
                                                         <td class="inline_edit">
                                                             <span>@if(!empty($supplierData->business_name))
@@ -183,7 +190,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>@if(!empty($supplierData))<a href="{{ url('/supplier-info/'.$supplierData->id.'/edit') }}"
-                                                                class="btn btn-md btn-info pull-right">Edit</a>@endif</td>
+                                                                class="btn btn-sm btn-info pull-right">Edit</a>@endif</td>
                                                     </tr>
                                                 </table>
                                             </div>

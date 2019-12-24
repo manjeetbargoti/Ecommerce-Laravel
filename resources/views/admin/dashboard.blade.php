@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-lg-7 col-7 icon_padd_right">
                                     <div class="float-right cards_content">
-                                        <span class="number_val" id="sales_count">29</span><i
+                                        <span class="number_val" id="sales_count">{{ \App\ProductQuery::count() }}</span><i
                                             class="fa fa-long-arrow-up fa-2x"></i>
                                         <br />
                                         <span class="card_description">Queries</span>

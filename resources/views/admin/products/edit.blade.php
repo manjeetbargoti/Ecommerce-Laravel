@@ -1,6 +1,58 @@
 @extends('layouts.panel.panel_design')
 
 @section('content')
+<style>
+.product_image_upload .fileinput-upload-button {
+    display: none;
+}
+
+#filediv {
+    display: inline-block !important;
+}
+
+#file {
+    color: green;
+    padding: 5px;
+    border: 1px dashed #123456;
+    background-color: #f9ffe5
+}
+
+#noerror {
+    color: green;
+    text-align: left
+}
+
+#error {
+    color: red;
+    text-align: left
+}
+
+#img {
+    width: 17px;
+    border: none;
+    height: 17px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.abcd img {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #e8debd
+}
+
+#close {
+    vertical-align: top;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: -13px;
+    margin-top: 1px;
+}
+</style>
 <header class="head">
     <div class="main-bar">
         <div class="row">
@@ -153,10 +205,31 @@
                             <div class="form-group row">
                                 <div class="col-sm-12 col-12 product_image_upload">
                                     <label for="Product Description" class="control-label">{{ 'File Upload' }}</label>
+                                    <!-- <input id="input-f" name="product_image[]" accept="image/*" type="file" accept="image/*" multiple> -->
+                                    <div class="add_image">
+                                        <input type="button" id="add_more" class="btn btn-info" value="add image" />
+                                        <!-- <i class="fas fa-camera"></i> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row filediv">
+                                <div id="abcd1" class="abcd">
+                                    @foreach(\App\ProductImage::where('product_id', $product->id)->get() as $pimg)
+                                    <img class="img-responsive" width="100"
+                                        src="{{ asset('/images/product/large/'.$pimg->image_name) }}"
+                                        alt="{{ $product->name }}" style="padding: 0 0.1em;">
+                                    <a href="{{ url('/admin/product/' . $pimg->id . '/delete-image') }}"><i id="close" alt="delete" class="fa fa-close"></i></a>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group row">
+                                <div class="col-sm-12 col-12 product_image_upload">
+                                    <label for="Product Description" class="control-label">{{ 'File Upload' }}</label>
                                     <input id="input-fa" name="product_image[]" accept="image/*" type="file"
                                         class="file-loading" accept="image/*" multiple>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <hr>
 

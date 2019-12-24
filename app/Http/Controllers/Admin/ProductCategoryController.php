@@ -124,8 +124,23 @@ class ProductCategoryController extends Controller
 
         $requestData = $request->all();
         if ($request->hasFile('image')) {
-            $requestData['image'] = $request->file('image')
-                ->store('uploads', 'public');
+            // $requestData['image'] = $request->file('image')
+            //     ->store('uploads', 'public');
+            $image_array = $request->file('image');
+            // $image_size = $image_array->getClientSize();
+            $extension = $image_array->getClientOriginalExtension();
+            $filename = 'category_' . $requestData['name'] . '.' . $extension;
+            // $watermark = Image::make(public_path('/images/frontend_images/images/logo.png'));
+            $large_image_path = public_path('/images/product-category/large/' . $filename);
+            $medium_image_path = 'images/backend_images/property_images/medium/' . $filename;
+            $small_image_path = 'images/backend_images/property_images/small/' . $filename;
+            // Resize image
+            Image::make($image_array)->save($large_image_path);
+
+            // Store image in property folder
+            $requestData['image'] = $filename;
+            // $requestData['image'] = $request->file('image')->store('uploads', 'public/images/product-category/large');
+
         }
 
         $productcategory = ProductCategory::findOrFail($id);

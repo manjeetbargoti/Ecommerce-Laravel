@@ -80,6 +80,23 @@ class SystemController extends Controller
         return back();
     }
 
+    // Get Terms & Conditions
+    public function getTerms()
+    {
+        $data['terms'] = file_get_contents(resource_path('views/admin/system/partials/terms_condition.blade.php'));
+        return view('admin.system.terms_condition', $data);
+    }
+
+    // Save Terms & Conditions
+    public function postTerms(Request $request)
+    {
+        file_put_contents(resource_path('views/admin/system/partials/terms_condition.blade.php'), $request->custom_code_terms);
+        $option = Option::where('key', '=', 'app.terms')->first();
+        $option->value = $request->custom_code_terms ?: $option->value;
+        $option->save();
+        return back();
+    }
+
     // Get Website Contact Details
     public function getContactInfo()
     {
@@ -105,6 +122,6 @@ class SystemController extends Controller
         $option = Option::where('key', '=', 'app.copyright')->first();
         $option->value = $request->copyright ?: $option->value;
         $option->save();
-        return back()->with(['flash_message_success' => 'Contact info Updated!']);
+        return back()->with(['flash_message_success' => 'Terms & Conditions Updated!']);
     }
 }

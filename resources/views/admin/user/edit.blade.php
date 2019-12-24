@@ -58,7 +58,6 @@
                             <!-- /.User Role Select Field -->
 
                             <!-- Business name Field -->
-                            @if(!empty($supplierData->business_name))
                             <div class="form-group row d-none" id="EditBusinessName">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Business Name"
@@ -67,14 +66,13 @@
                                 <div class="col-xl-4">
                                     <input type="text" name="business_name" id="business_name"
                                         class="form-control @error('business_name') is-invalid @enderror" required
-                                            value="{{ $supplierData->business_name }}">
+                                            value="@if(!empty($supplierData->business_name)){{ $supplierData->business_name }}@endif">
                                 </div>
                             </div>
-                            @endif
                             <!-- /.Business name Field -->
 
                             <!-- Supplier Category Select Field -->
-                            @if(!empty($supplierData->business_name))
+                            
                             <div class="form-group row d-none" id="EditSupplierCategory">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Supplier Category"
@@ -86,13 +84,12 @@
                                         required value="{{ old('category') }}">
                                         <option value=""> -- Supplier Category -- </option>
                                         @foreach(\App\SupplierCategory::where('status',1)->get() as $suppCat)
-                                        <option value="{{ $suppCat->name }}" @if($supplierData->category ==
-                                            $suppCat->name) selected @endif>{{ $suppCat->name }}</option>
+                                        <option value="{{ $suppCat->name }}" @if(!empty($supplierData->category)) @if($supplierData->category ==
+                                            $suppCat->name) selected @endif @endif>{{ $suppCat->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            @endif
                             <!-- /.Supplier Category Select Field -->
 
                             <!-- User Title Select Field -->
@@ -178,6 +175,25 @@
                                 </div>
                             </div>
                             <!-- Phone Number Input Field -->
+
+                            <!-- Country Select Field -->
+                            <div class="form-group row" id="UserCountry">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Country"
+                                        class="col-form-label">{{ __('Country *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <select name="country" id="UCountry"
+                                        class="validate[required] form-control select2 @error('country') is-invalid @enderror"
+                                        required value="{{ old('country') }}">
+                                        <option value=""> -- Select Country -- </option>
+                                        @foreach(\App\Country::get() as $count)
+                                        <option value="{{ $count->iso3 }}" @if($count->iso3 == $user->country) selected @endif>{{ $count->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.Country Select Field -->
 
                             <!-- User Status Select Field -->
                             <div class="form-group row">

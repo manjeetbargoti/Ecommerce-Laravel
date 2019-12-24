@@ -33,16 +33,31 @@
                         </ul>
                         @endif
 
-                        {!! Form::model($role, [
-                        'method' => 'PATCH',
-                        'url' => ['/admin/user/role', $role->id],
-                        'class' => 'form-horizontal',
-                        'files' => true
-                        ]) !!}
 
-                        @include ('admin.role.form', ['formMode' => 'edit'])
+                        <form action="{{ url('admin/user/role/'.$role->id) }}" method="POST"
+                            class="form-horizontal login_validator" enctype="multipart/form-data"
+                            id="form_inline_validator">
+                            <input name="_method" type="hidden" value="PATCH">
 
-                        {!! Form::close() !!}
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+                                <label for="Name" class="control-label">Name</label>
+                                <input type="text" class="form-control" required value="{{ $role->name }}">
+                            </div>
+
+                            <div class="form-group {{ $errors->has('permissions') ? 'has-error' : ''}}">
+                                <label for="Permissions" class="control-label">Permissions</label>
+                                <select name="permissions" id="permissions" class="form-control" multiple>
+                                    @foreach($permissions as $p)
+                                    <option value="{{ $p->name }}">{{ $p->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Update Role" class="btn btn-info">
+                            </div>
+
+                        </form>
 
                     </div>
                 </div>

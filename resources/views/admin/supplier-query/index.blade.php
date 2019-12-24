@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12 m-auto">
                 <div class="card">
-                    <div class="card-header">Product Query</div>
+                    <div class="card-header">Supplier Query</div>
                     <div class="card-body">
                         <!-- <a href="{{ url('/admin/support/product-query/create') }}" class="btn btn-success btn-sm"
                             title="Add New ProductQuery">
@@ -88,9 +88,9 @@
                                                         aria-hidden="true"></i></button>
                                             </form>
 
-                                            <a href="{{ url('/admin/send-email/' . $item->id) }}"
+                                            <!-- <a href="{{ url('/admin/send-email/' . $item->id) }}"
                                                 title="Send Email"><button class="btn btn-info btn-sm"><i
-                                                        class="fa fa-envelope" aria-hidden="true"></i> </button></a>
+                                                        class="fa fa-envelope" aria-hidden="true"></i> </button></a> -->
                                         </td>
                                     </tr>
                                     @endforeach

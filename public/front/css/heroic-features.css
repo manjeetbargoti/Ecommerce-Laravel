@@ -433,3 +433,16 @@ canvas {
 .inquireform .form-control:focus {
 	border-color: #67d5ae;
 }
+
+#TermCondition .modal-title {
+	color: #000;
+	font-weight: bold;
+}
+#TermCondition .modal-body {
+	color: #000;
+}
+#TermCondition .modal-body h3,#TermCondition .modal-body h2,#TermCondition .modal-body h4{
+	color: #000;
+	font-weight: bold;
+	padding: 0.1em 0;
+}

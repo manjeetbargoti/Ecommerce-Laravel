@@ -1,8 +1,15 @@
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
-    {!! Form::text('name', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class'
-    => 'form-control']) !!}
-    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+    <label for="Name" class="control-label">Name</label>
+    <input type="text" class="form-control" required value="">
+</div>
+
+<div class="form-group {{ $errors->has('permissions') ? 'has-error' : ''}}">
+<label for="Permissions" class="control-label">Permissions</label>
+<select name="permissions" id="permissions">
+    @foreach($permissions as $p)
+    <option value="{{ $p->name }}">{{ $p->name }}</option>
+    @endforeach
+</select>
 </div>
 
 <div class="form-group {{ $errors->has('permissions') ? 'has-error' : ''}}">

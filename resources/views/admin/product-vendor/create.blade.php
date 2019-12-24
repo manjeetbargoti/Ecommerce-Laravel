@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Vendors
+                    Sellers
                 </h4>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-xl-12 m-auto">
                 <div class="card">
-                    <div class="card-header">Create New Vendor</div>
+                    <div class="card-header">Create New Seller</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/product-vendor') }}" title="Back"><button class="btn btn-warning btn-sm"><i
                                     class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -191,7 +191,7 @@
                             </div>
                             <!-- /.Confirm Password Input Field -->
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Terms & Condition" class="col-form-label"></label>
                                 </div>
@@ -206,7 +206,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">

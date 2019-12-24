@@ -26,7 +26,7 @@
                     <p style="margin: auto;padding-top: 6rem;">Sorry! We have no Supplier in this category.</p>
                     @else
                     @foreach($supplier as $supp)
-                    <div class="col-lg-4 col-md-6 mb-4" id="watch1">
+                    <div class="col-lg-12 col-md-12 mb-4" id="watch1">
                         <div class="card h-100">
                             <a href="#">
                                 @if(!empty($supp->image))
@@ -36,14 +36,31 @@
                                 @endif
                             </a>
                             <div class="card-body">
-                                <h5><a href="#"
-                                        class="text-white">{{ $supp->business_name }}</a></h5>
-                                <p class="card-text mt-2">{{ $supp->category }}</p>
-                                <h4 class="card-title">
-                                    <a href="" class="green-txt" data-toggle="modal"
-                                        data-target="#Supplier{{ $supp->id }}">Get
-                                        Inquired</a>
-                                </h4>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @if(!empty($supp->image))
+                                        <img class="img-responsive" width="200"
+                                            src="{{ url('/images/business/large/'.$supp->image) }}"
+                                            alt="{{ $supp->business_name }}">
+                                        @else
+                                        <img class="img-responsive" width="200"
+                                            src="{{ asset('/images/business/large/default.png') }}"
+                                            alt="{{ $supp->business_name }}">
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <h5><a href="#" class="text-white">{{ $supp->business_name }}</a></h5>
+                                        <p class="card-text mt-2">
+                                            {{ $supp->category }}@foreach(\App\Country::where('iso3',$supp->country)->get()
+                                            as $count), {{ $count->name }} @endforeach</p>
+                                        <p>{{ str_limit(strip_tags($supp->description), $limit=100) }}</p>
+                                        <h4 class="card-title">
+                                            <a href="" class="green-txt" data-toggle="modal"
+                                                data-target="#Supplier{{ $supp->id }}">Get
+                                                Inquired</a>
+                                        </h4>
+                                    </div>
+                                </div>
                             </div>
                             <!-- <div class="card-footer gry-bg">
                                     <small class="text-muted green-txt">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -99,12 +116,14 @@
                                         <div class="form-group">
                                             <input type="checkbox" name="terms" id="Terms" class="mb-2" value="1"
                                                 required>
-                                            I accept <a href="#">Terms and Conditions</a>.
+                                            I accept <a href="#" data-toggle="modal" style="color: #67d5ae;"
+                                                data-target="#TermCondition">Terms and Conditions</a>.
                                         </div>
                                         <div class="form-group">
-                                            <button type="reset" class="btn btn-warning"
-                                                data-dismiss="modal">Reset</button>
-                                            <button type="submit" class="btn btn-primary pull-right">Submit
+                                            <button type="reset" class="btn btn-info"
+                                                style="background: #67d5ae;border: 1px solid #67d5ae;">Reset</button>
+                                            <button type="submit" class="btn btn-info pull-right"
+                                                style="background: #67d5ae;border: 1px solid #67d5ae;">Submit
                                                 Query</button>
                                         </div>
                                     </form>

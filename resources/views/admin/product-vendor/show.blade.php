@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Vendors
+                    Sellers
                 </h4>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Product Vendor #{{ $productvendor->id }} ({{ $productvendor->first_name }} {{ $productvendor->last_name }})</div>
+                    <div class="card-header">Product Seller #{{ $productvendor->id }} ({{ $productvendor->first_name }} {{ $productvendor->last_name }})</div>
                     <div class="card-body">
 
                         <a href="{{ url('/admin/product-vendor') }}" title="Back"><button

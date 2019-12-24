@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Vendors
+                    Sellers
                 </h4>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12 m-auto">
                 <div class="card">
-                    <div class="card-header">Product Vendor</div>
+                    <div class="card-header">Product Seller</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/product-vendor/create') }}" class="btn btn-success btn-sm"
                             title="Add New Vendor">

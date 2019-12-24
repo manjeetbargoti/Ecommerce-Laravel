@@ -36,11 +36,11 @@ class ProductsController extends Controller
 
         if ($role == 'Seller') {
             if (!empty($keyword)) {
-                $products = Product::where('user_id',$user_info->id)->orWhere('product_name', 'LIKE', "%$keyword%")
+                $products = Product::where('user_id', $user_info->id)->orWhere('product_name', 'LIKE', "%$keyword%")
                     ->orWhere('product_category', 'LIKE', "%$keyword%")
                     ->latest()->paginate($perPage);
             } else {
-                $products = Product::where('user_id',$user_info->id)->latest()->paginate($perPage);
+                $products = Product::where('user_id', $user_info->id)->latest()->paginate($perPage);
             }
         } elseif ($role == 'Super Admin') {
             if (!empty($keyword)) {
@@ -86,9 +86,9 @@ class ProductsController extends Controller
 
         if ($latestProductCount > 0) {
             $latestProductCode = Product::orderBy('created_at', 'DESC')->first();
-            $product_code = 'PROD' . str_pad($latestProductCode->id + 1, 8, "0", STR_PAD_LEFT);
+            $product_code = 'VVVLUX' . str_pad($latestProductCode->id + 1, 8, "0", STR_PAD_LEFT);
         } else {
-            $product_code = 'PROD' . str_pad(0 + 1, 8, "0", STR_PAD_LEFT);
+            $product_code = 'VVVLUX' . str_pad(0 + 1, 8, "0", STR_PAD_LEFT);
         }
 
         // dd($product_code);
@@ -253,6 +253,50 @@ class ProductsController extends Controller
         }
 
         try {
+
+            if ($request->hasFile('file')) {
+                $image_array = Input::file('file');
+                // if($image_array->isValid()){
+                $array_len = count($image_array);
+                // dd($array_len);
+                for ($i = 0; $i < $array_len; $i++) {
+                    // $image_name = $image_array[$i]->getClientOriginalName();
+                    $image_size = $image_array[$i]->getClientSize();
+                    $extension = $image_array[$i]->getClientOriginalExtension();
+                    $filename = 'VVV_Lux_' . rand(1, 99999) . '.' . $extension;
+                    $large_image_path = public_path('images/product/large/' . $filename);
+                    // Resize image
+                    Image::make($image_array[$i])->save($large_image_path);
+
+                    // dd($product->id);
+
+                    // Store image in property folder
+                    ProductImage::create([
+                        'image_name' => $filename,
+                        'image_size' => $image_size,
+                        'product_id' => $product->id,
+                    ]);
+                    // }
+                }
+            } else {
+                $filename = "default.png";
+                // $property->image = "default.jpg";
+                ProductImage::create([
+                    'image_name' => $filename,
+                    'image_size' => '7.4',
+                    'product_id' => $product->id,
+                ]);
+            }
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return Redirect()->back()->withErrors($e->getErrors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        try {
             $productInCategory = ProductCategory::where('name', $requestData['product_category'])->count();
             $catProduct_count = $productInCategory;
 
@@ -327,10 +371,10 @@ class ProductsController extends Controller
         $product_count = $products->count();
         $products = json_decode(json_encode($products));
 
-        foreach($products as $key => $val){
-            $productImage_count = ProductImage::where('product_id',$val->id)->count();
-            if($productImage_count > 0){
-                $productImage = ProductImage::where('product_id',$val->id)->first();
+        foreach ($products as $key => $val) {
+            $productImage_count = ProductImage::where('product_id', $val->id)->count();
+            if ($productImage_count > 0) {
+                $productImage = ProductImage::where('product_id', $val->id)->first();
                 $products[$key]->image = $productImage->image_name;
                 // dd($productImage);
             }
@@ -340,7 +384,7 @@ class ProductsController extends Controller
 
         // dd($pcategory);
 
-        return view('front.product.category_product', compact('productcategory', 'products', 'pcategory','product_count'));
+        return view('front.product.category_product', compact('productcategory', 'products', 'pcategory', 'product_count'));
     }
 
     // VVV Lux Products
@@ -472,5 +516,18 @@ class ProductsController extends Controller
         }
 
         return view('front.product.single_product', compact('productcategory', 'productData', 'productImage'));
+    }
+
+    // Delete Product Image
+    public function deleteProductImage(Request $request, $id = null)
+    {
+        ProductImage::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Image Deleted!',
+            'alert-type' => 'success',
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

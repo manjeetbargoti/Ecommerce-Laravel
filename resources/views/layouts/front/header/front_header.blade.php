@@ -8,6 +8,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/promotions') }}" style="color:#67d5ae !important;">PROMOTIONS &nbsp;&nbsp;|</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/contact') }}">CONTACT &nbsp;&nbsp;|</a>
                 </li>

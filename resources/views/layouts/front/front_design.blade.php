@@ -191,6 +191,79 @@ z-index: 999999">
     @endif
     </script>
 
+<script>
+    // Check Username
+    $('#UserName').blur(function() {
+        var error_username = '';
+        var username = $('#UserName').val();
+        var _token = $('input[name="_token"]').val();
+        var filter = /^([a-zA-Z0-9_]{3,20})+$/;
+        if (!filter.test(username)) {
+            $('#error_username').html(
+                '<label class="text-danger"><i class="fa fa-exclamation-circle"></i> Invalid Username</label>'
+            );
+            $('#UserName').addClass('has-error');
+        } else {
+            $.ajax({
+                url: "{{ url('/valid/checkusername') }}",
+                method: "POST",
+                data: {
+                    username: username,
+                    _token: _token
+                },
+                success: function(result) {
+                    if (result == 'unique') {
+                        $('#error_username').html(
+                            '<label class="text-success"><i class="fa fa-check"></i> Username Available</label>'
+                        );
+                        $('#UserName').removeClass('has-error');
+                    } else {
+                        $('#error_username').html(
+                            '<label class="text-danger"><i class="fa fa-exclamation-circle"></i> Username already exist.</label>'
+                        );
+                        $('#UserName').addClass('has-error');
+                    }
+                }
+            })
+        }
+    });
+
+    // Check User Email
+    $('#email').blur(function() {
+        var error_email = '';
+        var email = $('#email').val();
+        var _token = $('input[name="_token"]').val();
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (!filter.test(email)) {
+            $('#error_email').html(
+                '<label class="text-danger"><i class="fa fa-exclamation-circle"></i> Invalid Email</label>');
+            $('#email').addClass('has-error');
+        } else {
+            $.ajax({
+                url: "{{ url('/valid/checkemail') }}",
+                method: "POST",
+                data: {
+                    email: email,
+                    _token: _token
+                },
+                success: function(result) {
+                    if (result == 'unique') {
+                        $('#error_email').html(
+                            '<label class="text-success"><i class="fa fa-check"></i> Email Available</label>'
+                        );
+                        $('#email').removeClass('has-error');
+                    } else {
+                        $('#error_email').html(
+                            '<label class="text-danger"><i class="fa fa-exclamation-circle"></i> Email already exist.</label>'
+                        );
+                        $('#email').addClass('has-error');
+                    }
+                }
+            })
+        }
+    });
+    </script>
+
 </body>
 
 </html>

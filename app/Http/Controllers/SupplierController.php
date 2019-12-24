@@ -54,7 +54,7 @@ class SupplierController extends Controller
             $requestData = $request->except('roles');
             $roles = $request->roles;
 
-            dd($requestData);
+            // dd($requestData);
 
             DB::beginTransaction();
 
@@ -267,6 +267,8 @@ class SupplierController extends Controller
                 $supplier_data = SupplierData::where('user_id', $val->id)->where('category', $category)->first();
                 $supplier[$key]->business_name = $supplier_data->business_name;
                 $supplier[$key]->image = $supplier_data->image;
+                $supplier[$key]->country = $supplier_data->country;
+                $supplier[$key]->description = $supplier_data->description;
             }
 
             // dd($supplier);

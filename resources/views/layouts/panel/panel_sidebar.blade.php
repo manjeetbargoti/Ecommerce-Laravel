@@ -67,6 +67,12 @@
                             <span class="link-title"> &nbsp; Custom Code</span>
                         </a>
                     </li>
+                    <li class="{{ (request()->is('admin/system/terms-condition')) ? 'active':'' }}">
+                        <a href="{{ url('admin/system/terms-condition') }}">
+                            <i class="fa fa-angle-right"></i>
+                            <span class="link-title"> &nbsp; Terms & Conditions</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!-- /.System Settings -->
@@ -153,7 +159,7 @@
                     <li class="{{ (request()->is('admin/product-vendor*')) ? 'active':'' }}">
                         <a href="{{ url('admin/product-vendor') }}">
                             <i class="fa fa-angle-right"></i>
-                            <span class="link-title"> &nbsp; Product Vendor</span>
+                            <span class="link-title"> &nbsp; Product Seller</span>
                         </a>
                     </li>
                     @endrole

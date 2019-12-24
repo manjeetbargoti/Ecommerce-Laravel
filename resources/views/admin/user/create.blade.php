@@ -172,6 +172,25 @@
                             </div>
                             <!-- Phone Number Input Field -->
 
+                            <!-- Country Select Field -->
+                            <div class="form-group row" id="UserCountry">
+                                <div class="col-xl-4 text-xl-right">
+                                    <label for="Country"
+                                        class="col-form-label">{{ __('Country *') }}</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <select name="country" id="UCountry"
+                                        class="validate[required] form-control select2 @error('country') is-invalid @enderror"
+                                        required value="{{ old('country') }}">
+                                        <option value=""> -- Select Country -- </option>
+                                        @foreach(\App\Country::get() as $count)
+                                        <option value="{{ $count->iso3 }}">{{ $count->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.Country Select Field -->
+
                             <!-- Password Input Field -->
                             <div class="form-group row">
                                 <div class="col-xl-4 text-xl-right">
@@ -209,7 +228,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Terms & Condition" class="col-form-label"></label>
                                 </div>
@@ -224,7 +243,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">

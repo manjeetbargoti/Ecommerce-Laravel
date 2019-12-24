@@ -111,12 +111,11 @@
                                         <div class="form-group">
                                             <input type="checkbox" name="terms" id="Terms" class="mb-2" value="1"
                                                 required>
-                                            I accept <a href="#">Terms and Conditions</a>.
+                                            I accept <a href="#" data-toggle="modal" style="color: #67d5ae;" data-target="#TermCondition">Terms and Conditions</a>.
                                         </div>
                                         <div class="form-group">
-                                            <button type="reset" class="btn btn-warning"
-                                                data-dismiss="modal">Reset</button>
-                                            <button type="submit" class="btn btn-primary pull-right">Submit
+                                            <button type="reset" class="btn btn-info" style="background: #67d5ae;border: 1px solid #67d5ae;">Reset</button>
+                                            <button type="submit" class="btn btn-info pull-right" style="background: #67d5ae;border: 1px solid #67d5ae;">Submit
                                                 Query</button>
                                         </div>
                                     </form>

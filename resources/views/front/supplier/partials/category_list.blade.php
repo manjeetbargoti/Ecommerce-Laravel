@@ -26,6 +26,14 @@
             </ul>
         </div>
     </div>
+    <div class="menu-destination-prehome" style="padding-top: 7em;">
+        <ul class="list-unstyled text-center">
+            <li class="">
+                <span style="display: block;"><a class="" href="{{ url('/vvv-lux/products/') }}"
+                        style="font-size: 3em !important;color: #fff;">VVV LUXURY</a></span>
+            </li>
+        </ul>
+    </div>
     <div class="space"></div>
 </div>
 <!-- <div class="space"></div> -->

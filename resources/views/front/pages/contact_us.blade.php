@@ -25,9 +25,18 @@
                             placeholder="Query..." required></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="reset" class="btn btn-info btn-md" data-dismiss="modal">Reset</button>
-                        <button type="submit" class="btn btn-info btn-md pull-right">Submit
-                            Query</button>
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="form-check-input" name="terms" id="Terms" required>
+                            <span class="custom-control-indicator"></span>
+                            <span href="#" class="custom-control-description">I agree with the <a href="#"
+                                    data-toggle="modal" data-target="#TermCondition"
+                                    style="text-decoration:underline;color: #fff;">Terms and Conditions</a>.</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button type="reset" style="background: #67d5ae;border: 1px solid #67d5ae;" class="btn btn-info btn-md" data-dismiss="modal">RESET</button>
+                        <button type="submit" style="background: #67d5ae;border: 1px solid #67d5ae;" class="btn btn-info btn-md pull-right">SUBMIT
+                            QUERY</button>
                     </div>
                 </form>
             </div>
@@ -35,12 +44,12 @@
                 {!! $pageData->content !!}
             </div>
         </div>
-        <div class="contact_page_map" style="padding-top: 2em; padding-bottom: 10em;">
+        <!-- <div class="contact_page_map" style="padding-top: 2em; padding-bottom: 10em;">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d902.3331514949289!2d55.28335022919859!3d25.225719998992684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42ee8879e54b%3A0x18c04cc22bfbd904!2sConrad%20Dubai!5e0!3m2!1sen!2sae!4v1576395104983!5m2!1sen!2sae"
                 width="100%" height="450" frameborder="1" style="border:1px solid #f2f2f2;"
                 allowfullscreen="1"></iframe>
-        </div>
+        </div> -->
     </div>
 </div>
 

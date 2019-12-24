@@ -7,7 +7,7 @@
             <div class="col-6">
                 <h4 class="m-t-5">
                     <i class="fa fa-home"></i>
-                    Vendors
+                    Sellers
                 </h4>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-9 m-auto">
                 <div class="card">
-                    <div class="card-header">Edit Vendor #{{ $productvendor->id }} ({{ $productvendor->first_name }}
+                    <div class="card-header">Edit Seller #{{ $productvendor->id }} ({{ $productvendor->first_name }}
                         {{ $productvendor->last_name }})</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/product-vendor') }}" title="Back"><button
@@ -216,7 +216,7 @@
                             </div>
                             <!-- User Status Field -->
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <div class="col-xl-4 text-xl-right">
                                     <label for="Terms & Condition" class="col-form-label"></label>
                                 </div>
@@ -231,7 +231,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-actions form-group row">
                                 <div class="col-xl-4 m-auto">

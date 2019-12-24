@@ -6,6 +6,7 @@
         margin: 5% 0 0 !important;
     }
 }
+
 .inquireform {
     padding-bottom: 1%;
 }
@@ -111,7 +112,8 @@
                 <div class="col-sm-6">
                     <label for="username" class="col-form-label">{{ __('Username *') }}</label>
                     <input type="text" class="form-control @error('username') is-invalid @enderror" name="username"
-                        value="{{ old('username') }}" required id="username" placeholder="Username">
+                        value="{{ old('username') }}" required id="UserName" placeholder="Username">
+                        <span class="pull-left" id="error_username"></span>
                     @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -155,6 +157,7 @@
                     <input type="email" placeholder="Email Address" name="email" id="email"
                         class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required
                         autocomplete="email" />
+                    <span class="pull-left" id="error_email"></span>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -241,14 +244,15 @@
                         <input type="checkbox" class="form-check-input" name="terms" id="Terms" required>
                         <span class="custom-control-indicator"></span>
                         <span href="#" class="custom-control-description">I agree with the <a href="#"
+                                data-toggle="modal" data-target="#TermCondition"
                                 style="text-decoration:underline;color: #fff;">Terms and Conditions</a>.</span>
                     </label>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <button type="reset" class="btn btn-info btn-md pull-left">Reset</button>
-                    <input type="submit" value="Register" class="btn btn-info btn-md pull-right" />
+                    <button type="reset" class="btn btn-info btn-md pull-left">RESET</button>
+                    <input type="submit" value="REGISTER" class="btn btn-info btn-md pull-right" />
                 </div>
             </div>
         </form>
