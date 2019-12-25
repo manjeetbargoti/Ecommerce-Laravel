@@ -67,8 +67,8 @@
                                     <input type="file" name="site_logo" id="site_logo" accept="image/*"
                                         class="form-control" placeholder="Site Logo">
                                     <div class="help-block">
-                                        <span><a href="{{ asset(config('app.logo')) }}" target="_blank"><img
-                                                    src="{{ asset(config('app.logo')) }}" width="60"></a></span>
+                                        <span><a href="{{ asset('/images/logo/'.config('app.logo')) }}" target="_blank"><img
+                                                    src="{{ asset('/images/logo/'.config('app.logo')) }}" width="60"></a></span>
                                     </div>
                                 </div>
                             </div>
@@ -83,8 +83,8 @@
                                     <input type="file" name="site_icon" id="site_icon" accept="image/*"
                                         class="form-control" placeholder="Site icon">
                                     <div class="help-block">
-                                        <s pan><a href="{{ asset(config('app.favicon')) }}" target="_blank"><img
-                                                    src="{{ asset(config('app.favicon')) }}"></a></span>
+                                        <s pan><a href="{{ asset('/images/logo/'.config('app.favicon')) }}" target="_blank"><img
+                                                    src="{{ asset('/images/logo/'.config('app.favicon')) }}" width="60"></a></span>
                                     </div>
                                 </div>
                             </div>

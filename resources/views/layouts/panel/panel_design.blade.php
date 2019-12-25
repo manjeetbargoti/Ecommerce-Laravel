@@ -7,7 +7,7 @@
 
     <title>Dashboard | {{ config('app.name') }}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="shortcut icon" href="{{ asset('/images/logo/'.config('app.favicon')) }}" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

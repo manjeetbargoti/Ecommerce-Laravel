@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Option;
 use Illuminate\Http\Request;
+use Image;
 
 class SystemController extends Controller
 {
@@ -26,11 +27,32 @@ class SystemController extends Controller
         $option->save();
 
         if (isset($request->site_logo)) {
-            $request->site_logo->move(public_path(), 'logo.svg');
+            if ($request->hasFile('site_logo')) {
+                $image_array = $request->file('site_logo');
+                $extension = $image_array->getClientOriginalExtension();
+                $filename = 'logo_' . rand(0, 999) . '.' . $extension;
+                $large_image_path = public_path('/images/logo/' . $filename);
+                // Resize image
+                Image::make($image_array)->save($large_image_path);
+            }
+            $option = Option::where('key', '=', 'app.logo')->first();
+            $option->value = $filename ?: $option->value;
+            $option->save();
         }
 
         if (isset($request->site_icon)) {
-            $request->site_icon->move(public_path(), 'favicon.ico');
+            // $request->site_icon->move(public_path(), 'favicon.ico');
+            if ($request->hasFile('site_icon')) {
+                $image_array = $request->file('site_icon');
+                $extension = $image_array->getClientOriginalExtension();
+                $filename = 'favicon_' . rand(0, 999) . '.' . $extension;
+                $large_image_path = public_path('/images/logo/' . $filename);
+                // Resize image
+                Image::make($image_array)->save($large_image_path);
+            }
+            $option = Option::where('key', '=', 'app.favicon')->first();
+            $option->value = $filename ?: $option->value;
+            $option->save();
         }
 
         return back()->with(['flash_message_success' => 'Updated']);

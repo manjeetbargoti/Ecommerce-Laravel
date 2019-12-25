@@ -37,6 +37,11 @@
                         </a>
                     </li>
                     <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" target="_blank" href="<?php echo e(url('/')); ?>">
+                            <i class="fa fa-globe"></i>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="topnav dropdown-menu-right ml-auto">

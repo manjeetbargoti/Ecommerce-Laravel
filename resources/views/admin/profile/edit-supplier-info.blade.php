@@ -1,6 +1,58 @@
 @extends('layouts.panel.panel_design')
 
 @section('content')
+<style>
+.product_image_upload .fileinput-upload-button {
+    display: none;
+}
+
+#filediv {
+    display: inline-block !important;
+}
+
+#file {
+    color: green;
+    padding: 5px;
+    border: 1px dashed #123456;
+    background-color: #f9ffe5
+}
+
+#noerror {
+    color: green;
+    text-align: left
+}
+
+#error {
+    color: red;
+    text-align: left
+}
+
+#img {
+    width: 17px;
+    border: none;
+    height: 17px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.abcd img {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #e8debd
+}
+
+#close {
+    vertical-align: top;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: -13px;
+    margin-top: 1px;
+}
+</style>
 <header class="head">
     <div class="main-bar">
         <div class="row">
@@ -25,11 +77,28 @@
                                     class="fa fa-arrow-left" aria-hidden="true"></i>
                                 Back</button></a>
                         <form class="form-horizontal login_validator" id="tryitForm"
-                            action="{{ url('/supplier-info/'.$sdata->id.'/edit') }}" method="post">
+                            action="{{ url('/supplier-info/'.$sdata->id.'/edit') }}" method="post" enctype="multipart/form-data">
 
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-12">
+                                    <div class="form-group row m-t-25">
+                                        <div class="col-lg-3 text-center text-lg-right">
+                                            <label class="col-form-label">Business Logo/Pic</label>
+                                        </div>
+                                        <div class="col-lg-6 text-center text-lg-left">
+                                            <p>@if(!empty($sdata->image))<img
+                                                    src="{{ url('/images/business/large/'.$sdata->image) }}"
+                                                    alt="{{ $sdata->business_name }}" class="img-responsive" width="100">@endif</p>
+                                            <div class="add_image">
+                                                <input type="button" id="add_more" class="btn btn-info"
+                                                    value="Add image" />
+                                                <input type="text" id="CurrentImage" name="current_image"
+                                                    value="{{ $sdata->image }}" class="d-none" />
+                                                <!-- <i class="fas fa-camera"></i> -->
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group row m-t-25">
                                         <div class="col-lg-3 text-lg-right">
                                             <label for="business name" class="col-form-label">Business Name *</label>

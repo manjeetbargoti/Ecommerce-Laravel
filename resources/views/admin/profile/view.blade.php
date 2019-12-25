@@ -49,7 +49,7 @@
                                                     alt="{{ $user->first_name }} {{ $user->last_name }}"
                                                     class="admin_img_width">
                                                 @endif
-                                                </div>
+                                            </div>
                                             <div
                                                 class="fileinput-preview fileinput-exists thumb_zoom zoom admin_img_width">
                                             </div>
@@ -131,6 +131,14 @@
                                             <div class="card_nav_body_padding">
                                                 <table class="table" id="users">
                                                     <tr>
+                                                        <td>Business Image</td>
+                                                        <td class="inline_edit">
+                                                            <span>@if(!empty($supplierData->image)) <img src="{{ asset('/images/business/large/'.$supplierData->image) }}" alt="@if(!empty($supplierData->business_name)){{ $supplierData->business_name }}
+                                                                @endif" class="img-responsive" width="100"> 
+                                                                @endif</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>Business Name</td>
                                                         <td class="inline_edit">
                                                             <span>@if(!empty($supplierData->business_name)){{ $supplierData->business_name }}
@@ -189,15 +197,17 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>@if(!empty($supplierData))<a href="{{ url('/supplier-info/'.$supplierData->id.'/edit') }}"
-                                                                class="btn btn-sm btn-info pull-right">Edit</a>@endif</td>
+                                                        <td>@if(!empty($supplierData))<a
+                                                                href="{{ url('/supplier-info/'.$supplierData->id.'/edit') }}"
+                                                                class="btn btn-sm btn-info pull-right">Edit</a>@endif
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </div>
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="address">
                                             <div class="card_nav_body_padding follower_images">
-                                            <table class="table" id="users">
+                                                <table class="table" id="users">
                                                     <tr>
                                                         <td>Name</td>
                                                         <td class="inline_edit">
@@ -251,7 +261,11 @@
                                                     </tr>
                                                 </table>
                                                 <div class="row">
-                                                    @if(!empty($userAddress)) <a class="btn btn-info btn-sm pull-right" href="{{ url('/admin/user/address/'.$userAddress->id.'/edit') }}">Edit Address</a> @else<a class="btn btn-info btn-sm pull-right" href="{{ url('/admin/user/address/create') }}">Add Address</a>@endif
+                                                    @if(!empty($userAddress)) <a class="btn btn-info btn-sm pull-right"
+                                                        href="{{ url('/admin/user/address/'.$userAddress->id.'/edit') }}">Edit
+                                                        Address</a> @else<a class="btn btn-info btn-sm pull-right"
+                                                        href="{{ url('/admin/user/address/create') }}">Add
+                                                        Address</a>@endif
                                                 </div>
                                             </div>
                                         </div>

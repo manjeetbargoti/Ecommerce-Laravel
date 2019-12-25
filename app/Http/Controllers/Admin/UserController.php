@@ -340,8 +340,32 @@ class UserController extends Controller
     {
         $requestData = $request->all();
 
+        // dd($requestData);
+
         if ($request->isMethod('post')) {
-            // dd($id);
+
+            if ($request->hasFile('file')) {
+                $image_array = Input::file('file');
+                // if($image_array->isValid()){
+                $array_len = count($image_array);
+                // dd($array_len);
+                for ($i = 0; $i < $array_len; $i++) {
+                    // $image_name = $image_array[$i]->getClientOriginalName();
+                    $image_size = $image_array[$i]->getClientSize();
+                    $extension = $image_array[$i]->getClientOriginalExtension();
+                    $filename = 'business_' . rand(0, 99999) . '.' . $extension;
+                    $large_image_path = public_path('/images/business/large/' . $filename);
+                    // Resize image
+                    Image::make($image_array[$i])->save($large_image_path);
+
+                    // dd($filename);
+
+                    // Store image in property folder
+                    $requestData['image'] = $filename;
+                    // }
+                }
+            }
+
             $supplierData = SupplierData::findOrFail($id);
             $supplierData->update($requestData);
 
